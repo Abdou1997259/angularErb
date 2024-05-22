@@ -1,0 +1,97 @@
+<header style="margin-top:-2px">
+  <div class="content-wrapper" >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="Add New Type">أضافة نوع جديدة</h2>
+        <div class="buttons">
+          <div class="button">
+            <i class="bi bi-bookmark-x "></i>
+            <a routerLink="/ar/customerTypesList" *ngIf="!isEnglish" >خروج</a>
+            <a routerLink="/ar/customerTypesList" *ngIf="isEnglish" >Exit</a>
+          </div>
+          <div class="button">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+     
+            <input type="button" [disabled]="!ar_customers_types.valid" class="translate" data-en="Save" value="حفظ"  (click)="Save()" value="حفظ">
+           </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;"  [ngClass]="{'disabled':showspinner}">
+  <!-- Content Header (Page header) -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-dark">
+          </div>
+          <!-- Main content -->
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="ar_customers_types" (keydown.enter)="$event.preventDefault()">
+
+              <div class="card-body">
+                <div class="row">
+
+                  <section class="col-lg-7">
+                    <div class="card p-3">
+                      <div class="row" [hidden]="n_customer_type_id <= 0">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Type No">رقم النوع</label>
+                            <div class="col-sm-5">
+                              <input type="text" class="form-control" formControlName="n_customer_type_id" readonly/>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-8">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Ar Type Name">اسم النوع<span style="color:red">&nbsp;*</span></label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="s_customer_type_name" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-8">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Type Name">اسم النوع انجليزي</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="s_customer_type_name_eng" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <div class="card-footer mb-4" >
+                <div class="row mb-lg-5">
+                     <div class="col-md-2">
+                      <app-attachments [ID]="this.n_customer_type_id" [DataArea]="this.ar_customers_types.value.n_DataAreaID" [Folder]="'Customers'" [SubFolder]="'Attachments'" *ngIf="this.n_customer_type_id !=null && this.n_customer_type_id > 0"></app-attachments>
+                     </div>
+                  </div>
+                  <div class="row" *ngIf="showspinner">
+                    <hr/>
+                    <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

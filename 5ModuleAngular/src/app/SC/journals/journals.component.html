@@ -1,0 +1,222 @@
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+        
+          </div>
+          <!-- Main content -->
+          <div class="invoice p-3 mb-3">
+
+            <form   [formGroup]="JournalForm">
+              <!-- <input type="number" style="display: none;" class="form-control" formControlName="n_journal_id"> -->
+              <!-- <input type="number" style="display: none;" class="form-control" formControlName="n_currency_id"> -->
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+              <div class="card-body" >
+                  <div class="row">
+
+                      <section class="col-lg-7 connectedSortable">
+                        <div class="container-fluid">
+                          <div class="row">
+
+                            <section class="col col-3">
+                                <div class="form-group" style="display: none;">
+                                    <label class="label translate" data-en="Show Journal">رقم القيد:</label>
+                                    <div class="input-group">
+                                      <input type="number" class="form-control" formControlName="x" >
+                                    </div>
+                                </div>
+                            </section>
+
+                          </div>
+
+
+                          <div class="row">
+
+                            <section class="col col-6">
+                              <div class="form-group">
+                                  <label class="label translate" data-en="Date">التاريخ:</label>
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" required  readonly  formControlName="d_doc_date" >
+                                  </div>
+                              </div>
+                            </section>
+                          </div>
+                          <div class="row">
+
+
+
+                            <section class="col col-6">
+                              <div class="form-group">
+                                <label class="label translate" data-en="Currency">العملة:</label>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" required  readonly  formControlName="s_currency_name"  >
+                                </div>
+                                <!-- <div class="input-group">
+                                  <input type="text" class="form-control" formControlName="s_currency_name" readonly (click)="LoadCurrency()" >
+                                </div> -->
+                              </div>
+                            </section>
+
+                          </div>
+
+                          <div class="row">
+
+                            <section class="col col-6">
+                              <div class="form-group">
+                                  <label class="label translate" data-en="Ar Description">الوصف عربى:</label>
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="s_arabic_description" >
+                                  </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-6">
+                              <div class="form-group">
+                                <label class="label translate" data-en="Description">الوصف انجليزى:</label>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" formControlName="s_english_description" >
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </section>
+                      <section class="col-lg-5 ">
+                        <div class="card p-3">
+                          <div class="row">
+                            <section class="col-lg-6">
+                              <div class="form-group">
+                                  <label class="label translate" data-en="Trans Number">رقم الحركة:</label>
+                                  <div class="input-group">
+                                    <input type="number" class="form-control" formControlName="n_doc_trans_no" min="0">
+                                  </div>
+                              </div>
+                            </section>
+                          </div>
+                          <div class="row">
+
+                            <section class="col-lg-6">
+                              <div class="form-group">
+                                <label class="label translate" data-en="Book Doc">المرجع الدفترى:</label>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" formControlName="s_book_doc_no" >
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                            <div class="row">
+
+                            <section class="col-lg-6">
+                              <div class="form-group">
+                                <label class="label translate" data-en="Doc No" >رقم المستند:</label>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" formControlName="n_document_no" >
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                      </div>
+                    </section>
+
+
+                        <!-- /.card -->
+
+
+
+                    </div>
+
+
+              </div>
+
+ <!-- Table row -->
+ <div class="row"   >
+  <div class="col-12 table-responsive">
+    <table  id="tbljournaldetails"  *ngIf="journalDetails.controls.length > 0" class="table table-striped" formArrayName="journalDetails">
+      <thead>
+      <tr>
+        <th  class="translatedata" data-en="Account No">رقم الحساب</th>
+        <th  class="translatedata" data-en="Account Name">اسم الحساب</th>
+        <th  class="translatedata" data-en="Debit">مدين</th>
+        <th  class="translatedata" data-en="Credit">دائن</th>
+        <th  class="translatedata" data-en="AR Descrption">الوصف العربى</th>
+        <th  class="translatedata" data-en="Cost Center">مركز التكلفة</th>
+        <th  class="translatedata" data-en="Cost Center Name">اسم مركز التكلفة</th>
+
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr  [formGroupName]="i" *ngFor="let det of journalDetails.controls; let i=index">
+
+
+          <td style="width: 150px;">
+
+            <input type="text" class="form-control {{det.value.s_color}} " id="Item_{{i}}"
+             formControlName="s_account_no" readonly >
+          </td>
+
+          <td style="width: 250px;">
+            <input type="text"  class="form-control" readonly formControlName="s_account_name" readOnly>
+          </td>
+
+          <td style="width: 100px;">
+            <input type="number" class="form-control"  formControlName="n_debit" min="0"  readonly>
+          </td>
+
+          <td style="width: 100px;">
+            <input type="number" class="form-control"  formControlName="n_credit" min="0" readonly>
+          </td>
+
+          <td style="width: 250px;">
+            <input type="text"  class="form-control" formControlName="s_detailed_arabic_description">
+          </td>
+
+          <td style="width: 100px;">
+
+            <input type="text" class="form-control {{det.value.cost_color}} " id="Cost_{{i}}"
+             formControlName="s_cost_center_id"
+ >
+          </td>
+
+          <td style="width: 150px;">
+            <input type="text" class="form-control" readonly formControlName="s_cost_center_name">
+          </td>
+
+
+
+
+
+      </tr>
+
+      </tbody>
+    </table>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+              </form>
+
+          </div>
+          <!-- /.invoice -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+
+
+
+
+
+

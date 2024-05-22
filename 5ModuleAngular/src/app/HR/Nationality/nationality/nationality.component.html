@@ -1,0 +1,165 @@
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        
+            
+             
+                 <h2 class="translate" data-en="Nationality Add">اضافة الجنسيات </h2>
+                 <div class="buttons">
+                   
+                    
+                   
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/hr/nationality" class="translate" data-en="Close">خروج</a>
+                     
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <button (click)="save()" class="translate" data-en="Save">حفظ
+  
+  
+                          
+                        </button>
+                    </div>
+                  </div>
+  
+                 
+                
+           
+               
+              
+     
+  
+  
+        
+          
+    
+                </div>
+    
+              </section>
+  </div>
+  </header>
+  <div class="content-wrapper" style="margin-top: 120px; ">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      <div class="container-fluid">
+        <form [formGroup]="nationalityForm" (keydown.enter)="$event.preventDefault()">
+              <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                          بيانات اساسية
+                        </div>
+                        <div class="card-body">         
+                            <div class="form-group row" *ngIf="nclassId">
+                                <div class="label col-md-1">رقم الموظف</div>
+                                  
+                                  <div class="col-lg-2 col-md-12 col-sm-12">
+                                      <input type="text" class="form-control "  formControlName="n_nationality_id" style="width:130px;" readonly >  
+                                  </div>
+                          </div>
+                          <div class="form-group  row mt-2">
+                            <div class="label col-md-3">اسم الجنسية  <span class="text-danger">*</span></div>
+                            <div class="col-lg-7 col-md-12 col-sm-12" >
+                                
+                                <input type="text" class="form-control" formControlName="s_nationality_name" >
+                            </div>
+                           
+                        </div>
+                        <div class="form-group row mt-4">
+                            <div class="label col-md-3">اسم الجنسية الانجليزي</div>
+                            <div class="col-lg-7 col-md-12 col-sm-12" >
+                                
+                                <input type="text" class="form-control" formControlName="s_nationality_name_eng" >
+                            </div>
+                        </div>
+                        <div class="form-group row mt-4">
+                            <div class="label col-md-3">قيمة تقديريةللتذكرة ذهاب وعودة</div>
+                            <div class="col-lg-4 col-md-12 col-sm-12" >
+                                
+                                <input type="text" class="form-control" formControlName="n_ticket_Value" >
+                            </div>
+                        </div>
+                        <div class="form-group row mt-4">
+                            <div class="label col-md-3">قيمة تقديرية للتذكرة ذهاب فقط</div>
+                            <div class="col-lg-4 col-md-12 col-sm-12" >
+                                
+                                <input type="text" class="form-control" formControlName="n_ticket_Value_one_way" >
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                          المرافقين
+                        </div>
+                        <div class="card-body">
+                         <div class="row">
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 " style="justify-content: flex-start;
+                                    display: flex;">
+                                        <h5 class="card-title " style="font-weight: bold;
+                                        font-size: 15px !important;">ذهاب وعودة</h5>
+                                    </div>
+                                </div>
+                                <div class="form-group row mt-4">
+                                    <div class="label col-lg-4 col-md-12 col-sm-12">قيمة التذكرة للطفل من 2 الي 11عام</div>
+                                    <div class="col-lg-8 col-md-12 col-sm-12" >
+                                        
+                                        <input type="text" class="form-control" formControlName="n_ticket_Value" >
+                                    </div>
+                                </div>
+                                <div class="form-group row mt-4">
+                                    <div class="label col-lg-4 col-md-12 col-sm-12">قيمة التذكرة للطفل من 2 الي 11عام</div>
+                                    <div class="col-lg-8 col-md-12 col-sm-12" >
+                                        
+                                        <input type="text" class="form-control" formControlName="n_ticket_Value_one_way" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 " style="justify-content: flex-start;
+                                    display: flex;">
+                                        <h5 class="card-title " style="font-weight: bold;
+                                        font-size: 15px !important;">ذهاب فقط</h5>
+                                    </div>
+                                </div>
+                                <div class="form-group row mt-4">
+                                    <div class="label col-lg-4 col-md-12 col-sm-12">قيمة التذكرة للطفل من 2 الي 11عام</div>
+                                    <div class="col-lg-8 col-md-12 col-sm-12" >
+                                        
+                                        <input type="text" class="form-control" formControlName="n_ticket_Value" >
+                                    </div>
+                                </div>
+                                <div class="form-group row mt-4">
+                                    <div class="label col-lg-4 col-md-12 col-sm-12">قيمة التذكرة للطفل من 2 الي 11عام</div>
+                                    <div class="col-lg-8 col-md-12 col-sm-12" >
+                                        
+                                        <input type="text" class="form-control" formControlName="n_ticket_Value_one_way" >
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                        
+                   
+                        </div>
+                      </div>
+                </div>
+              </div>
+     
+        </form>
+     </div>
+    </section>
+</div>
+
+
+
+

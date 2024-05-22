@@ -1,0 +1,91 @@
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper rtl ">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row" *ngIf="showspinner"> 
+            <hr/>
+            <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+          </div>
+
+          
+      <div class="row">
+        <div class="col-12">
+          
+
+          <div class="card">
+         
+            <div class="card card-success">
+                <div class="card-header" style="height: 50px;"> 
+                  <h3  class="d-flex justify-content-center">عروض الاسعار</h3>
+                </div>
+                </div>
+
+            <!-- /.card-header -->
+
+         
+          
+             
+
+            <div class="card-body">
+            
+              <div *ngIf="Quotations.length == 0">
+                <div class="d-flex justify-content-center ">
+                  <h3>لا يوجد عروض أسعار</h3>
+                </div>
+              </div>
+             
+
+               <table  *ngIf="Quotations.length > 0" id="CustDataTable" datatable
+                 [dtOptions]="dtOptions"  class="table table-striped table-bordered dt-responsive"
+                  style="width:100%;text-align: center;" >
+                <thead >
+                <tr class="table-primary"> 
+               
+                  <th style="text-align: center;">رقم العرض</th>
+                  <th style="text-align: center;">تاريخ العرض</th>
+                  <th style="text-align: center;">العميل</th> 
+                  <th style="text-align: center;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr    *ngFor="let order of Quotations"
+                [ngStyle]="order.b_confirm ?{'background-color': '#48D1CC'} : {'background-color': ''}" >  
+               
+                   <td  >{{order.n_Quotation_no}}  </td>
+                   <td  >{{order.d_Quotation_date}}  </td>
+                   <td  >{{order.s_customer_name}}  </td> 
+                   <td>  
+                        <a  (click)="openDialog(order.n_Quotation_no)" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات الطلب"  class="btn "><i class="bi bi-sd-card text-primary"></i></a>
+                  </td>
+                </tr>
+                </tbody>
+                 
+              </table> 
+
+            </div>
+       
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+
+ <p></p>
+<!-- Modal -->
+
+
+
+ 
+
+ 

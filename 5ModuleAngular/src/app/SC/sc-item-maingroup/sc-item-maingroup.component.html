@@ -1,0 +1,184 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate" data-en="Items Main Group"> مجموعات الاصناف </h2>
+              <div class="buttons">
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!accountListForm.valid" class="translate" data-en="Save" (click)="Save()" [value]="btnSave">
+                  </div>
+              </div>
+          </div>
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="accountListForm" (keydown.enter)="$event.preventDefault()">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+              <div class="card-body" >
+                <div class="row">
+                  <section class="col-lg-6">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6 text-center">
+                          <div class="form-group">
+                            <button type="button" class="btn btn-outline-primary p-2 w-50 translate" data-en="Add New Group" (click)="AddNewItem();" [disabled]="isAddMode">اضافة مجموعة جديد</button>
+                          </div>
+                        </section>
+
+                        <section class="col col-6 text-center">
+                          <div class="form-group">
+                            <input type="button" class="btn btn-outline-danger p-2 w-50 translate" data-en="Remove Group" [disabled]="!isAccountSelected || isAddMode" value="حذف مجموعة" data-toggle="modal" data-target="#exampleModal" />
+                          </div>
+                        </section>
+                      </div>
+
+                      <hr />
+
+                      <div class="row">
+                        <section class="col col-4">
+                          <div class="form-group">
+                            <input type="text" class="form-control search-input"  *ngIf="!isEnglish" id="search-input" placeholder="بحث..." />
+                            <input type="text" class="form-control search-input" *ngIf="isEnglish" id="search-input" placeholder="searching..." />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row overflow-auto" style="max-height: 500px;">
+                        <section class="col col-12">
+                          <div class="form-group">
+                            <div id="jstree"></div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="col-lg-6">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="Group No" > رقم المجموعة <span style="color: red;">*</span> </label>
+                            <input type="number" formControlName="s_GroupItem_no" class="form-control w-50" required="required" (change)="onInputEvent();" />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="Main Group"> المجموعة الرئيسية </label>
+                            <input type="text" formControlName="s_upper_Group" class="form-control" readonly />
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="Level">المستوى</label>
+                            <input type="number" formControlName="n_Group_level" class="form-control w-50" readonly  />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label " ><span class="translate" data-en="Ar Group Name"> الاسم </span><span style="color: red;">*</span> </label>
+                            <input type="text" formControlName="s_GroupItem_name" class="form-control" required="required" />
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="Group Name"> الاسم انجليزي </label>
+                            <input type="text" formControlName="s_GroupItem_name_eng" class="form-control" />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <label> <span class="translate" data-en="Group Name">نوع المجموعة </span><span style="color: red;">*</span> </label>
+                          <select name="Code" class="form-select" formControlName="n_type" [attr.disabled]="isHasChildrens ? '' : null">
+                            <option *ngFor="let item of options" value="{{ item.code }}">{{item.name_arabic}}</option>
+                          </select>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="Group Code"> رمز المجموعة </label>
+                            <input type="text" formControlName="s_group_code" class="form-control w-50" />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <label class="translate" data-en="Realated Account">الحساب المرتبط:</label>
+                          <select-server-side [selectForm]="accountListForm" [controlName]="'s_expenses_acc'" [TextField]="'s_account_name'"
+                            [ValueField]="'s_account_no'" [searching]="searching" [filteredServerSide]="filteredServerSideRelatedAcc" (OnSearch)="searchAccounts($event)">
+                          </select-server-side>
+                        </section>
+
+                        <section class="col col-6">
+                          <label class="translate" data-en="Incomes account:">حساب الايرادات:</label>
+                          <select-server-side
+                            [selectForm]="accountListForm"
+                            [controlName]="'s_income_acc'"
+                            [TextField]="'s_account_name'"
+                            [ValueField]="'s_account_no'"
+                            [searching]="searchingIncomeAcc"
+                            [filteredServerSide]="filteredServerSideIncomeAcc"
+                            (OnSearch)="searchIncomeAccounts($event)">
+                          </select-server-side>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تأكيد الحذف</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">تأكيد حذف مجموعة {{s_GroupItem_name}} ؟!</label>
+      </div>
+      <div class="modal-footer" dir="rtl">
+        <input type="button" class="btn btn-danger mr-2" value="حذف مجموعة" (click)="DeleteGroup()" data-toggle="modal" data-target="#exampleModal"  >
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+      </div>
+    </div>
+  </div>
+</div>
+

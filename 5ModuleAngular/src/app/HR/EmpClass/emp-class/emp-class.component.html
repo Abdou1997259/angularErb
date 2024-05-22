@@ -1,0 +1,125 @@
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        
+            
+             
+                 <h2 class="translate" data-en="Add Bank Branch">أضافة  فئات الموظفين</h2>
+                 <div class="buttons">
+                   
+                    
+                   
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/hr/empclass" class="translate" data-en="Close">خروج</a>
+                     
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <button (click)="save()" class="translate" data-en="Save">حفظ
+  
+  
+                          
+                        </button>
+                    </div>
+                  </div>
+  
+                 
+                
+           
+               
+              
+     
+  
+  
+        
+          
+    
+                </div>
+    
+              </section>
+  </div>
+  </header>
+  <div class="content-wrapper" style="margin-top: 120px; ">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      <div class="container-fluid">
+        <form [formGroup]="EmpClassFrom" (keydown.enter)="$event.preventDefault()">
+         <div class="row">
+            
+               <div class=" mt-5 p-3 col-12">
+                <div class="form-group row" *ngIf="nclassId">
+                  <div class="label col-md-1">رقم الموظف</div>
+                    
+                    <div class="col-lg-2 col-md-12 col-sm-12">
+                        <input type="text" class="form-control "  formControlName="n_class_Id" style="width:130px;" readonly >  
+                      </div>
+                  </div>
+                <div class="form-group  row mt-2">
+                    <div class="label col-md-1">اسم النوع  <span class="text-danger">*</span></div>
+                    <div class="col-lg-4 col-md-12 col-sm-12" >
+                        
+                        <input type="text" class="form-control" formControlName="s_class_name" >
+                    </div>
+                   
+                </div>
+                <div class="form-group row">
+                    <div class="label col-md-1">اسم النوع الانجليزي</div>
+                    <div class="col-lg-4 col-md-12 col-sm-12" >
+                        
+                        <input type="text" class="form-control" formControlName="s_class_name_eng" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="label col-lg-1">ملاحظات  </div>
+                    <div class="col-lg-4 col-sm-12">
+                       <textarea class="form-control" style="height: 130px;" formControlName="s_notes"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <div class="label col-lg-1">حساب أيرادات العمالة اليومية <span class="text-danger">*</span></div>
+                  <div class="col-lg-4">
+                                     
+                    <select-server-side
+                    [selectForm]="EmpClassFrom"
+                    [controlName]="'s_daily_labor_income_account'"
+                    [TextField]="'s_source_name'"
+                    [ValueField]="'n_source_id'"
+                    [searching]="searchingEmpClassAcc"
+                    [filteredServerSide]="filteredAccServerSide"
+                    (OnSearch)="searchEmpClassAcc($event)">
+                    </select-server-side>
+                 </div>
+                </div>
+                <div class="form-group row">
+                  <div class="label col-lg-1">الخزينة <span class="text-danger">*</span></div>
+                  <div class="col-lg-4">
+                                     
+                    <select-server-side
+                    [selectForm]="EmpClassFrom"
+                    [controlName]="'n_cash_id'"
+                    [TextField]="'s_cash_name'"
+                    [ValueField]="'n_cash_id'"
+                    [searching]="searchingEmpClassCash"
+                    [filteredServerSide]="filteredCashServerSide"
+                    (OnSearch)="searchEmpClassCach($event)">
+                    </select-server-side>
+                 </div>
+                </div>
+            
+               </div>
+                
+    
+         </div>
+     
+        </form>
+     </div>
+    </section>
+</div>
+
+
+
+

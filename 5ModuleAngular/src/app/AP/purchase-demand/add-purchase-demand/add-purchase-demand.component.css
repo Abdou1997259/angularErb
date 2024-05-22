@@ -1,0 +1,43 @@
+.card
+{
+  margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+.special-card
+{
+   
+  display: block;
+  background-color: rgb(233,236,239);
+  padding: 0px 0px;
+  border: 12px solid white;
+  /* height: 74px; */
+  padding-top: 16px;
+  font-weight: bold;
+  width: 379px;
+  max-height: 97px;
+  border-radius: 17px;
+}
+
+
+
+i {
+    font-size: 1.2rem;
+    color: rgb(0,104,215);
+    top: .75rem;
+    left: .75rem
+  }
+  input
+  {
+      margin-bottom: 15px;
+      margin-left: 10px;
+  }
+
+@media  only screen and (min-width:988px) and (max-width:1125px) {
+
+    .dropDown
+    {
+        
+        display: inline
+    }
+}

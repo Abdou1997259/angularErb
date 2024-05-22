@@ -1,0 +1,168 @@
+::ng-deep:root
+{
+    --sidebar-color:#23437E;
+    --nav-color:#03045E;
+}
+
+ nav.custom-nav
+{
+    background-color: var( --nav-color);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    
+}
+.changeDirection
+{
+    margin-left: 0px;
+    margin-right: 250px;
+    margin-right: 0 !important;
+    margin-left: 250px;
+    
+}
+nav.custom-nav .navbar-nav .d-none-custom
+    {
+      display: none;
+    }
+@media (max-width:767px)
+{
+    nav.custom-nav .navbar-nav .d-none-custom
+    {
+      display: block;
+    }
+}
+
+aside a.brand-link 
+{
+    text-decoration: none;
+    text-align: center;
+    color: var(--sidebar-color);
+    font-weight: bolf !important;
+  
+}
+
+aside a.brand-link span
+{
+  
+    font-size: 15px !important;
+    font-weight: bold !important;
+
+}
+aside .sidebar
+{
+
+}
+aside .sidebar .info{
+
+}
+aside .sidebar .info a span
+{
+   
+}
+aside .sidebar nav 
+{
+    color:white
+}
+aside .sidebar nav  ul 
+{
+
+}
+aside .sidebar nav   > ul > li
+{
+    background-color: var(--sidebar-color);
+    border-radius: 3px;
+}
+aside .sidebar nav   > ul > li > ul li
+{
+    background-color:white;
+    display: block;
+    border-radius: 0;
+    margin: 0;
+    border-bottom: none;
+    height: 35px;
+}
+.nav-link > .right
+{
+    position: static !important;
+}
+
+aside .sidebar nav   > ul > li > ul li p
+{
+    color:var(--sidebar-color) !important
+}
+aside .sidebar nav   > ul > li > ul li i
+{
+    color:var(--sidebar-color) !important
+}
+
+
+aside .sidebar .nav-link  a{
+    display: grid;
+    grid-template-columns: repeat(1fr,3);
+
+}
+aside .sidebar nav ul li a {
+
+
+ color: white;
+ display: flex;
+ justify-content: space-between;
+
+}
+aside .sidebar nav ul li a p
+{
+    font-size:  12px !important;
+    font-weight: bold !important;
+}
+aside .sidebar nav  ul li a p
+{
+
+}
+aside .sidebar nav  ul li a i.fa-angle-left:before {
+    content: "\f104";
+   color:white
+}
+
+aside .sidebar nav ul li a i.fa-tachometer-alt:before {
+    content: "\f3fd";
+    color:white
+}
+@media (max-width:1133px) and (min-width:851px){
+    .custom-header 
+{
+font-size: 9px !important;
+}
+}
+@media (max-width:986px) {
+    .custom-header 
+{
+font-size: 0px !important;
+}
+}
+.bi-door-closed::before {
+    content: "\f306";
+    font-size: 26px;
+}
+.bi-door-open::before {
+    content: "\f308";
+    font-size: 26px;
+}
+
+@media (max-width:767px) {
+    .door-icon
+    {
+        display: none;
+    }
+}
+[class*=sidebar-dark] .brand-link {
+    border-bottom: none !important;
+    
+}
+@media (max-width:767px) {
+    .hide-respon{
+        display: none;
+    }
+    
+}

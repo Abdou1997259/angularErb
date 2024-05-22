@@ -1,0 +1,220 @@
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+      <!-- Content Header (Page header) -->
+      
+          
+           
+               <h2 class="translate" data-en="Recive Exports"  >أستلام التحويلات</h2>
+               <div class="buttons">
+                 
+        
+           
+                 
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <a routerLink="/" class="translate" data-en="Exit"   >خروج</a>
+                   
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                    
+                      <button class="translate" data-en="Recive"   (click)="importing()">استلام
+
+
+                        
+                      </button>
+                  </div>
+                </div>
+
+               
+              
+         
+             
+            
+   
+
+
+      
+        
+  
+      
+              </div>
+  
+            </section>
+</div>
+</header>
+<div class="content-wrapper rtl ">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+
+
+
+
+      <div class="row">
+        <div class="col-12">
+
+
+          <div class="card">
+
+            <div class="card card-dark">
+                <div class="card-header" style="height: 50px;">
+                  <h3  class="d-flex justify-content-center translate"  data-en="Recive"  >  استلام التحويلات </h3>
+
+                  <input  type="text" style="display: none;" class="form-control"  #myInput1>
+                </div>
+                </div>
+
+            <!-- /.card-header -->
+
+
+
+
+
+            <div class="card-body" style=" margin-top: 50px !important; ">
+             <div class="row " style="margin-bottom: 50px;">
+              <div class="col-7 d-flex justify-content-right">
+                <label class="english-edit translate" data-en="Store" > المخزن</label>
+                 <input  type="text" class="form-control english-edit-txtbox"  (change)="getStoreByNow(myInput.value)"  #myInput>
+                 <i class="bi bi-search" (click)="loadItems()"></i>
+              </div>
+              <div class="col-5 justify-content-left english-btn-edit "  style="position: absolute ;    left: -325px;
+              ">
+                
+                    <div class="button-plus">
+                      <i class="bi bi-incognito english-icon-edit"></i>
+                      <a (click)="getStoresRecievable()" class="translate" data-en="Get Trans">تحديث</a>
+                    </div>
+              
+             
+
+              </div>
+
+
+             </div>
+
+             <div class="ag-theme-custom" id="myGrid">
+              <ag-grid-angular
+              [rowData]="rowData$ |async"
+              class="ag-theme-alpine ag-theme-custom"
+              [columnDefs]="isEnglish?colDefEn:colDef"
+              style="height: 400px;width: 1300px;"
+              [enableRtl]="true"
+              [rowSelection]="'multiple'"
+
+              (selectionChanged)="getRecived($event)"
+
+              (rowDoubleClicked)="getItemsData($event)"
+              (gridReady)="OnGridReady($event)"
+
+             #agGrid>
+            </ag-grid-angular>
+
+            <ag-grid-angular
+            [rowData]="rowItemsData$ |async"
+            class="ag-theme-alpine ag-theme-custom"
+            [columnDefs]="isEnglish?colDefItemsEn:colDefItems"
+            style="height: 350px;width: 1300px;"
+            [enableRtl]="true"
+
+           >
+           </ag-grid-angular>
+           
+
+             </div>
+
+
+
+                          <!-- <div *ngIf="JournalsData.length == 0">
+                <div class="d-flex justify-content-center ">
+                  <h3>لا يوجد قيود</h3>
+                </div>
+              </div> -->
+
+
+
+
+
+
+
+               <!-- <table  id="JournalDataTable"
+                 class="table table-borderless "
+                  style="width:100%;text-align: center;" >
+                <thead >
+
+                  <tr >
+                    <th style="text-align: center;">رقم المخزن</th>
+                    <th style="text-align: center ;
+                    "  ><input type="text" class="form-control" ></th>
+
+
+
+
+                  </tr>
+                <tr style="
+                     color: #ffffff;
+                     background: #1b1e24;
+                     border-bottom: 0px solid #9ea7af;
+                     border-right: 0px solid #343a45;
+                     font-size: 18px;
+                     font-weight: 200;
+                     padding: 9px;
+                     /* text-align: left; */
+                     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                     /* vertical-align: middle; */
+                     /* width: 101%; */
+                     " >
+                  <th style="text-align: center;">رقم الحركه</th>
+                  <th style="text-align: center;"> وصف الحركة</th>
+                  <th style="text-align: center;">  التاريخ </th>
+                  <th style="text-align: center;">الكمية</th>
+                  <th style="text-align: center;">السعر</th>
+
+
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr    *ngFor="let balance of IncomingData"    >
+
+                    <td>{{balance.n_document_no}}  </td>
+                    <td>{{balance.s_arabic_transaction_description}}  </td>
+                    <td>{{balance.d_initial_balance_date}}  </td>
+                    <td>{{balance.n_initial_balance_total_qty}}  </td>
+                    <td>{{balance.n_total_value}}  </td>
+
+
+
+
+
+
+
+
+
+                </tr>
+                </tbody>
+
+              </table>  -->
+
+
+            </div>
+
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+
+ <p></p>

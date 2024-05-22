@@ -1,0 +1,64 @@
+<header>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+                <h2 class="translate" data-en="Sales Dashboard">احصائيات المخازن</h2>
+            </div>
+        </section>
+    </div>
+</header>
+<br/><br/>
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-3 mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <section class="col-lg-6">
+                                    <div class="card p-3">
+                                        <div class="row">
+                                            <section class="col col-12">
+                                                <div class="form-group">
+                                                    <ngx-charts-bar-vertical 
+                                                        [view]="[600,500]" 
+                                                        [results]="gdpData"
+                                                        [xAxisLabel]="'الشهور' "
+                                                        [yAxisLabel]="'الإجمالى'" 
+                                                        [showXAxisLabel]="true" 
+                                                        [showYAxisLabel]="true" 
+                                                        [xAxis]="true"
+                                                        [yAxis]="true"
+                                                        [gradient]="true" >
+                                                        <!-- [legend]="true" [legendTitle]="'GSP Units Chart'" -->
+                                                    </ngx-charts-bar-vertical>
+                                                </div>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="col-lg-6 ">
+                                    <div class="card p-3">
+                                        <div class="row">
+                                            <section class="col-lg-6">
+                                                <ngx-charts-pie-chart [view]="[600,500]"
+                                                 [results]="pieData"
+                                                 [animations]="true"                            
+                                                 [labels]="true" >
+                                              </ngx-charts-pie-chart>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

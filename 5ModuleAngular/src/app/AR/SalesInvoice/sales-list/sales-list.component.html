@@ -1,0 +1,138 @@
+<header>
+  <div class="content-wrapper"  >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="Sales Invoice">فواتير المبيعات</h2>
+        <div class="buttons">
+          <div class="button" *ngIf="cannew">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+            <a routerLink="/ar/salesInvoice" class="translatedata" data-en="New" >جديد
+            </a>
+          </div>
+          <div class="button">
+            <i class="bi bi-bookmark-x fa-lg"></i>
+            <a  (click)="PrintExcel()" id="excelBTN" class="translate" data-en="Exel Import">تصدير لإكسيل</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+  <div class="content-wrapper" style="    margin-top: 140px;" >
+    <section class="content" >
+          <div class="container-fluid">
+              <div class="row" *ngIf="showspinner" >
+                <hr/>
+                <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+              </div>
+
+              <div class="custom-table-responsive">
+
+                <table  class="custom-table-add" >
+                  <thead >
+                    <tr>
+                      <td colspan="12" width="100%" >
+                        <div>
+                          <div class="s-icons">
+                            <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                            <i class="bi bi-file-earmark-excel"></i>
+                            <i class="bi bi-info"></i>
+                          </div>
+                          <h2 class="translate" data-en="Sales Invoice">فواتير المبيعات</h2>
+                          <div class="f-icons">
+                            <i class="bi bi-layout-text-window-reverse"></i>
+                            <i class="bi bi-microsoft"></i>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="DocNo"></th>
+                      <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="DocDate"></th>
+                      <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="TypeName"></th>
+                      <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="CustomerName"></th>
+                      <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="SalesManName"></th>
+                      <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="Description"> </th>
+                      <th></th>
+                      <th *ngIf="canedit"></th>
+                      <th *ngIf="candelete"></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th style="text-align: center;text-align: center;" class="translate" data-en="Invoice No">رقم الفاتورة</th>
+                      <th style="text-align: center;text-align: center;" class="translate" data-en="Data">تاريخ الفاتورة</th>
+                      <th style="text-align: center;text-align: center;"class="translate" data-en="Invoice Type">نوع الفاتورة</th>
+                      <th style="text-align: center;text-align: center;"class="translate" data-en="Customer Name">اسم العميل</th>
+                      <th style="text-align: center;text-align: center;"class="translate" data-en="Rep Person Name">اسم المندوب</th>
+                      <th style="text-align: center;text-align: center;"class="translate" data-en="Description">الوصف</th>
+                      <th style="text-align: center;text-align: center;"class="translate" data-en="Net">الصافى</th>
+                      <th *ngIf="canedit"></th>
+                      <th *ngIf="candelete"> </th>
+                      <th></th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let item of InvoiceData">
+                      <td >{{item.n_document_no}}  </td>
+                      <td >{{item.d_document_date}}  </td>
+                      <td >{{item.s_type_name}}  </td>
+                      <td >{{item.s_customer_name}}  </td>
+                      <td >{{item.s_salesman_name}}  </td>
+                      <td >{{item.s_description_arabic}}  </td>
+                      <td >{{item.n_net_value}}  </td>
+                      <td *ngIf="canedit"><a routerLink="/ar/editsalesInvoice/{{item.n_document_no}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات الفاتورة" class="translatedata" data-en="Edit" >تعديل</a></td>
+                      <td *ngIf="candelete"><a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowID(item.n_document_no, item.n_invoice_type_id, item.n_trans_source_no)" class="translatedata" data-en="Remove" >حذف </a></td>
+                      <td > <a href="{{ReportUrl}}PrintReport?docNo={{item.n_document_no}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+                    </tr>
+                  </tbody>
+
+                </table>
+
+              </div>
+
+
+
+
+              <!-- <div class="row m-3 mb-5">
+                <div class="col-12 d-flex justify-content-center">
+                  <pagination [boundaryLinks]="true" [totalItems]="journalsCount"  [maxSize]="8"
+                    [(ngModel)]="currentPage"
+                    (pageChanged)="pageChanged($event)"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                  </pagination>
+                </div>
+              </div> -->
+            </div>
+          </section>
+    </div>
+    <br/><br/>
+
+
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" data-en="Close">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body translate" data-en="Are you sure to delete this invoice?">
+                هل انت متاكد من حذف هذه الفاتورة
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #closebutton data-en="Close">اغلاق</button>
+                <button type="button" class="btn btn-primary translate" (click)="deleteRow()" data-en="Remove">حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <p></p>
+<!-- Modal -->

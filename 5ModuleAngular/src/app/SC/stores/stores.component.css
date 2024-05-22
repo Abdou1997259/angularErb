@@ -1,0 +1,17 @@
+
+  td.mat-cell, th.mat-header-cell {
+    text-align: center;
+    justify-content:center;
+}
+th.mat-header-cell
+{
+    background: #343A40;
+    color: white ;
+
+}
+.mat-paginator 
+{
+    direction: ltr;
+    margin-right: 400px;
+    justify-content: center;
+}

@@ -1,0 +1,115 @@
+
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+
+
+
+                 <h2 class="translate" data-en="Add Supplier Cat">أضافة تنصيف الموردين</h2>
+                 <div class="buttons">
+
+
+
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/ap/suppliercat" class="translate" data-en="Exit">خروج</a>
+
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <input type="button" [disabled]="!typesForm.valid" class="translatedata" data-en="Save" value="حفظ"  (click)="save()" value="حفظ">
+                    </div>
+                  </div>
+                </div>
+              </section>
+  </div>
+  </header>
+
+
+
+
+  <div class="content-wrapper mt-5" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <!-- <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div> -->
+
+       <div class="row">
+        <div class="col-12">
+          <div class="invoice p-3 mb-3">
+          <form [formGroup]="typesForm" (keydown.enter)="$event.preventDefault()">
+            <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+            <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+            <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+            <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+            <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+            <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+            <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+            <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+            <div class="card-body" >
+              <div class="row">
+                <section class="col-lg-7">
+                  <div class="card p-3">
+                    <div class="row" [hidden]="DocNo <= 0">
+                      <section class="col-lg-12">
+                        <div class="form-group">
+                          <label class="label translate" data-en="Supplier Category" > رقم التصنيف </label>
+                          <input type="text" class="form-control w-50" formControlName="n_id" readonly/>
+                        </div>
+                      </section>
+                    </div>
+
+                    <div class="row">
+                      <section class="col-lg-6">
+                        <div class="form-group">
+                          <label class="label"><span class="translate" data-en="Ar Supplier Category"> اسم التصنيف </span><span style="color:red;">*</span> </label>
+                          <input type="text" class="form-control" formControlName="s_name"/>
+                        </div>
+                      </section>
+
+                      <section class="col-lg-6">
+                        <div class="form-group">
+                          <label class="label translate" data-en="Supplier Category Name Eng"> اسم التصنيف Eng </label>
+                          <input type="text" class="form-control" formControlName="s_name_eng"/>
+                        </div>
+                      </section>
+                      <section class="col-lg-12">
+                        <div class="form-group">
+                          <label class="label translate" data-en="Notes">الملاحظات </label>
+                          <textarea class="form-control"  formControlName="s_notes" ></textarea>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+
+             <div class="row">
+
+              <div class="col-md-2">
+                <app-attachments [ID]="this.DocNo" [DataArea]="this.DataAreaNo" [Folder]="'Stores'" [SubFolder]="'Attachments'" *ngIf="this.DocNo !=null && this.DocNo > 0"></app-attachments>
+              </div>
+             </div>
+          </form>
+          </div>
+        </div>
+       </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+
+
+
+

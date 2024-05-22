@@ -1,0 +1,168 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+            <h2 class="translate" data-en="Add User">أضافة مستخدم</h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      
+                      <input type="button" *ngIf="!isEnglish" routerLink="/sys/userslist" class="translatedata"  data-en="Exit" value="خروج">
+                      <input type="button" *ngIf="isEnglish" routerLink="/sys/userslist" class="translatedata"  data-en="Exit" value="Exit">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!UserForm.valid"  class="translatedata"  data-en="Save" value="حفظ" *ngIf="!isEnglish"(click)="save()" value="حفظ">
+                      <input type="button" [disabled]="!UserForm.valid"  class="translatedata"  data-en="Save" value="حفظ" *ngIf="isEnglish" (click)="save()" value="Save">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+
+<div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+      <div class="container-fluid">
+  
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+  
+  
+  
+        <div class="row">
+          <div class="col-12">
+  
+            <div class="invoice p-3 mb-3">
+             
+              <form   [formGroup]="UserForm">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="card-body" >        
+                    <div class="row">
+              
+                          <div class="container-fluid">
+                            <div class="row">
+
+                              <section class="col col-3">
+                                  <div class="form-group" style="display: none;">
+                                      <label class="label translate" data-en="User No" *ngIf="!isEnglish">رقم المستخدم:</label>
+                                      <label class="label translate" data-en="User No" *ngIf="isEnglish">User No</label>
+                                      <div class="input-group"> 
+                                        <input type="text" class="form-control" formControlName="n_ID" >
+                                      </div>
+                                  </div>
+                              </section>
+
+                            </div>
+                            <br/>
+                            <div class="row" *ngIf="UserForm.value.n_Is_Group==true">
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="User Name Ar" *ngIf="!isEnglish">الاسم عربى:</label> 
+                                    <label class="label translate" data-en="User Name Ar" *ngIf="isEnglish"> User Name AR:</label> 
+                                    <div class="input-group"> 
+                                      <input type="text" class="form-control" required  [disabled]="UserForm.value.n_Is_Group==false" formControlName="s_User_Name" >
+                                    </div>  
+                                </div>
+                              </section>
+
+                              
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="User Name" *ngIf="!isEnglish">الاسم انجليزى:</label> 
+                                    <label class="label translate" data-en="User Name" *ngIf="isEnglish">User Name</label> 
+                                    <div class="input-group"> 
+                                      <input type="text" class="form-control"   formControlName="s_User_Name_eng" >
+                                    </div>  
+                                </div>
+                              </section>
+                            </div>
+                            
+                            <div class="row">
+                                <section class="col col-3">
+                                    <div class="form-check checkbox-xl">
+                                        <input class="form-check-input" type="checkbox" formControlName="n_Is_Group" [value]="UserForm.value.n_Is_Group" (change)="setValidation()" />
+                                        <label class="form-check-label translate" data-en="Users Group">مجموعة مستخدمين</label>
+                                      </div>
+                                </section>
+                            </div>
+
+                            <br/>
+                            <br/>
+
+                            <div *ngIf="UserForm.value.n_Is_Group==false">
+                                <div class="row" >
+                                    <section class="col col-4">
+                                        <div class="form-group">
+                                            <label class="label translate" data-en="User">اسم المستخدم:</label> 
+                                            <div class="input-group"> 
+                                              <input type="text" class="form-control"  [disabled]="UserForm.value.n_Is_Group==true" formControlName="s_User_Name" >
+                                            </div>  
+                                        </div>
+                                      </section>
+                                </div>
+
+                                <div class="row">
+                                    <section class="col col-4">
+                                        <div class="form-group">
+                                            <label class="label translate" data-en="Passwprd">كلمة المرور:</label> 
+                                            <div class="input-group"> 
+                                              <input type="password" class="form-control"   formControlName="s_User_Password">
+                                            </div>  
+                                        </div>
+                                      </section>
+                                </div>
+                                
+                                <div class="row">
+                                    <section class="col col-4">
+                                            <label class="label translate" data-en="Group">المجموعة:</label>
+                                              <select-server-side  
+                                                [selectForm]="UserForm"
+                                                [controlName]="'n_Parent_Id'"
+                                                [TextField]="'s_group_name'"
+                                                [ValueField]="'n_Parent_Id'"
+                                                [searching]="searchingGroup"
+                                                [filteredServerSide]="filteredGroupServerSide"
+                                                (OnSearch)="searchGroup($event)">
+                                              </select-server-side> 
+                                      </section> 
+                                </div>
+                            </div>
+
+                          </div>                                                                         
+                      </div>          
+                </div>
+
+
+                    <div class="card-footer mb-4" >
+                       
+                        
+                        <div class="row" *ngIf="showspinner"> 
+                            <hr/>
+                            <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+                        </div>
+                        
+                    </div>
+
+                </form>
+           
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+  </div>
+
+  
+
+ 

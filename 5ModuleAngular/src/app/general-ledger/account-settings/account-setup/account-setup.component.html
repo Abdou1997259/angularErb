@@ -1,0 +1,311 @@
+<div class="content-wrapper rtl" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card card-primary">
+            <div class="card-header" style="height: 50px">
+              <h3 class="d-flex justify-content-center translate" data-en="Account Settings">اعدادات الحسابات</h3>
+            </div>
+            <div class="card-body">
+              <div class="" style="background-color: transparent">
+                <div dir="rtl">
+
+                  <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+                    <li class="nav-item border border-primary rounded mr-2" role="presentation">
+                      <button class="nav-link translate active " data-en="System Settings" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                        type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                        تهيئة النظام
+                      </button>
+                    </li>
+
+                    <li class="nav-item border border-primary rounded mr-2" role="presentation">
+                      <button class="nav-link translate" data-en="Account Level" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                        مستويات الحسابات
+                      </button>
+                    </li>
+
+                    <li class="nav-item border border-primary rounded" role="presentation">
+                      <button class="nav-link translate" data-en="Cost Ceneter Level" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
+                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
+                        مستويات مراكز التكلفة
+                      </button>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                      <div class="d-flex align-items-start">
+                        <div class="nav flex-column nav-pills me-3 mb-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                          <button class="nav-link active mb-3 border border-primary translate" data-en="Accounting Period" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+                            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                            الفترة المحاسبية
+                          </button>
+
+                          <button class="nav-link mb-3 border border-primary translate" data-en="Restrictions Settings" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+                            type="button" role="tab"  aria-controls="v-pills-profile" aria-selected="false">
+                            اعدادات القيود
+                          </button>
+
+                          <button class="nav-link mb-3 border border-primary translate" data-en="Cost Center" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages"
+                            type="button"  role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                            مراكز التكلفة
+                          </button>
+                        </div>
+
+                        <form [formGroup]="accountingFrorm">
+                          <div class="tab-content container" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                              <div class="row">
+
+                                <div class="row">
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+
+                                      <label class="translate" data-en="Date of beginning of the accounting period:">تاريخ بداية الفترة المحاسبية:</label>
+                                      <div class="input-group">
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_open_period_from" required>
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                        <!-- <input type="date" class="form-control" value="" required formControlName="d_open_period_from" /> -->
+                                      </div>
+
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+
+                                      <label class="translate" data-en="End date of the accounting period:">تاريخ نهاية الفترة المحاسبية:</label>
+                                      <div class="input-group">
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker1" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker1.open()"  formControlName="d_open_period_to" required>
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker1 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                        <!-- <input type="date" class="form-control" required formControlName="d_open_period_to" /> -->
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value=""  id="b_use_cost_center" formControlName="b_use_cost_center" />
+                                    <label class="form-check-label translate" data-en="Display all types of diaries in the daily entries screen" for="b_use_cost_center">
+                                      عرض كل انواع اليوميات في شاشة القيود
+                                      اليومية
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="b_close_preiod" formControlName="b_close_preiod" />
+                                    <label class="form-check-label translate" data-en="Activate closing periods and review movement restrictions" for="b_close_preiod">
+                                      تفعيل اغلاق الفترات ومراجعة قيود الحركات
+                                    </label>
+                                  </div>
+                                </div>
+
+                                
+                                <div class="col-md-12">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="b_financial_years_in_one_year" formControlName="b_financial_years_in_one_year" />
+                                    <label class="form-check-label translate" data-en="Financial Years is connected to the same DataBase" for="b_financial_years_in_one_year">
+                                      السنوات المالية متصلة في نفس قاعدة البيانات
+                                    </label>
+                                  </div>
+                                </div>
+
+                                
+                                <div class="col-md-12">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="b_activate_accounts_by_branch" formControlName="b_activate_accounts_by_branch" />
+                                    <label class="form-check-label translate" data-en="Activate accounts by branch" for="b_activate_accounts_by_branch">
+                                      تفعيل الحسابات علي مستوي الفرع
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <hr />
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+
+                                      <label class="translate" data-en="Account for profits and losses of currency differences :">حساب أرباح وخسائر فروق عملة</label>
+                                      <div class="input-group">
+                                        <look-up-gl [form]="accountingFrorm" [SearchID]="'ACC'" [inputName]="'s_currency_diff_calculation'" [mylookupID]="'s_currency_diff_calculation'" [colSize]="'col-3'" [colSizeName]="'col-7'" [nameCol]="'diffAccName'" [TitleAr]="'الحسابات'" [TitleEn]="'Accounts'" ></look-up-gl>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+
+                                      <label class="translate" data-en="Account for posted profits and losses :">حساب أرباح وخسائر مرحلة</label>
+                                      <div class="input-group">
+                                        <look-up-gl [form]="accountingFrorm" [SearchID]="'ACC'" [inputName]="'s_profitLoss_Posted_Acc'" [mylookupID]="'s_profitLoss_Posted_Acc'" [colSize]="'col-3'" [colSizeName]="'col-7'" [nameCol]="'profAccName'" [TitleAr]="'الحسابات'" [TitleEn]="'Accounts'" ></look-up-gl>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_period_jour" formControlName="b_period_jour" />
+                                  <label class="form-check-label translate" data-en="Activate periodic restrictions" for="b_period_jour">
+                                    تفعيل القيود الدورية
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_reverse_jour" formControlName="b_reverse_jour" />
+                                  <label class="form-check-label translate" data-en="Activate reverse restrictions" for="b_reverse_jour">
+                                    تفعيل القيود العكسية
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_auto_search_account" formControlName="b_auto_search_account" />
+                                  <label class="form-check-label translate" data-en="Activate reverse restrictions"  for="b_auto_search_account">
+                                    بحث باول رقم الرقم للحسابات
+                                  </label>
+                                </div>
+                              </div>
+
+                              <br />
+
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_repeat_journal_desc" formControlName="b_repeat_journal_desc" />
+                                  <label class="form-check-label translate" data-en="Repeat the description of the entry after the other party" for="b_repeat_journal_desc" >
+                                    تكرار وصف القيد بعد الطرف التاني
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_UsePosting" formControlName="b_UsePosting" />
+                                  <label class="form-check-label translate" data-en="Manual migration system" for="b_UsePosting">
+                                    نظام الترحيل يدويآ
+                                  </label>
+                                </div>
+                              </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <hr />
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label class="translate" data-en="Calculating rounding differences and unlinked accounts:" >حساب فروق التقريب والحسابات الغير مرتبطة:</label>
+                                    <select-server-side [selectForm]="accountingFrorm" [controlName]="'s_Not_Related_Acc'" [TextField]="'s_account_name'"
+                                      [ValueField]="'s_account_no'" [searching]="searching" [filteredServerSide]="filteredServerSide" (OnSearch)="search($event)"
+                                      >
+                                    </select-server-side>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_use_tow_cost" formControlName="b_use_tow_cost" />
+                                  <label class="form-check-label translate" data-en="Cost center allocation 1 - 2" for="b_use_tow_cost">
+                                    تخصيص مركز تكلفة 1 - 2
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_stop_cost_center_2" formControlName="b_stop_cost_center_2" />
+                                  <label class="form-check-label translate" data-en="Cost center allocation 1 - 2"  for="b_stop_cost_center_2">
+                                    اخفاء مركز تكلفة 2
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_activate_item_budget_for_cost_centers" formControlName="b_activate_item_budget_for_cost_centers" />
+                                  <label class="form-check-label translate" data-en="Activating cost centers in the accounting guide" for="b_activate_item_budget_for_cost_centers">
+                                    تفعيل مراكز التكلفة في الدليل المحاسبي
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="b_Control_CostCenter_WithAcc" formControlName="b_Control_CostCenter_WithAcc" />
+                                  <label class="form-check-label translate" data-en="Monitor cost centers with accounts" for="b_Control_CostCenter_WithAcc">
+                                    مراقبة مراكز التكلفة مع الحسابات
+                                  </label>
+                                </div>
+                              </div>
+                              
+
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="row" *ngIf="showspinner">
+                        <hr/>
+                        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <input type="button" id="btnSave" class="btn btn-primary mr-2 translate" data-en="Apply" [disabled]="!accountingFrorm.valid || showspinner" value="تطبيق" (click)="Save()" />
+                          <a routerLink="/" class="btn btn-danger mr-2 translate" data-en="Exit"> خروج </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                      <app-account-levels></app-account-levels>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                      <app-costcenters-levels></app-costcenters-levels>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

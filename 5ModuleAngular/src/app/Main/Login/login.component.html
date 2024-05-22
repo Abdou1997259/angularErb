@@ -1,0 +1,87 @@
+
+<link  *ngIf="!isEnglish" type="text/css" rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCSSUrlar)'>
+<link  *ngIf="isEnglish" type="text/css" rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCSSUrleng)'>
+
+
+<!-- <link  type="text/css" rel="stylesheet" href='/assets/css/styles-ar.css'  *ngIf="!isEnglish">
+
+<link  type="text/css" rel="stylesheet" href='/assets/css/styles-en.css'  *ngIf="isEnglish">  -->
+
+
+<header >
+    <br/><br/>
+    <div class="container" #headerContainer>
+      <ul class="links" #Links>
+         <li class="finan">
+          <a  href="#"  class="translate" data-en="Language">اللغة</a>
+          <ul class="company-years-dropdown" style="top:32px; left:-126px; height:104px;">
+            <li *ngFor="let l of lang; let i =index;" [class.active]="i === activeIndex">
+              <a (click)="getLang(l);translatefun();" style="cursor: pointer;" ><span ></span> {{l}}</a>
+            </li>
+          </ul>
+         </li>
+      </ul>
+      <img src="../../assets/img/LogoBase.png" alt="" class="logo">
+    </div>
+</header>
+
+<section class="vh-100" style="background: url(./assets/img/bg2.jpg); background-size: cover;">
+  <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col col-xl-8">
+              <div class="card" style="border-radius: 1rem;">
+                  <div class="row g-0">
+
+                      <div class="col-md-6 col-lg-6 d-flex align-items-center">
+                          <div class="card-body p-3 p-lg-3 text-black">
+
+                              <form [formGroup]="LoginForm">
+
+                                  <div class="d-flex align-items-center mb-3 pb-1 justify-content-center">
+                                      <img src="./assets/img/Ultra-visions.png" height="100" />
+                                  </div>
+                                  <div class="d-flex align-items-center mb-3 pb-1 justify-content-center">
+                                      <span style="color: black; font-weight:bold; font-size:20px !important; color:#2596be" data-en="Xceer ERP" class="translate">اكسير المحاسبى</span>
+                                  </div>
+
+                                  <div class="mb-4 form-group" style="text-align: right;">
+                                      <input type="text" style="text-align:center;"  placeholder="اسم المستخدم" class="form-control form-control-lg" required formControlName="s_user_name" [email]="true"/>
+                                  </div>
+                                  <div class="mb-4 form-group" style="text-align: right;">
+                                      <input type="password" style="text-align:center;" placeholder="كلمة المرور" class="form-control form-control-lg" required formControlName="s_user_password"/>
+                                  </div>
+
+                                  <div class="pt-1 mb-2 row" style="text-align:center;">
+                                    <section class="col col-6">
+                                        <button class="btn btn-success btn-lg btn-block rounded-pill translate" [disabled]="!LoginForm.valid" (click)="DoLogin()" data-en="Login" type="submit">تسجيل الدخول</button>
+
+                                    </section>
+                                    <section class="col col-6">
+                                        <a class="btn btn-info btn-lg btn-block rounded-pill translate" routerLink="/main/subscribe" data-en="Subscribe Request" style="color: white;">طلب اشتراك</a>
+                                    </section>
+                                  </div>
+
+
+
+                                  <br/>
+
+                                  <a href="http://ultra-visions.com/" target="_blank" class="small text-muted translate" data-en="@All rights reserved to Mada'in Al-Jazeera Company">©جميع الحقوق محفوظة لشركة مدائن الجزيرة</a>
+
+                              </form>
+                              <mat-progress-bar *ngIf="showspinner" mode="indeterminate"></mat-progress-bar>
+
+                          </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-6 d-none d-md-block">
+                        <img src="./assets/img/test.jpg" alt="login form" class="img-fluid" style="height:100%; border-radius: 1rem 0 0 1rem; border-right: 1px solid black;" />
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>
+

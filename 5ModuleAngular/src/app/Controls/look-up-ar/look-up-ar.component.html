@@ -1,0 +1,74 @@
+<div class="row" [formGroup]="form">
+  <div [class]="colSize" >
+    <div class="input-group">
+      <input type="text" class="form-control" [id]="inputName" formControlName="{{inputName}}" [value]="SelectedValue" (change)="GetItemName();"> 
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="GetLookup()" data-toggle="modal" [attr.data-target]="'#'+inputName+'Tbl'" style="z-index: 0;">
+          <i class="fa fa-search"></i>
+        </button>  
+      </div>
+    </div>
+  </div>
+  <div [class]="colSizeName"> 
+      <input type="text" class="form-control" [id]="nameCol" [value]="SelectedName" readonly>
+  </div>
+</div>
+
+<div class="modal fade" [id]="inputName+'Tbl'" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h2 class="modal-title text-center" *ngIf='isEnglish'>{{TitleEn}}</h2>
+        <h2 class="modal-title text-center" *ngIf='!isEnglish'>{{TitleAr}}</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="btn btn-danger" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="row">
+              <div class="col-12">
+                  <div class="form-group">
+                      <label data-en="Search">بحث</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString">
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+                
+          <table [id]="tblName" class="table table-striped table-bordered dt-responsive" style="width:100%;text-align: center;" >
+            <thead>
+              <tr>
+                <th class="translate" data-en="Code">الكود</th> 
+                <th class="translate" data-en="Name">الاسم</th> 
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of data;let i = index" data-dismiss='modal' 
+                  (click)="SelectRow(d.code, d.name);InputChange(d.code);">  
+                  <td >{{d.code}}</td>     
+                  <td >{{d.name}}</td>     
+              </tr>  
+            </tbody>
+          </table>  
+
+          <div class="d-flex justify-content-center pt-1">
+
+            <pagination [boundaryLinks]="true" [totalItems]="totalCount"  [maxSize]="5"
+            [(ngModel)]="currentPage"
+            (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">         
+            </pagination>
+          
+          </div>
+
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+  
+      </div>
+    </div>
+  </div>
+</div>

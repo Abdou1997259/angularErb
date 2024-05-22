@@ -1,0 +1,42 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>بحث عام</label>
+
+                <div class="input-group"> 
+                     <!--  <input type="text" class="form-control" (keyup)="DoSearch();"  [(ngModel)]="KeyWord"    /.input group -->
+                  
+                </div>
+               
+              </div>
+        </div>
+    </div>
+     
+
+     <table    datatable 
+        class="table table-striped table-bordered dt-responsive" style="width:100%;text-align: center;" >
+      <thead >
+      <tr class="table-primary"> 
+        <!-- <th  style="text-align: center;">رقم العميل</th> -->
+        <th style="text-align: center;">رقم المجموعة</th>
+        <th style="text-align: center;">إسم المجموعة</th>
+        
+       
+      </tr>
+      </thead>
+      <tbody>
+      <tr    *ngFor="let item of items" (click)="selectItem(item)" >  
+        <td  >{{item.s_GroupItem_no}}  </td>
+        <td  >{{item.s_GroupItem_name}}  </td>
+      </tr>
+      </tbody>
+       
+    </table> 
+ 
+
+  </div>
+
+
+
+

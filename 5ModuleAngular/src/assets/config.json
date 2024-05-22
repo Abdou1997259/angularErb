@@ -1,0 +1,5 @@
+{
+  "apiUrl": "https://localhost:5201/api/",
+  "qrUrl": "http://192.168.1.100/AngularAPI/Uploads",
+  "reportUrl": "http://192.168.1.9/Reports/Reports/"
+}

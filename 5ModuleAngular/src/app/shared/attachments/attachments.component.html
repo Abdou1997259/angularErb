@@ -1,0 +1,53 @@
+
+<div class="button-plus">
+    <i class="bi bi-paperclip"></i>
+    <a href="#" class="translate" role="button" data-toggle="modal" data-en="Attachment" data-target="#AttchmentModal" data-target="#AttchmentModal" (click)="getAttachments()">المرفقات</a>
+  </div>
+
+ <div class="modal fade" id="AttchmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title translatedata" data-en="Attachment" id="exampleModalLongTitle" >المرفقات</h5>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <section class="col col-12">
+                    <div class="form-group">
+                      <label class="form-label translate" data-en="UpLoad" for="customFile">رفع ملفات</label>
+                      <input #myInput type="file" class="form-control" id="attachments" multiple/>
+                  </div>
+                </section>
+                <br/><br/>
+
+                <section class="col col-12 card">
+                    <table>            
+                        <thead>                  
+                        <tr>
+                            <th class="text-center" data-en="Stored Files">الملفات المحفوظة</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let row of attachmentsData">
+                            <td class="text-center card" ><button class="btn btn-success downloadBtn" (click)="openFile(row.fileName)" >{{row.fileName}}</button></td>
+                        </tr>
+                        </tbody>      
+                    </table>   
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary translate" data-en="Save" id="attachmentBTN" (click)="SaveAttachments()">حفظ</button>
+                <button type="button" class="btn btn-secondary translate" data-en="Close" data-dismiss="modal" #closebutton >اغلاق</button>
+                
+            </div>
+            <div class="row" *ngIf="showAttachmentspinner"> 
+                <hr/>
+                <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+              </div>
+        </div>
+    </div>
+</div>

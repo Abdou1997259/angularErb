@@ -1,0 +1,47 @@
+[
+
+    {
+        
+        "FormName":"شاشة جديدة",
+        "Fields":[
+    
+{
+    "ID":"FirstName",
+     "Label":"First Name",
+     "Type":"input",
+     "Value":""
+},
+{
+    "ID":"LastName",
+     "Label":"Last Name",
+     "Type":"input",
+     "Value":""
+}
+,
+{
+    "ID":"BirthDate",
+     "Label":"Birth Date",
+     "Type":"date",
+     "Value":""
+}
+,
+{
+    "ID":"mobile",
+     "Label":"Mobile",
+     "Type":"input",
+     "Value":""
+}
+,
+{
+    "ID":"Gender",
+     "Label":"Gender",
+     "Type":"select",
+     "Value":"male,female"
+}
+
+]
+    }
+   
+   
+
+]

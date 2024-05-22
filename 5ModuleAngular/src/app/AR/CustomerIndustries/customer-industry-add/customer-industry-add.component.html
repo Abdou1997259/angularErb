@@ -1,0 +1,94 @@
+<header style="margin-top:-2px">
+  <div class="content-wrapper" >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="Add Cutomer Industry" class="translate" data-en="Add Customer Activity">أضافة نشاط جديد</h2>
+        <div class="buttons">
+          <div class="button">
+            <i class="bi bi-bookmark-x "></i>
+            <a routerLink="/ar/customerIndustryList" class="translate" data-en="Exit">خروج</a>
+          </div>
+          <div class="button">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+   
+            <input type="button" [disabled]="!ar_customers_Industries.valid" class="translate" data-en="Save" value="حفظ"  (click)="Save()" value="حفظ">
+           </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;"  [ngClass]="{'disabled':showspinner}">
+  <!-- Content Header (Page header) -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-dark">
+          </div>
+          <!-- Main content -->
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="ar_customers_Industries" (keydown.enter)="$event.preventDefault()">
+
+              <div class="card-body">
+                <div class="row">
+
+                  <section class="col-lg-7">
+                    <div class="card p-3">
+                      <div class="row" [hidden]="n_Id <= 0">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Activity No">رقم النشاط</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="n_Id" readonly/>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label"><span class="translate" data-en="Activity Name">اسم النشاط</span><span style="color:red">&nbsp;*</span></label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="s_name" />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Activity Name">اسم النشاط انجليزي</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" formControlName="s_name_eng" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-9">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label translate" data-en="Notes">ملاحظات</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" formControlName="s_notes" rows="5"></textarea>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

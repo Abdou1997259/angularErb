@@ -1,0 +1,161 @@
+<h1 mat-dialog-title   >  التحويلات الصادرة 
+
+</h1>
+<mat-dialog-content>
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+         
+
+        <div class="master row ">
+            <div class="col-12">
+         
+            
+               
+                    <h2 class="card-subtitle mb-2 text-body-primary text-end ">بيانات اساسية</h2>
+                  
+
+                        
+                 <table class="table table-borderless " >
+                    <thead>
+                      <tr >
+                        <th scope="col">رقم المستند</th>
+                        <th scope="col">من </th>
+                        <th scope="col">الي </th>
+                        <th scope="col">تاريخ المستند</th>
+                        <th scope="col">اجمالي الكمية</th>
+                        
+                      </tr>
+                      <tr>
+                        <th scope="row">{{mastterDetailsData.n_document_no}}</th>
+                        <td>{{mastterDetailsData.s_store_name}}</td>
+                        <td>{{mastterDetailsData.s_store_name2}}</td>
+                        <td>{{mastterDetailsData.d_transaction_date}}</td>
+                      
+                        <td>{{mastterDetailsData.n_transaction_total_qty}}</td>
+                      </tr>
+                      <tr>
+                       
+                        <th scope="col"> الوصف بالعربي</th>
+                        <th scope="col">الوصف بالانجليزي </th>
+                        
+                      </tr>
+                      <tr>
+                        <th scope="row">   {{mastterDetailsData.s_arabic_transaction_description}}</th>
+                        <td>{{mastterDetailsData.s_english_transaction_description}}</td>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    
+                    </tbody>
+                  </table>
+  <!--                             <table>
+                            <tr> 
+                                    
+                                      <th  class=" control-label">رقم المستند</th>
+                                
+                                      <th class=" control-label"> اسم المخزن</th>
+                                      <th class=" control-label"> تاريخ المستند  </th>
+                                      <th class=" control-label"> اجمالي الكميه  </th>
+                                      
+                                  
+                                     
+              
+                                    
+                                </tr>
+                                <tr>
+                                   <td class=" control-label">{{mastterDetailsData.n_document_no}}</td>
+                                   <td class=" control-label">{{mastterDetailsData.d_initial_balance_date}}</td>
+                                   <td class=" control-label">{{mastterDetailsData.s_store_name}}</td>
+                                   <td class=" control-label">{{mastterDetailsData.n_initial_balance_total_qty}}</th>
+                                </tr>
+                                <tr>
+                                    <p class="text-left"> الوصف بالعربي   </p>
+                                    <p class="text-left">{{mastterDetailsData.s_arabic_transaction_description}}</p>
+                                  
+                                </tr>
+                                <tr >
+                                    
+                                    <p class=" control-label text-left"> الوصف بلانجليزي  </p>
+                                    <p class=" control-label text-left">{{mastterDetailsData.s_english_transaction_description}}</p>
+                                </tr>
+                            </table>
+                     
+                        --> 
+                      
+        
+                  
+                  
+                   
+
+
+                
+                
+            </div>
+            
+        </div>
+         
+         
+        </div>
+        
+      </div>
+    
+  <div class="card">
+    <div class="card-body">
+        <div class="details row">
+            <div class="col-12">  
+               <h2 class="card-subtitle mb-2 text-body-primary text-end ">
+                   
+                   
+                   الاصناف
+               
+               </h2>
+               <table class="table table-borderless">
+                   <thead>
+                     <tr style="
+                     color: #ffffff;
+                     background: #1b1e24;
+                     border-bottom: 0px solid #9ea7af;
+                     border-right: 0px solid #343a45;
+                     font-size: 15px;
+                     font-weight: 200;
+                     padding: 9px;
+                     /* text-align: left; */
+                     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                     /* vertical-align: middle; */
+                     /* width: 101%; */
+                     " >
+                       <th scope="col">كود الصنف</th>
+                       <th scope="col">اسم الصنف</th>
+                       <th scope="col">اسم الوحدة</th>
+                       <th scope="col">الكمية</th>
+                       <th scope="col">السعر</th>
+                       <th scope="col" *ngIf="multiStore">المخزن</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                    <tr *ngFor="let item of details">
+                       <th scope="row">{{item.s_item_id}}</th>                  
+                       <th scope="row">{{item.s_item_name}}</th>
+                       <th scope="row">{{item.s_unit_name}}</th>
+                       <th scope="row">{{item.n_qty}}</th>
+                       <th scope="row">{{item.n_unit_price}}</th>
+                    
+                     </tr>
+                     
+                   </tbody>
+                 </table>
+            </div>
+
+          </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>غلق</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="true">مسح</button>
+</mat-dialog-actions>
+    
+ 

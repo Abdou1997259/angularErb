@@ -1,0 +1,19 @@
+
+
+footer
+{
+    background-color: #2f387b;
+
+    border-radius: 3px;
+    color: white;
+}  
+ 
+
+footer strong
+{
+
+}
+footer a {
+    text-decoration: none;
+    color:white
+}

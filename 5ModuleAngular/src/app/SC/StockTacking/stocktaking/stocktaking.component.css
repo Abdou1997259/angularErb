@@ -1,0 +1,39 @@
+i {
+  font-size: 1rem;
+  color: rgb(0,104,215);
+  top: .75rem;
+  left: .75rem
+}
+
+/* .table-responsive {
+  max-height:300px;
+} */
+
+/* .table-responsive thead th {
+  position: sticky;
+  top: 0px;
+  background: black;
+  color: #fff;
+} */
+
+.table-responsive {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.table-responsive tbody {
+  display: block;
+  overflow: auto;
+  max-height:300px;
+}
+.table-responsive thead tr {
+  display: block;
+}
+.table-responsive thead {
+  background: black;
+  color: #fff;
+}
+.table-responsive th,
+.table-responsive td {
+  padding: 5px;
+  text-align: left;
+}

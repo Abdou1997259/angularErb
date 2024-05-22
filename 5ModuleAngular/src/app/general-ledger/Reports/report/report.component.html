@@ -1,0 +1,85 @@
+<div class="content-wrapper rtl">
+  <section class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card card-primary">
+         
+            <div class="card-body">
+              <div class="" style="background-color: transparent">
+                <div dir="rtl">
+                  <div class="row d-flex justify-content-center align-items-center">
+
+                    <div class="col-xs-4 col-sm-4 col-md-3 myBox">
+                      <a class="nav-link" [routerLink]="['/gl/report-details/', reports[2].nModuleID, reports[2].rep_Group_ID]">
+                        <div class="panel">
+                          <div class="panel-heading">
+                            <h3 class="panel-title text-center">
+                              <label class="label" style="font-size: large">{{ isEnglish? reports[2].rep_Group_Name_Eng : reports[2].rep_Group_Name }}</label>
+                            </h3>
+                            <br />
+                            <div>
+                              <img [src]="url2" class="img-responsive" style="margin-left: auto; margin-right: auto" />
+                            </div>
+                          </div>
+                          <div class="panel-body">
+                           <p>   مسئولة عن تقارير الاكواد وعرض الملفات المعنية وبرنامح الاكسير سيبهرك بنتائج عمليات التي قمت بها ببناء المنظم لكل تقرير </p>
+                         </div>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-3 myBox">
+                      <a class="nav-link" [routerLink]="['/gl/report-details/', reports[0].nModuleID, reports[0].rep_Group_ID]">
+                        <div class="panel">
+                          <div class="panel-heading">
+                            <h3 class="panel-title text-center">
+                              <label class="label" style="font-size: large"> {{ isEnglish? reports[0].rep_Group_Name_Eng : reports[0].rep_Group_Name }}</label>
+                            </h3>
+                            <br />
+                            <div>
+                              <img [src]="url1" class="img-responsive" style="margin-left: auto; margin-right: auto" />
+                            </div>
+                          </div>
+                          <div class="panel-body">
+                         <p>   مسئولة عن تقارير التحليل ينتج عنها عرض تحليلي للبينات المعنية وبرنامح الاكسير سيبهرك بنتائج عمليات التي قمت بها ببناء المنظم لكل تقرير </p>
+                         </div>
+                         
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-3 myBox">
+                      <a class="nav-link" [routerLink]="['/gl/report-details/', reports[1].nModuleID, reports[1].rep_Group_ID]">
+                        <div class="panel">
+                          <div class="panel-heading">
+                            <h3 class="panel-title text-center">
+                              <label class="label" style="font-size: large">{{ isEnglish? reports[1].rep_Group_Name_Eng : reports[1].rep_Group_Name }}</label>
+                            </h3>
+                            <br />
+                            <div>
+                              <img [src]="url3" class="img-responsive" style="margin-left: auto; margin-right: auto" />
+                            </div>
+                          </div>
+                          <div class="panel-body">
+                           <p>   مسئولة عن تقارير حركات ينتج عنها زيادة او نقصان في حسابات البرنامج وبرنامح الاكسير سيبهرك بنتائج عمليات التي قمت بها ببناء المنظم لكل تقرير </p>
+                         </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <!-- <ul *ngFor="let report of reports">
+                    <li>{{ report.rep_Group_ID }}</li>
+                    <li>{{ report.nModuleID }}</li>
+                    <li>{{ report.rep_Group_Name }}</li>
+                    <li>{{ report.rep_Group_Name_Eng }}</li>
+                  </ul> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

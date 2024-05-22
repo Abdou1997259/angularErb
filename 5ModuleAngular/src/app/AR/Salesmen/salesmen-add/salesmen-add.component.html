@@ -1,0 +1,549 @@
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="Add Saleman">إضافة مندوب مبيعات</h2>
+        <div class="buttons">
+          <div class="button">
+            <i class="bi bi-bookmark-x "></i>
+            <a routerLink="/ar/salesmenList" class="translate" data-en="Exit">خروج</a>
+          </div>
+          <div class="button">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+
+
+            <input type="button" [disabled]="!ar_salesmen.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="ar_salesmen" (keydown.enter)="$event.preventDefault()">
+              <div class="card-body">
+                <div class="row">
+                  <section class="col-lg-7">
+                    <div class="card p-3">
+
+                      <div class="row" [hidden]="n_salesman_id <= 0">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Salesman Code"> كود المندوب </label>
+                            <div class="col-sm-5">
+                              <input type="text" class="form-control" formControlName="n_salesman_id" readonly />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Data Of Hiring"> تاريخ التعيين <span style="color:red">&nbsp;*</span> </label>
+                            <div class="col-sm-8">
+                              <mat-form-field>
+                                <input matInput [matDatepicker]="datepicker1" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker1.open()"  formControlName="d_start_date" required>
+                                <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker1 disabled="false"></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Date of Living"> تاريخ ترك العمل </label>
+                            <div class="col-sm-8">
+                              <mat-form-field>
+                                <input matInput [matDatepicker]="datepicker2" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker2.open()"  formControlName="d_leaving_date">
+                                <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker2 disabled="false"></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label "> <span class="translate" data-en="AR Name">الاسم</span><span style="color:red">&nbsp;*</span> </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" formControlName="s_salesman_name" required />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Name"> الاسم انجليزي </label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="s_salesman_name_eng" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label translate" data-en="Telphone"> الجوال </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" formControlName="s_tel" />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Telphone No"> تليفون </label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="s_tel_no" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label translate" data-en="Email"> ايميل </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" formControlName="s_e_mail" />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Fax No"> فاكس </label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="s_fax_no" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                    </div>
+                  </section>
+
+                  <section class="col-lg-5">
+                    <div class="row">
+                      <section class="col col-12">
+                        <div class="row">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-4">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="flexCheckDefault"
+                                    style="width: 18px; height: 19px;" formControlName="b_left_work" />
+                                  <label class="form-check-label translate" data-en="Leave Work" for="flexCheckDefault" style="margin-right: 15px; font-weight: bold;"> ترك العمل </label>
+                                </div>
+                              </section>
+
+                              <section class="col col-3">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="flexCheckDefault"
+                                    style="width: 18px; height: 19px;" formControlName="b_supervisor" />
+                                  <label class="form-check-label translate" data-en="superviror" for="flexCheckDefault" style="margin-right: 15px; font-weight: bold;"> مشرف مبيعات </label>
+                                </div>
+                              </section>
+
+                              <section class="col col-5">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="flexCheckDefault"
+                                    style="width: 18px; height: 19px;" formControlName="b_Allow_Comm" />
+                                  <label class="form-check-label translate" data-en="Allow Commission" for="flexCheckDefault" style="margin-right: 15px; font-weight: bold;"> تطبيق حد احتساب العمولة </label>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                      <section class="col col-12">
+                        <div class="row">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-5 col-form-label translate" data-en="Basic Salary"> الراتب الاساسي </label>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" formControlName="n_basic_salaray" />
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-5 col-form-label translate" data-en="Precent Value"> نسبة العمولة % </label>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" formControlName="n_precent_value" />
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-5 col-form-label translate" data-en="Transportation"> بدل الانتقال </label>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" formControlName="n_transportation" />
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-5 col-form-label translate" data-en="Max Discount"> اقصي خصم % </label>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" formControlName="n_max_discount" />
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-7 col-form-label translate" data-en="Collection Percent"> نسبة عمولة التحصيل % </label>
+                                  <div class="col-sm-5">
+                                    <input type="number" class="form-control" formControlName="n_collection_percent" />
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-7 col-form-label translate" data-en="Sales Percent"> نسبة عمولة المبيعات % </label>
+                                  <div class="col-sm-5">
+                                    <input type="number" class="form-control" formControlName="n_sales_percent" />
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="row">
+                  <section class="col-lg-7">
+                    <div class="card p-3">
+
+                      <div class="row">
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Emp Name">الموظف</label>
+                            <div class="col-sm-9">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                  <i class="fa fa-search position-absolute en-left-sm"></i>
+                                  <input class="form-control has-search" type="text" formControlName="s_employee_name"  (focus)="serachOpen($event); searchEmployeesBegin('');"  id="input-search-1" (keyup)="searchEmployeesBegin($event)" (blur)="searchHide(1)"  autocomplete="off">
+                                  <div class="search-list" id="serach-list-id-1">
+                                    <table class="search-table">
+                                        <thead>
+                                          <tr>
+                                            <th>رقم  </th>
+                                            <th>الاسم</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let type of employeesList; let i=index;" (click)="selectItem(i, 1, 's_employee_name', 'n_employee_id')">
+                                              <td [id]="'tdF'+ i">{{type.n_employee_id}}</td>
+                                              <td [id]="'tdS'+ i">{{type.s_employee_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  <input type="hidden" name="n_employee_id">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Supervisor Name">المشرف</label>
+                            <div class="col-sm-9">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                  <i class="fa fa-search position-absolute en-left-sm"></i>
+                                  <input class="form-control has-search" type="text" formControlName="s_supervisior_name"  (focus)="serachOpen($event); searchSupervisorBegin('');"  id="input-search-2" (keyup)="searchSupervisorBegin($event)" (blur)="searchHide(2)"  autocomplete="off">
+                                  <div class="search-list" id="serach-list-id-2">
+                                    <table class="search-table">
+                                        <thead>
+                                          <tr>
+                                            <th>رقم  </th>
+                                            <th>الاسم</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let type of supervisorsList; let i=index;" (click)="selectItem(i, 2, 's_supervisior_name', 'n_supervisior_id')">
+                                              <td [id]="'tdF'+ i">{{type.n_employee_id}}</td>
+                                              <td [id]="'tdS'+ i">{{type.s_employee_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  <input type="hidden" name="n_supervisior_id">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
+                      </div>
+
+                      <div class="row">
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Manger Name">المدير المباشر</label>
+                            <div class="col-sm-9">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                  <i class="fa fa-search position-absolute en-left-sm"></i>
+                                  <input class="form-control has-search" type="text" formControlName="s_manager_name"  (focus)="serachOpen($event); searchManagersBegin('');"  id="input-search-3" (keyup)="searchManagersBegin($event)" (blur)="searchHide(3)"  autocomplete="off">
+                                  <div class="search-list" id="serach-list-id-3">
+                                    <table class="search-table">
+                                        <thead>
+                                          <tr>
+                                            <th>رقم  </th>
+                                            <th>الاسم</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let type of managersList; let i=index;" (click)="selectItem(i, 3, 's_manager_name', 's_manager_id')">
+                                              <td [id]="'tdF'+ i">{{type.n_employee_id}}</td>
+                                              <td [id]="'tdS'+ i">{{type.s_employee_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  <input type="hidden" name="s_manager_id">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Commissoin Type Name" >نوع العمولة</label>
+                            <div class="col-sm-9">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                  <i class="fa fa-search position-absolute en-left-sm"></i>
+                                  <input class="form-control has-search" type="text" formControlName="s_commission_type_name"  (focus)="serachOpen($event); searchCommissionsBegin('');"  id="input-search-4" (keyup)="searchCommissionsBegin($event)" (blur)="searchHide(4)"  autocomplete="off">
+                                  <div class="search-list" id="serach-list-id-4">
+                                    <table class="search-table">
+                                        <thead>
+                                          <tr>
+                                            <th>رقم </th>
+                                            <th>الاسم</th>
+                                            <th>ك الصنف</th>
+                                            <th>الاسم</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let type of commissionsList; let i=index;" (click)="selectItem(i, 4, 's_commission_type_name', 'n_commission_type_id')">
+                                              <td [id]="'tdF'+ i">{{type.n_commission_type_id}}</td>
+                                              <td [id]="'tdS'+ i" *ngIf="!isEnglish">{{type.s_commission_type_name}}</td>
+                                              <td [id]="'tdS'+ i" *ngIf="isEnglish">{{type.s_commission_type_name_eng}}</td>
+                                              <td [id]="'tdS'+ i" >{{type.s_item_id}}</td>
+                                              <td [id]="'tdS'+ i" *ngIf="!isEnglish">{{type.s_item_name}}</td>
+                                              <td [id]="'tdS'+ i" *ngIf="isEnglish">{{type.s_item_name_eng}}</td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  <input type="hidden" name="n_commission_type_id">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
+                      </div>
+
+                      <div class="row">
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Group Name">المجموعة</label>
+                            <div class="col-sm-9">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                  <i class="fa fa-search position-absolute en-left-sm"></i>
+                                  <input class="form-control has-search" type="text" formControlName="s_group_name"  (focus)="serachOpen($event); searchGroupsBegin('');"  id="input-search-5" (keyup)="searchGroupsBegin($event)" (blur)="searchHide(5)"  autocomplete="off">
+                                  <div class="search-list" id="serach-list-id-5">
+                                    <table class="search-table">
+                                        <thead>
+                                          <tr>
+                                            <th>رقم  </th>
+                                            <th>الاسم</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let type of groupsList; let i=index;" (click)="selectItem(i, 5, 's_group_name', 'n_group_id')">
+                                              <td [id]="'tdF'+ i">{{type.n_group_id}}</td>
+                                              <td [id]="'tdS'+ i">{{type.s_group_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  <input type="hidden" name="n_group_id">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Related Account Name">الحساب المرتبط</label>
+                            <div class="col-sm-9">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                  <i class="fa fa-search position-absolute en-left-sm"></i>
+                                  <input class="form-control has-search" type="text" formControlName="s_related_account_name"  (focus)="serachOpen($event); searchAccountsOrdersBegin('');"  id="input-search-6" (keyup)="searchAccountsOrdersBegin($event)" (blur)="searchHide(6)"  autocomplete="off">
+                                  <div class="search-list" id="serach-list-id-6">
+                                    <table class="search-table">
+                                        <thead>
+                                          <tr>
+                                            <th>رقم </th>
+                                            <th>الاسم</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let type of accountsList; let i=index;" (click)="selectItem(i, 6, 's_related_account_name', 's_related_account')">
+                                              <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                              <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  <input type="hidden" name="s_related_account">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
+                      </div>
+
+                    </div>
+
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-12">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label translate" data-en="Notes"> ملاحظات </label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" formControlName="s_notes" rows="4"></textarea>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="col-lg-5">
+                    <div class="row">
+                      <div class="card p-3">
+                        <div class="row">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label translate" data-en="Agent Type Type">نوع الوكيل</label>
+                              <div class="col-sm-8">
+                                <select class="form-select" formControlName="n_agent_type_id">
+                                  <option [ngValue]="0">------------------------</option>
+                                  <option *ngFor="let c of agentsList" [value]="c.code">{{ isEnglish ?c.Name_English: c.name_arabic }}</option>
+                                </select>
+                              </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label" class="translate" data-en="target type">نوع التارجت</label>
+                              <div class="col-sm-8">
+                                <select class="form-select" formControlName="n_target_type">
+                                  <option [ngValue]="0">------------------------</option>
+                                  <option *ngFor="let c of targetsList" [value]="c.code">{{ isEnglish ?c.Name_English: c.name_arabic }}</option>
+                                </select>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+
+                      <div class="card p-3">
+                        <div class="row">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-6 col-form-label translate" data-en="First Container Price"> سعر الحاوية الاولي </label>
+                              <div class="col-sm-6">
+                                <input type="number" class="form-control" formControlName="n_first_container_price" />
+                              </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-6 col-form-label translate" data-en="Second Containter Price"> سعر الحاوية الثانية </label>
+                              <div class="col-sm-6">
+                                <input type="number" class="form-control" formControlName="n_second_container_price" />
+                              </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-7 col-form-label translate" data-en="More Container Price"> سعر الحاوية بعد الثالثة </label>
+                              <div class="col-sm-5">
+                                <input type="number" class="form-control" formControlName="n_more_container_price" />
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </form>
+            <div class="card-footer mb-4" >
+              <div class="row mb-lg-5">
+                   <div class="col-md-2">
+                    <app-attachments [ID]="this.n_salesman_id" [DataArea]="this.ar_salesmen.value.n_DataAreaID" [Folder]="'Customers'" [SubFolder]="'Attachments'" *ngIf="this.n_salesman_id !=null && this.n_salesman_id > 0"></app-attachments>
+                   </div>
+                </div>
+                <div class="row" *ngIf="showspinner">
+                  <hr/>
+                  <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

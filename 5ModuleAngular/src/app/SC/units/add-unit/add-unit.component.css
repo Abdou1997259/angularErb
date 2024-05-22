@@ -1,0 +1,65 @@
+
+input
+{
+    margin-bottom: 15px;
+}
+
+.card
+{
+    padding-top: 60px;
+    padding-bottom: 60px;
+    width: 100%;
+}
+
+i {
+    font-size: 1.rem;
+    color: rgb(0,104,215);
+    top: .75rem;
+    left: .75rem
+  }
+
+
+input.ng-invalid.ng-touched
+{
+    border:1px solid red;
+    outline: none;
+}
+input{
+    margin-bottom: 13px !important;
+  
+}
+.custom-group-input
+{
+    width: fit-content;
+    margin-right: 20px;
+
+}
+.custom-group-input .input-icons
+{
+ position: relative;
+ width:fit-content
+}
+.custom-group-input .input-icons input:first-of-type
+{
+    background-color: none;
+    /* background-color: rgb(214,216,219); */
+    border: none;
+    border: 1px solid #DDE;
+    border-radius: 6px;
+    background-color: n;
+    padding-left: 20px;
+    padding-right: 5px;
+
+
+}
+.custom-group-input .input-icons input:focus
+{
+   outline: none;
+}
+
+.custom-group-input .input-icons i:first-of-type
+{
+    position: absolute;
+    left: 4px;
+    top: 4px;
+}

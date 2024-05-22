@@ -1,0 +1,139 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center" style="font-size: 24px; font-weight: bold;">
+      <span class="translate" data-en="Paying supplier invoices">سداد فواتير المورد </span>=> {{ s_supplier_name }}
+    </div>
+    <form [formGroup]="invoicesForm" (keydown.enter)="$event.preventDefault()">
+      <div class="card-body mt-0">
+        <div class="row">
+          <section class="col-lg-4">
+            <div class="card p-3">
+              <div class="row">
+                <section class="col col-12">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label translate" data-en="Invoice No"> رقم الفاتورة </label>
+                    <div class="col-sm-5">
+                      <input type="number" class="form-control" formControlName="n_doc_no" (keyup)="DoSearch();" />
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div class="row">
+                <section class="col col-12">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label mt-3 translate" data-en="Invoice Date">تاريخ الفاتورة</label>
+                    <div class="col-sm-6">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" formControlName="d_doc_date" (click)="datepicker.open()" (ngModelChange)="DoSearch();">
+                        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+        </section>
+        </div>
+
+        <div class="row">
+          <section class="col-lg-12">
+            <div class="card p-3">
+              <div class="row">
+                <div class="col-12 table-responsive">
+                  <table datatable class="custom-table table-responsive" style="height: 300px;" formArrayName="invoicesList">
+                    <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
+                      <tr>
+                        <th scope="col" class="text-center"  style="min-width: 25px;"> # </th>
+                        <th scope="col" class="text-center translate" data-en="Branch" style="min-width: 80px;"> الفرع </th>
+                        <th scope="col" class="text-center translate" data-en="Invoice No" style="min-width: 80px;"> رقم الفاتورة </th>
+                        <th scope="col" class="text-center translate" data-en="Invoice Supplier No" style="min-width: 110px;"> رقم فاتورة المورد </th>
+                        <th scope="col" class="text-center translate" data-en="Invoice Date" style="min-width: 100px;"> تاريخ الفاتورة </th>
+                        <th scope="col" class="text-center translate" data-en="Invoice Total Value " style="min-width: 80px;"> مبلغ الفاتورة </th>
+                        <th scope="col" class="text-center translate" data-en="Total Return" style="min-width: 85px;"> اجمالي المرتد </th>
+                        <th scope="col" class="text-center translate" data-en="Notification Dedution" style="min-width: 80px;"> اشعار خصم </th>
+                        <th scope="col" class="text-center translate" data-en="Invoice Value" style="min-width: 90px;"> قيمة الفاتورة </th>
+                        <th scope="col" class="text-center translate" data-en="Payment Value" style="min-width: 80px;"> مسدد سابقآ </th>
+                        <th scope="col" class="text-center translate" data-en="Advanced Payment" style="min-width: 85px;"> دفعات مقدمة </th>
+                        <th scope="col" class="text-center translate" data-en="Invoice Balance" style="min-width: 80px;"> رصيد الفاتورة </th>
+                        <th scope="col" class="text-center translate" data-en="Total Value" style="min-width: 80px;"> المبلغ </th>
+                        <th scope="col" class="text-center translate" data-en="Total Rest" style="min-width: 80px;"> المتبقي </th>
+                        <th scope="col" class="text-center translate" data-en="Notes" style="min-width: 150px;"> ملاحظات </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr [formGroupName]="i" *ngFor="let row of invoicesList.controls; let i = index;">
+                        <td scope="row" class="text-center" style="min-width: 25px;">{{ i + 1 }}</td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_DataAreaID" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="text"   class="form-control text-center" formControlName="s_invoice_no" readonly/> </td>
+                        <td scope="row" style="min-width: 110px;"> <input type="number" class="form-control text-center" formControlName="SuppInvoiceNo" readonly/> </td>
+                        <td scope="row" style="min-width: 100px;"> <input type="text"   class="form-control text-center" formControlName="d_invoice_date" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_invoice_value" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_ReturnInvoice_value" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_credit_note" readonly/> </td>
+                        <td scope="row" style="min-width: 90px;"> <input type="number" class="form-control text-center" formControlName="SaleNetValue" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_pre_paid_value" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_AdvancedPayment" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_requested" readonly/> </td>
+                        <td scope="row" style="min-width: 80px;" > <input type="number" class="form-control color-input text-center" formControlName="n_paid_valuee" placeholder="0" (ngModelChange)="isPaid(i);" (change)="insertIntoList(row);" /> </td>
+                        <td scope="row" style="min-width: 80px;"> <input type="number" class="form-control text-center" formControlName="n_remain_value" readonly/> </td>
+                        <td scope="row" style="min-width: 150px;"> <input type="text"   class="form-control text-center" formControlName="s_notes" readonly/> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="row justify-content-between">
+          <section class="col-lg-2">
+            <div class="card p-3">
+              <div class="row">
+                <section class="col col-12">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary w-100 p-2 translate" data-en="Add" (click)="getPaidInvoices();">اضافة</button>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="col-lg-6">
+            <div class="card p-3">
+              <div class="row">
+                <section class="col col-6">
+                  <div class="form-group row">
+                    <label class="col-sm-5 col-form-label translate" data-en="Total Value"> إجمالي المبلغ: </label>
+                    <div class="col-sm-7">
+                      <input type="number" class="form-control" formControlName="n_total_value" placeholder="0" readonly />
+                    </div>
+                  </div>
+                </section>
+
+                <section class="col col-6">
+                  <div class="form-group row">
+                    <label class="col-sm-5 col-form-label translate" data-en="Total Rest" > إجمالي المتبقي: </label>
+                    <div class="col-sm-7">
+                      <input type="number" class="form-control" formControlName="n_total_rest" placeholder="0" readonly />
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- <div class="d-flex justify-content-center pt-1">
+    <pagination [boundaryLinks]="true" [totalItems]="totalItems"  [maxSize]="5"
+      [(ngModel)]="currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+  </div> -->
+
+

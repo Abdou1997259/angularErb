@@ -1,0 +1,166 @@
+    <!-- Navbar -->
+    <nav *ngIf="username != '' " class="main-header navbar navbar-expand navbar-primary navbar-light custom-nav" id="nav">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li>
+            <a class="nav-link text-white custom-header hide-respon"  data-widget="pushmenu"><i [class]="openCloseIcon[(changeIcon===false? 0 :1)]" id="nav-icon-custom"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-none-custom" data-widget="pushmenu" href="#"><i class="fas fa-bars" style="color: white;"></i></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="index3.html" class="nav-link"> </a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link text-white custom-header"><span class="translate" data-en="CompanyName: ">إسم الشركة: </span> {{currentCompany}} -
+              <span class="translate" data-en="Year: "> العام المالي:</span>
+              <select style=" padding: 0px 27px;display: inline-block;width: 120px;background-color: white;outline: none;border: none;margin: -6px 11px;" [(ngModel)]="currentYear" (change)="UpdateYear()" class="form-control">
+                  <option *ngFor="let year of years" [value]="year.nYear">{{ year.nYear }}</option>
+              </select> <span class="translate" data-en="User Name: ">إسم المستخدم:</span> {{currentUser}} -
+
+              <span class="translate" data-en="Branch: ">الفرع </span>
+              <select style=" padding: 0px 27px;display: inline-block;width: 140px;background-color: white;outline: none;border: none;margin: -6px 11px;" [(ngModel)]="currentBranch" (change)="UpdateBranch()" class="form-control">
+                  <option *ngFor="let option of branchesByUser" [value]="option.n_branch_id">{{ option.s_branch_name }}</option>
+              </select>
+
+            </a>
+          </li>
+
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav mr-auto-navbav">
+          <li class="nav-item dropdown">
+
+            <a href="#" routerLink="/modules" class="nav-link text-white " style="cursor: pointer;" > <span  data-en="Home" class="translate"> الصفحة الرئيسية </span><i class="fas fa-home" style="   margin-right: 5px;"></i> </a>
+
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <span class="dropdown-item dropdown-header">15 Notifications</span>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-envelope mr-2"></i> 4 new messages
+                <span class="float-right text-muted text-sm">3 mins</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-users mr-2"></i> 8 friend requests
+                <span class="float-right text-muted text-sm">12 hours</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-file mr-2"></i> 3 new reports
+                <span class="float-right text-muted text-sm">2 days</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+            </div>
+          </li>
+
+          <li class="nav-item" style="cursor:pointer;">
+
+            <a class="nav-link text-white" data-widget="control-sidebar" data-slide="true" (click)="LogOut();">
+              <span  class="translate" data-en="Logout">تسجيل الخروج</span><i class="fas fa-sign-out-alt" style=" margin-right: 5px;"></i>
+            </a>
+
+          </li>
+
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+
+      <!-- Main Sidebar Container -->
+      <aside *ngIf="username != '' " class="main-sidebar sidebar-dark-primary    elevation-4" id="aside" style="background-color:white; z-index: 1000000000;">
+        <!-- Brand Logo -->
+        <a href="#" routerLink="/modules" class="brand-link">
+          <!-- <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+               style="opacity: .8"> -->
+          <span class="brand-text font-weight-light translate" style="font-size: 16px;" data-en="Xceer ERP Solution">برنامج أكسيير المحاسبى</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel (optional) -->
+          <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+             <div class="image">
+              <img src="assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">{{username}}</a>
+            </div>
+          </div> -->
+
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav  nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <!-- Add icons to the links using the .nav-icon class
+                   with font-awesome or any other icon font library -->
+
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="bi bi-house"></i>
+                  <p>
+                    <span class="translate" data-en="Main">الرئيسية</span>
+
+                  </p>
+                  <i *ngIf="!isEnglish" class="right fas fa-angle-left"></i>
+                  <i *ngIf="isEnglish" class="right fas fa-angle-right"></i>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a routerLink="/dashboards/{{GetModeuleNo()}}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p class="translate" data-en="Home">الصفحة الرئيسية</p>
+                    </a>
+                  </li>
+
+                  <!-- <li class="nav-item" *ngIf="userType==1">
+                    <a routerLink="/sys/userslist" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p class="translate" data-en="Users and Permissions">المستخدمين والصلاحيات</p>
+                    </a>
+                  </li> -->
+
+                </ul>
+              </li>
+
+
+              <li class="nav-item has-treeview" *ngFor="let group of menutables;let i=index">
+                <a href="#" class="nav-link ">
+                  <i [class]="'nav-icon' + icons[i] "></i>
+                  <p><span *ngIf="!isEnglish">{{group.s_Menu_Arabic_Name}}</span><span *ngIf="isEnglish">{{group.s_Menu_English_Name}}</span> </p>
+                  <i *ngIf="!isEnglish" class="right fas fa-angle-left"></i>
+                  <i *ngIf="isEnglish" class="right fas fa-angle-right"></i>
+                </a>
+                <ul class="nav nav-treeview ">
+                  <li  class="nav-item" *ngFor="let item of group.formsDetails"><a (click)="OpenNavLink(item);" [routerLink]="item.s_url" class="nav-link" > <!-- (click)="closeModal()"  [routerLink]="item.s_url" -->
+                    <p style="min-width: 220px;"><span *ngIf="!isEnglish">{{item.s_Menu_Arabic_Name}}</span><span *ngIf="isEnglish">{{item.s_Menu_English_Name}}</span></p></a>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- <li class="nav-item has-treeview menu-open">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    الحسابات
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a routerLink="/gl/journalslist" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>القيود اليومية</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li> -->
+
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>

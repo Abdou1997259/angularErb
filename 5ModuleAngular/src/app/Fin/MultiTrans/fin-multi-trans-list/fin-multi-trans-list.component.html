@@ -1,0 +1,121 @@
+<header>
+  <div class="content-wrapper"  >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="MultiTrans">التسويات</h2>
+        <div class="buttons">
+          <div class="button"  *ngIf="cannew">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+            <a routerLink="/fin/multitransAdd" class="translatedata" data-en="New">جديد</a>
+          </div>
+          <!-- <div class="button">
+            <i class="bi bi-bookmark-x fa-lg"></i>
+            <a  (click)="PrintExcel()" id="excelBTN" value=>تصدير لإكسيل</a>
+          </div> -->
+        </div>
+        <div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+
+  <div class="content-wrapper" style="margin-top: 140px;" >
+        <section class="content" >
+              <div class="container-fluid">
+                  <div class="row" *ngIf="showspinner" >
+                    <hr/>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
+
+              <div class="custom-table-responsive">
+                <table  class="custom-table-add" >
+                  <thead>
+                    <tr>
+                      <td colspan="9" width="100%" >
+                        <div>
+                          <div class="s-icons">
+                            <i class="bi bi-pencil-fill" style="color:#343A40;"></i>
+                            <i class="bi bi-file-earmark-excel"></i>
+                            <i class="bi bi-info"></i>
+                          </div>
+                          <h2 class="translate" data-en="MultiTrans">التسويات</h2>
+                          <div class="f-icons">
+                            <i class="bi bi-layout-text-window-reverse"></i>
+                            <i class="bi bi-microsoft"></i>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th >
+                        <input type="text"  *ngIf="!isEnglish" class="form-control" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString" placeholder="بحث">
+                        <input type="text"  *ngIf="isEnglish"class="form-control" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString" placeholder="searching....">
+                      </th>
+                      <!-- <th ><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="DocSerial"></th> -->
+                      <th colspan="9"></th>
+
+                    </tr>
+
+                    <tr>
+                      <th class="text-align: center;text-align: center;" class="translate" data-en="Trans No">مسلسل الحركة</th>
+                      <th class="text-align: center;text-align: center;" class="translate" data-en="Trans Name">تاريخ المستند</th>
+                      <th class="text-align: center;text-align: center;" class="translate" data-en="Employee">الموظف</th>
+                      <th class="text-align: center;text-align: center;" class="translate" data-en="SalesMan">المندوب</th>
+                      <th class="text-align: center;text-align: center;" class="translate" data-en="Year Description">الوصف العام</th>
+                      <th class="text-align: center;text-align: center;" class="translate" data-en="Trans">نوع الحركة</th>
+                      <th *ngIf="canedit"></th> 
+                      <th *ngIf="candelete"> 
+                      <th></th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of multiTransList">
+                      <td class="text-align: center;">{{item.n_doc_no}}  </td>
+                      <td class="text-align: center;">{{item.d_doc_date}}  </td>
+                      <td class="text-align: center;">{{item.s_User_Name}}  </td>
+                      <td class="text-align: center;">{{item.s_salesman_name}}  </td>
+                      <td class="text-align: center;">{{item.s_description}}  </td>
+                      <td class="text-align: center;">{{item.name_arabic}}  </td>
+                      <td > <a routerLink="/fin/multitransEdit/{{item.n_doc_no}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات التسوية"  class="btn translatedata" data-en="Edit">تعديل</a></td>
+                      <td > <a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowId(item.n_doc_no)" class="btn translatedata" data-en="Remove">حذف</a></td>
+                      <td > <a href="{{ReportUrl}}PrintReport?docNo={{item.n_doc_no}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+              </div>
+
+            </section>
+  </div>
+  <br/><br/>
+
+    <!-- Button trigger modal -->
+    <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title translate" data-en="Close" id="exampleModalLongTitle">الغاء</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body translate" data-en="Are you sure?">
+                  هل انت متاكد من حذف هذه التسوية؟
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary  translate" data-en="Close" data-dismiss="modal" #closebutton >اغلاق</button>
+                  <button type="button" class="btn btn-primary    translate" data-en="Remove" (click)="DeleteRow()" data-dismiss="modal" #closebutton>حذف</button>
+              </div>
+          </div>
+      </div>
+  </div>
+   <p></p>
+  <!-- Modal -->
+
+
+
+

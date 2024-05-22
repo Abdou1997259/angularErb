@@ -1,0 +1,46 @@
+.isEdit {
+  display: none;
+}
+
+.isMultiAcc {
+  visibility: hidden;
+}
+
+/* .has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: auto;
+  color: #aaa;
+} */
+
+i {
+  font-size: 1rem;
+  /* color: #aaa; */
+  color: rgb(0,104,215);
+  top: .75rem;
+  left: .75rem
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.card-dark:not(.card-outline)>.card-header, .card-dark:not(.card-outline)>.card-header a {
+  color: #fff;
+  margin-top: 50px;
+}
+
+table
+{
+  border-bottom: 1px solid white;
+}

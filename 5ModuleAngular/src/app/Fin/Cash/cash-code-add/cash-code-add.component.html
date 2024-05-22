@@ -1,0 +1,125 @@
+<header style="margin-top:-2px">
+    <div class="content-wrapper" >
+      <section class="content" >
+        <div class="container-fluid">
+          <h2>الخزن</h2>
+          <div class="buttons">
+            <div class="button">
+              <i class="bi bi-bookmark-x "></i>
+              <a routerLink="/fin/CashList">خروج</a>
+            </div>
+            <div class="button">
+              <i class="bi bi-file-earmark-medical  fa-lg"></i>
+ 
+              <input type="button" [disabled]="!cashForm.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+             </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <div class="content-wrapper"  style="min-height: 1233.2px; margin-top:120px" [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+    <section class="content">
+         
+            <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="card p-5">
+                          <form [formGroup]="cashForm" (keydown.enter)="$event.preventDefault()">
+                              <!-- Hidden Section -->
+                              <div class="row" style="margin-bottom: 20px" *ngIf="ShowID">
+                                  <div class="col-lg-2 col-md-12 col-sm-12">
+                                      <label>الكود</label>
+                                  </div>
+                                  <div class="col-lg-4 col-md-12 col-sm-12">
+                                      <input type="text" class="form-control input" formControlName="n_cash_id" style="width: 13%;
+                                      padding-right: 21px;
+                                      margin-right: -150px;" readonly>
+                                  </div>
+                              </div>
+                              
+                              <!-- Cash Name Section -->
+                              <div class="row">
+                                 
+                                  
+                              
+                                  <div class="form-group col-lg-4 col-sm-12 col-md-12">
+                                      <label>اسم الخزينة</label><span style="color:red">&nbsp;*</span>
+                                      <input type="text" class="form-control input" formControlName="s_cash_name">
+                                  </div>
+                                  <div class="form-group col-lg-4 col-sm-12 col-md-12">
+                                    <label>اسم الخزينة الانجليزي</label>
+                                    <input type="text" class="form-control input" formControlName="s_cash_name_eng">
+                                </div>
+                                <div class="col-lg-4 col-sm-12 col-md-12">
+                                  <label for="">فئه الخزينه</label>
+                                  <select class="form-control" formControlName="n_cash_class_id">
+                                      <option value="1">صندوق</option>
+                                      <option value="2">عهدة</option>
+                                  </select>
+                              </div>
+                              </div>
+                              
+                              <!-- Cash Type and Class Section -->
+                              <div class="row">
+                                  <div class="col-lg-4 col-sm-12 col-md-12">
+                                      <div class="form-group">
+                                          <label class="label"><span class="translate" data-en="Cash Type">نوع الخزينة:</span><span style="color:red">&nbsp;*</span></label>
+                                          <select-server-side [selectForm]="cashForm" [controlName]="'n_cash_type_id'" [TextField]="'s_cash_type_name'" [ValueField]="'n_cash_type_id'" [searching]="searchingCashType" [filteredServerSide]="filteredCashTypeServerSide" (OnSearch)="searchCashType($event)"></select-server-side>
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="col-lg-4 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label class="label"><span class="translate" data-en="Related Bank Account">رقم الحساب المرتبط:</span></label>
+                                        <select-server-side [selectForm]="cashForm" [controlName]="'s_related_account_no'" [TextField]="'s_account_name'" [ValueField]="'s_account_no'" [searching]="searchingAccounts" [filteredServerSide]="filteredaccounts" (OnSearch)="searchAccounts($event)"></select-server-side>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label class="label"><span class="translate" data-en="Cashier Name">أمين الصندوق:</span></label>
+                                        <select-server-side [selectForm]="cashForm" [controlName]="'s_cashier_name'" [TextField]="'s_employee_name'" [ValueField]="'s_employee_name'" [searching]="searchingCashier" [filteredServerSide]="filteredCashier" (OnSearch)="searchCahisher($event)"></select-server-side>
+                                    </div>
+                                </div>
+                               
+                              <section class="col-lg-4 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                  <label class="label"><span class="translate" data-en="Cash Type"> العملة:</span></label>
+                             
+                                      <select-server-side #Serverside style="width: 60%;"
+                                        [selectForm]="cashForm"
+                                        [controlName]="'n_cash_currency_id'"
+                                        [TextField]="'s_currency_name'"
+                                        [ValueField]="'n_currency_id'"
+                                        [searching]="searchingCurrency"
+                                        (onSelectionChange)="onCurrencuSelection($event)"
+                                        [filteredServerSide]="filteredCurrencyServerSide"
+                                        (OnSearch)="searchingCurrencies($event)">
+                                      </select-server-side>
+                                  
+      
+                                </div>
+      
+                              </section>
+                              <div class="col-lg-4 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label class="label"><span class="translate" data-en="Related Bank Account">رقم الحساب الوسيط:</span></label>
+                                    <select-server-side [selectForm]="cashForm" [controlName]="'s_middle_account'" [TextField]="'s_account_name'" [ValueField]="'s_account_no'" [searching]="searchingAccounts" [filteredServerSide]="filteredaccounts" (OnSearch)="searchAccounts($event)"></select-server-side>
+                                </div>
+                            </div>
+                              
+                              </div>
+                              
+                              <!-- Related Bank Account and Cashier Name Section -->
+                            
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+    </section>
+  </div>
+

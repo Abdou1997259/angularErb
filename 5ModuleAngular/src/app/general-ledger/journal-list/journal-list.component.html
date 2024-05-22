@@ -1,0 +1,177 @@
+<header>
+  <div class="content-wrapper"  >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="General Ledger">القيود اليومية</h2>
+      <div class="buttons" style="margin-right: auto;">
+        <div class="button" *ngIf="cannew">
+          <i class="bi bi-file-earmark-medical  fa-lg"></i>
+          <a routerLink="/gl/journals" class="translatedata" data-en="New">جديد</a>
+        
+        </div>
+        <div class="button"  style="min-width: 120px;">
+          <i class="bi bi-bookmark-x fa-lg"></i>
+          <a (click)="PrintExcel()" id="excelBTN" class="translatedata" data-en="Exporting Excel">تصدير لإكسيل</a>
+        </div>
+        <div class="button" style="min-width: 135px;" *ngIf="cannew">
+          <i class="bi bi-file-earmark-medical  fa-lg"></i>
+          <a data-toggle="modal" data-target="#ExcelModal" class="translatedata" data-en="Load From Excel">تحميل من إكسيل</a>
+        </div>
+      </div>
+     
+        <div>
+        </div>
+      </div>
+     
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="    margin-top: 140px;" >
+  <section class="content" >
+        <div class="container-fluid">
+            <div class="row" *ngIf="showspinner" >
+              <hr/>
+              <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+            </div>
+            <div class="custom-table-responsive">
+               <table class="custom-table-add">
+                <thead >
+                  <tr>
+                    <td colspan="12" width="100%" >
+                      <div>  
+                        <div class="s-icons">
+                          <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                          <i class="bi bi-file-earmark-excel"></i>
+                          <i class="bi bi-info"></i>
+                        </div> 
+                        <h2 class="translate" data-en="General Ledger">القيود اليومية</h2>
+                        <div class="f-icons">
+                          <i class="bi bi-layout-text-window-reverse"></i>
+                          <i class="bi bi-microsoft"></i>
+                        </div>                               
+                      </div>          
+                    </td>  
+                  </tr>
+
+                  <tr >               
+                    <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="DocNo"></th>
+                    <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="DocDate"></th>
+                    <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="JournalName"></th>
+                    <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="AccountName"></th>
+                    <th></th>
+                    <th></th> 
+                    <th><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="Description"></th>
+                    <th *ngIf="canedit"></th> 
+                    <th *ngIf="candelete"></th>
+                    <th ></th>
+                  </tr>
+
+                  <tr >               
+                    <th style="text-align: center;" class="translate" data-en="Gl No">رقم القيد</th>
+                    <th style="text-align: center;" class="translate" data-en="Data">تاريخ القيد</th>
+                    <th style="text-align: center;" class="translate" data-en="Journal">نوع اليومية</th>
+                    <th style="text-align: center;" class="translate" data-en="Account Name">اسم الحساب</th> 
+                    <th style="text-align: center;" class="translate" data-en="Credit">دائن</th> 
+                    <th style="text-align: center;"class="translate"  data-en="Debit">مدين</th> 
+                    <th style="text-align: center;"class="translate" data-en="Desctription" >الوصف</th> 
+                    <th style="text-align: center;" *ngIf="canedit"></th> 
+                    <th style="text-align: center;" *ngIf="candelete"> 
+                    <th style="text-align: center;"></th> 
+                  </tr>
+                </thead>
+                <tbody>
+                <tr    *ngFor="let journal of JournalsData" [ngStyle]="journal.b_posted ?{'background-color': '#c6d6f3'} : {'background-color': ''}" >                
+                   <td style="text-align: center;" >{{journal.n_doc_no}}  </td>
+                   <td style="text-align: center;" >{{journal.d_doc_date}}  </td>
+                   <td style="text-align: center;" >{{journal.s_journal_name}}  </td>
+                   <td style="text-align: center;" >{{journal.s_account_name}}  </td> 
+                   <td style="text-align: center;" >{{journal.n_debit}}  </td> 
+                   <td style="text-align: center;" >{{journal.n_credit}}  </td> 
+                   <td style="text-align: center;" >{{journal.s_detailed_arabic_description}}  </td> 
+                   <td style="text-align: center;" *ngIf="canedit"> <a routerLink="/gl/editjournal/{{journal.n_doc_no}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات القيد"  class="btn translatedata" data-en="Edit" >تعديل</a></td>
+                   <td style="text-align: center;" *ngIf="candelete && (journal.n_journal_id==1 ||journal.n_journal_id==4||journal.n_journal_id==7 ); else cantEdit"> <a href="#" data-toggle="modal" data-en="Remove"  data-target="#CancelModal" (click)="getRowID(journal.n_doc_no)" class="btn translatedata">حذف</a></td>
+                    <ng-template #cantEdit>
+                      <td ></td> 
+                    </ng-template>
+                  <td > <a href="{{ReportUrl}}PrintReport?docNo={{journal.n_doc_no}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+                </tr>
+                </tbody>
+                 
+              </table> 
+            </div>
+            </div>
+
+          </section>
+</div>
+<br/><br/>
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title translate" data-en="Close" id="exampleModalLongTitle">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body translate" data-en="Are you sure ?" >
+                هل انت متاكد من حذف هذا القيد
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-en="Close" data-dismiss="modal" #closebutton >اغلاق</button>
+                <button type="button" class="btn btn-primary translate" data-en="Remove" (click)="deleteRow()">حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <p></p>
+<!-- Modal -->
+
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="ExcelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLongTitle">اكسيل</h5> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row"> 
+                  <section class="col col-4">
+                    <div class="form-group">
+                      <label class="form-label translate" style="visibility:hidden;" data-en="Download Template">تحميل التمبلت</label>
+                      <button class="btn btn-warning translate" (click)="PrintTemplate()" id="excelBTN" data-en="Download Template" >تحميل التمبلت</button>
+                    </div>
+                  </section>
+                  <section class="col col-8">
+                    <div class="form-group">
+                      <label class="form-label translate" for="customFile" data-en="Upload Excel File">رفع ملف اكسيل</label>
+                      <input #myInput type="file" class="form-control" id="excelFile" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                    </div>
+                  </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #excelClosebutton data-en="Close">اغلاق</button>
+                <button type="button" class="btn btn-primary translate" id="excelSave" (click)="UploadExcel()" data-en="Save">حفظ</button>
+            </div>
+            <div class="row" *ngIf="showExcelSpinner"> 
+              <hr/>
+              <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+            </div>
+        </div>
+    </div>
+</div>
+ <p></p>
+<!-- Modal -->
+
+
+
+ 
+
+ 

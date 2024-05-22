@@ -1,0 +1,127 @@
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+            <h2 class="translate" data-en="Bank Opening Balance ">أرصدة أول المدة بنوك</h2>
+            <div class="buttons">
+              <div class="button" *ngIf="cannew">
+                <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                <a routerLink="/fin/banckOpeningBalanceAdd" class="translatedata" data-en="New"> جديد </a>
+              </div>
+            </div>
+        </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="margin-top: 140px;">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+
+      <div class="custom-table-responsive">
+
+        <table  class="custom-table-add" >
+          <thead>
+            <tr>
+              <td colspan="12" width="100%" >
+                <div>
+                  <div class="s-icons">
+                    <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                    <i class="bi bi-file-earmark-excel"></i>
+                    <i class="bi bi-info"></i>
+                  </div>
+                  <h2 class="translate" data-en="Bank Opening Balance ">أرصدة أول المدة بنوك</h2>
+                  <div class="f-icons">
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <i class="bi bi-microsoft"></i>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="docNo" /> </th>
+              <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="financialYear" /> </th>
+              <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="docDate" /> </th>
+              <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="mainBank" /> </th>
+              <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="description" /> </th>
+              <th ></th>
+              <th ></th>
+              <th ></th>
+            </tr>
+
+            <tr>
+              <th style="text-align: center;" class="translate" data-en="Doc No">رقم المستند</th>
+              <th style="text-align: center;" class="translate" data-en="Fiscal year">العام المالي</th>
+              <th style="text-align: center;" class="translate" data-en="Doc Date">تاريخ المستند</th>
+              <th style="text-align: center;" class="translate" data-en="Main Bank">البنك الرئيسي</th>
+              <th style="text-align: center;" class="translate" data-en="Description">الوصف</th>
+              <th style="text-align: center;" *ngIf="canedit"></th>
+              <th style="text-align: center;" *ngIf="candelete"></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let quotation of banckOpeningBalanceList">
+              <td scope="row" class="text-center"> {{quotation.n_doc_no}} </td>
+              <td class="text-center"> {{quotation.d_Financial_year}}       </td>
+              <td class="text-center"> {{quotation.d_doc_date}}  </td>
+              <td class="text-center" > {{quotation.s_bank_name}}  </td>
+              <td class="text-center" > {{quotation.s_arabic_description}}  </td>
+              <td class="text-center"> <a routerLink="/fin/banckOpeningBalanceEdit/{{quotation.n_doc_no}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات المستند"  class="btn translatedata" data-en="Edit">تعديل</a></td>
+              <td class="text-center"> <a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowId(quotation.n_doc_no)" class="btn translatedata" data-en="Remove">حذف</a></td>
+              <td > <a href="{{ReportUrl}}PrintReport?docNo={{quotation.n_doc_no}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+
+            </tr>
+          </tbody>
+      </table>
+    </div>
+      </div>
+      <div class="row m-3 mb-5">
+        <div class="col-12 d-flex justify-content-center">
+          <pagination [boundaryLinks]="true" [totalItems]="PagingCount"  [maxSize]="5"
+            [(ngModel)]="currentPage"
+            (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+          </pagination>
+        </div>
+      </div>
+          <!-- /.card -->
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title translate" id="exampleModalLongTitle" data-en="Close">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body translate" data-en="Are you sure ?">
+                هل انت متاكد من حذف هذا الرصيد؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #closebutton  data-en="Close">اغلاق</button>
+                <button type="button" class="btn btn-primary   translate" (click)="DeleteRow()" data-dismiss="modal" data-en="Remove" #closebutton>حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <p></p>
+<!-- Modal -->
+
+
+
+
+

@@ -1,0 +1,127 @@
+<style>
+    input.ng-invalid.ng-touched {
+        border: red 1px solid;
+    }
+     </style>
+     
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>صلاحيات المستخدمين</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">صلاحيات المستخدمين</li>
+                </ol>
+              </div>
+            </div>
+          </div><!-- /.container-fluid -->
+        </section>
+    
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+    
+            <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title">بيانات أساسية</h3>
+                </div>
+                <form  >
+    
+                <div class="card-body" >
+    
+                  
+               
+                    <div class="row">
+                        <div class="col-md-12">
+              
+                          <div class="card card-danger">
+                            
+                            <div class="card-body">
+                            
+                              <div class="form-group">
+                                <label>المستخدم:</label>
+              
+                                <select class="form-control"  
+                                  id="n_user_id"  
+                                 (change)="UserChange($event)"
+                                style="width: 100%;">
+                                <option  value="0">
+                                 ---------
+                                </option>
+                                <option *ngFor="let item of users" [value]="item.ID"   >
+                                  {{ item.username }}
+                                </option>
+                                </select>
+                                <!-- /.input group -->
+                              </div>
+                               
+              
+                            </div> 
+                            <div class="card-body"> 
+                                <table id="CustDataTable" class="table table-bordered table-hover">
+                                  <thead>
+                                  <tr> 
+                                    <th style="text-align: right;">الشاشة</th>
+                                    <th  style="text-align: right;"><input type="checkbox" name="chkAllNew"      (change)="CheckAll(1,$event)" /></th>
+                                    <th  style="text-align: right;"><input type="checkbox" name="chkAllUpdate"    (change)="CheckAll(2,$event)"  /></th>
+                                    <th  style="text-align: right;"><input type="checkbox" name="chkAllDelete"     (change)="CheckAll(3,$event)"  /></th>
+                                    <th  style="text-align: right;"><input type="checkbox" name="chkAllConfirm"     (change)="CheckAll(4,$event)"  /></th>
+                                    
+                                  </tr>
+                                  <tr> 
+                                    <th  style="text-align: right;">الشاشة</th>
+                                    <th  style="text-align: right;">جديد</th>
+                                    <th  style="text-align: right;">تعديل</th>
+                                    <th  style="text-align: right;">حذف</th>
+                                    <th  style="text-align: right;">تعميد</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody> 
+                                  <tr   *ngFor="let x of menutables">   
+                                    <td>{{x.s_menu_name}}</td>
+                                    <td><input type="checkbox" name="chknew_{{x.n_menu_id}}"       [(ngModel)]="x.can_new" /> </td>
+                                    <td><input type="checkbox" name="chkupdate_{{x.n_menu_id}}"    [(ngModel)]="x.can_update" /> </td>
+                                    <td><input type="checkbox"  name="chkdelete_{{x.n_menu_id}}"   [(ngModel)]="x.can_delete" /> </td>
+                                    <td><input type="checkbox"  name="chkconfirm_{{x.n_menu_id}}"   [(ngModel)]="x.can_confirm" /> </td>
+                                  </tr> 
+                                </table> 
+                              </div>
+
+                            <!-- /.card-body -->
+                          </div>
+                          <!-- /.card -->
+               
+              
+                        </div>
+                   
+                      </div>
+             
+           
+                </div>
+                <!-- /.card-body -->
+                 
+                <div class="card-footer mb-5">
+                    <div class="row"> 
+                        <div class="col-md-12"> 
+                            <input type="button" class="btn btn-primary mr-2"
+                               value="حفظ"  (click)="Save()" [disabled]="disablesave" > 
+                            <a  routerLink="/home" class="btn btn-danger mr-2"  >  خروج </a>
+                         </div>
+                      </div>
+                </div>
+              </form>
+              </div>
+     
+            
+            <!-- /.row -->
+          </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->

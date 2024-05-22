@@ -1,0 +1,128 @@
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+        <h2>أضافة أنواع الخزن</h2>
+        <div class="buttons">                                            
+          <div class="button">
+              <i class="bi bi-bookmark-x "></i>
+              <a routerLink="/fin/CashTypeList">خروج</a>                
+          </div>
+          <div class="button">
+              <i class="bi bi-file-earmark-medical  fa-lg"></i>
+              <button (click)="save()">حفظ                   
+              </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</header>
+  
+<div class="content-wrapper" style="margin-top: 120px;" [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      <div class="container-fluid">
+       
+       <div class="row">
+        <div class="col-12">
+          <form [formGroup]="CashTypeForm" (keydown.enter)="$event.preventDefault()">
+          
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+             <div class="row">
+              <div class="col-12">
+                  <div class="card">
+                    <div class="row" style="display: none;" #showID>
+                      <div class="col-12">
+                          
+                        <div class="custom-group-input">
+                          <label>كود النوع</label>
+                          <div class="input-icons">
+                            <input style="width:100px;" type="number"  formControlName="n_cash_type_id"  id="showid " readonly>
+                          
+                          </div>
+                        </div>
+
+                      </div>
+                  </div>
+                    
+                      <div class="row">
+                          <div class="col-12">
+                              
+                            <div class="custom-group-input">
+                              <label>اسم النوع</label>
+                              <div class="input-icons">
+                                <input type="text"  formControlName="s_cash_type_name">
+                                <i class="bi bi-bookmark"></i>
+                              </div>
+                            </div>
+  
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-12">
+                            <div class="custom-group-input">
+                              <label>اسم النوع الانجليزي</label>
+                              <div class="input-icons">
+                                <input type="text"  formControlName="s_cash_type_name_eng">
+                                <i class="bi bi-person"></i>
+                              </div>
+                            </div>
+                          
+  
+                          </div>
+                      </div>
+                      
+                  </div>
+              </div>
+  
+             </div>
+  
+            
+  
+        
+             
+  
+  
+   
+        
+             
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+             <div class="row">
+           
+              <div class="col-md-2">
+                <app-attachments [ID]="this.IDNo" [DataArea]="this.DataAreaNo" [Folder]="'Stores'" [SubFolder]="'Attachments'" *ngIf="this.IDNo !=null && this.IDNo > 0"></app-attachments>
+              </div>
+             </div>
+      
+  
+  
+          </form>
+        </div>
+  
+  
+       </div>
+  
+  
+  
+  
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  
+  
+  
+  
+  

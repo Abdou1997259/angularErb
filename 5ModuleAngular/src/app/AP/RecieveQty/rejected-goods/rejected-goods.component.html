@@ -1,0 +1,161 @@
+<div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+  <!-- Content Header (Page header) -->
+
+  <section class="content">
+    <div class="container-fluid">
+
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-dark">
+          <div class="card-header" style="height: 50px;">
+            <h3  class="d-flex justify-content-center">أذن استلام</h3>
+          </div>
+          </div>
+          <!-- Main content -->
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="ap_rejected_goods_details" (keydown.enter)="$event.preventDefault()">
+              <div class="card-body" >
+                <div class="row">
+                  <section class="col-lg-12">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label"> رقم المستند </label>
+                            <input type="text" class="form-control" formControlName="n_doc_no" readonly />
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label">تاريخ المستند <span style="color:red">&nbsp;*</span></label>
+                            <mat-form-field>
+                              <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_doc_date" required>
+                              <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                              <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-3">
+                          <div class="form-group">
+                            <label class="label"> رقم المورد </label>
+                            <input type="text" class="form-control" formControlName="n_supplier_id" readonly />
+                          </div>
+                        </section>
+                        <section class="col-lg-3">
+                          <label class="label">&nbsp;</label>
+                          <div class="form-group">
+                            <input type="txet" class="form-control border border-0 bg-light" formControlName="s_supplier_name" readonly>
+                          </div>
+                        </section>
+
+                        <section class="col col-3">
+                          <div class="form-group">
+                            <label class="label"> مهندس الجودة </label>
+                            <input type="text" class="form-control" formControlName="n_QualityEng_id" readonly />
+                          </div>
+                        </section>
+
+                        <section class="col-lg-3">
+                          <label class="label">&nbsp;</label>
+                          <div class="form-group">
+                            <input type="txet" class="form-control border border-0 bg-light" formControlName="s_employee_name" readonly>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="col-lg-12">
+                    <div class="card p-3">
+                      <div class="row">
+                        <div class="col-12 table-responsive">
+                          <table  id="tblRequestDetails" class="table table-striped" formArrayName="ap_recieve_qty_details">
+                            <thead>
+                              <tr>
+                                <th scope="col" class="text-center" style="min-width: 25px;">م</th>
+                                <th scope="col" class="text-center" style="min-width: 150px;">ك الصنف</th>
+                                <th scope="col" class="text-center" style="min-width: 200px;">اسم الصنف</th>
+                                <th scope="col" class="text-center" style="min-width: 150px;">ك الوحدة</th>
+                                <th scope="col" class="text-center" style="min-width: 200px;">اسم الوحدة</th>
+                                <th scope="col" class="text-center" style="min-width: 200px;">الكمية</th>
+                                <th scope="col" class="text-center" style="min-width: 130px;">ملاحظات</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                               <tr  [formGroupName]="i" *ngFor="let det of ap_rejected_goods_detailsLST.controls; let i=index">
+                                <td style="min-width: 25px;" scope="row" class="text-center"> <input type="hidden" class="form-control text-center" formControlName="nLineNo" readonly /> {{i+1}} </td>
+
+                                <td style="min-width: 150px;">
+                                  <div class="position-relative" >
+                                    <i class="fa fa-search position-absolute" (click)="loadItems(i)" data-toggle="modal"></i>
+                                    <input class="form-control has-search" [ngClass]="isItemExist[i] ? 'border-success' : 'border-danger'" type="text" formControlName="s_item_id" (keypress)="onKeyItemSearch($event, i)">
+                                  </div>
+                                </td>
+                                <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_item_name" readonly /> </td>
+
+                                <td style="min-width: 150px;">
+                                  <div class="position-relative">
+                                    <i class="fa fa-search position-absolute" (click)="loadUnits(i)" data-toggle="modal"></i>
+                                    <input class="form-control has-search" [ngClass]="isUnitExist[i] ? 'border-success' : 'border-danger'" type="text" formControlName="n_unit_id" (keypress)="onKeyUnitSearch($event, i)">
+                                  </div>
+                                </td>
+                                <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_unit_name" readonly /> </td>
+
+                                <td> <input type="text" class="form-control" formControlName="n_qty" (keypress)="isNumberKey($event);" /> </td>
+
+                                <td> <input type="text" class="form-control" formControlName="s_notes" /> </td>
+
+                                <td style="min-width: 45px;"><button class="btn btn-danger" (click)="removeDetailsRow(i)" tabindex="-1">حذف</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12 text-center">
+                            <button type="button" class="btn btn-primary"   style="width: 100%;"
+                            (click)="addNewRejectedRow();">إضافة</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </form>
+            <div class="card-footer mb-4" >
+              <div class="row">
+                  <div class="col-md-10">
+                      <input type="button" class="btn btn-primary mr-2" [disabled]="!ap_rejected_goods_details.valid" value="حفظ"  (click)="Save()" >
+                      <input type="button" routerLink="/ap/recieveqtyList" class="btn btn-danger mr-2" value="خروج">
+                   </div>
+                   <div class="col-md-2">
+                    <!-- <app-attachments [ID]="this.DocNo" [DataArea]="this.DataAreaNo" [Folder]="'Journals'" [SubFolder]="'Attachments'" *ngIf="this.DocNo !=null && this.DocNo > 0"></app-attachments> -->
+                   </div>
+                </div>
+
+                <div class="row" *ngIf="showspinner">
+                  <hr/>
+                  <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                </div>
+
+            </div>
+          </div>
+          <!-- /.invoice -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>

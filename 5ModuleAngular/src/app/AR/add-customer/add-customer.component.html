@@ -1,0 +1,199 @@
+ <style>
+input.ng-invalid.ng-touched {
+    border: red 1px solid;
+}
+ </style>
+ 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+     
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="">
+            
+            <div class="card card-success">
+              <div class="card-header" style="height: 50px;"> 
+                <h1 *ngIf="currentId == 0 || currentId == null" class="  d-flex justify-content-center translate" data-en="Add New Customer">إضافة عميل جديد</h1>
+                <h1 *ngIf="currentId > 0" class="  d-flex justify-content-center translate"data-en="Edit New Customer ">تعديل عميل جديد</h1>
+  
+              </div>
+              </div>
+
+            <form [formGroup]="CustomerForm">
+
+            <div class="card-body" >
+
+              
+           
+                <div class="row">
+
+                  <div class="row" *ngIf="showspinner"> 
+                    <hr/>
+                    <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+                  </div>
+
+                  
+                    <div class="col-md-12">
+          
+                      <div class="card card-danger">
+                        
+                        <div class="card-body">
+                        
+                          <div class="form-group" style="display:none;" >
+                            <label class="Customer No">رقم العميل:</label>
+          
+                            <div class="input-group"> 
+                              <input type="number" class="form-control"  
+                              readonly formControlName="n_customer_id">
+                            </div>
+                            <!-- /.input group -->
+                          </div>
+
+                          <div class="form-group">
+                            <label class="translate" data-en="Customer Name">إسم العميل:</label>
+          
+                            <div class="input-group"> 
+                              <input type="text" class="form-control"
+                               required   formControlName="s_customer_name">
+                            </div>
+                            <div *ngIf="CustomerForm.controls.s_customer_name.value === '' 
+                                  && CustomerForm.controls.s_customer_name.touched
+                                " class="translate" data-en="Customer name is mandatory.">
+                              إسم العميل إلزامي.
+                            </div>
+
+                            <!-- /.input group -->
+                          </div>
+
+                          
+                          <div class="form-group">
+                            <label class="translate" data-en="Phone Number">رقم التليفون:</label> 
+                            <div class="input-group"> 
+                              <input type="text" class="form-control"    formControlName="s_customer_phone_no">
+                            </div>
+
+                            <div *ngIf="CustomerForm.controls.s_customer_phone_no.value === '' 
+                            && CustomerForm.controls.s_customer_phone_no.touched
+                          " class="translate" data-en="Customer name is mandatory.">
+                        رقم التليفون إلزامي.
+                      </div>
+
+                          </div>
+
+
+
+                       
+                          <div class="form-group">
+                            <label>العنوان:</label>
+          
+                            <div class="input-group"> 
+                              <input type="text" class="form-control"    formControlName="s_customer_address">
+                            </div>
+
+                            <div *ngIf="CustomerForm.controls.s_customer_address.value === '' 
+                            && CustomerForm.controls.s_customer_address.touched
+                          " class="translate" data-en="Title is mandatory.">
+                        العنوان إلزامي.
+                      </div>
+
+
+                           
+                          </div>
+
+                   
+                          
+                          <div class="form-group">
+                            <label class="translate" data-en="Responsible Person:">الشخص المسئول:</label> 
+                            <div class="input-group"> 
+                              <input type="text" class="form-control"    formControlName="s_AttachmentPerson">
+                            </div>
+                          </div>
+
+                          
+                          <div class="form-group">
+                            <label class="translate" data-en="Activity:">النشاط:</label> 
+                            <div class="input-group"> 
+                              <input type="text" class="form-control"      formControlName="s_activity">
+                            </div>
+                          </div>
+
+
+
+                          <div class="form-group">
+                            <label class="translate" data-en="Notes">ملاحظات:</label> 
+                            <div class="input-group"> 
+                              <input type="text" class="form-control"      formControlName="s_ExtraNote">
+                            </div>
+                          </div>
+
+
+
+                          
+
+                        
+
+
+                          <!-- <div class="form-group">
+                            <label>الموقف الضريبي:</label>
+          
+                            <select class="form-control"  
+                              id="n_tax_type" formControlName="n_tax_type" 
+                           
+                            style="width: 100%;">
+                            <option *ngFor="let item of TaxesTypes" [ngValue]="item.code"   >
+                              {{ item.name }}
+                            </option>
+                            </select>
+                          
+                          </div> -->
+                           
+
+                          <!-- <div class="form-group">
+                            <label>  المستخدمين:</label>
+          
+                            <div class="input-group"> 
+                               <look-up  SearchID="Users" inputName="aaa" tblName="usertable"></look-up>
+                            </div>
+                              
+                          </div>  -->
+                         
+                          
+ 
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+           
+          
+                    </div>
+               
+                  </div>
+         
+       
+            </div>
+            <!-- /.card-body -->
+             
+            <div class="card-footer mb-5">
+                <div class="row"> 
+                    <div class="col-md-12"> 
+                        <input type="button" class="btn btn-primary mr-2" 
+                        [disabled]="!CustomerForm.valid || showspinner" 
+                        value="حفظ"  (click)="Save()" > 
+                        <a  routerLink="/customer" class="btn btn-danger mr-2"  >  خروج </a>
+                     </div>
+                  </div>
+            </div>
+          </form>
+          </div>
+ 
+        
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->

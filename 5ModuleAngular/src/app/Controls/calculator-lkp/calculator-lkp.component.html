@@ -1,0 +1,101 @@
+<div class="card-body mt-0">
+  <div class="row">
+    <section class="col col-lg-12">
+      <div class="card p-3">
+        <div class="row d-flex justify-content-center align-items-center">
+          <section class="col col-12">
+            <div class="form-group">
+              <input type="text" class="form-control text-center" [(ngModel)]="textVal">
+            </div>
+          </section>
+        </div>
+
+        <div class="row">
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="9" (click)="btnClicked($event);">9</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="8" (click)="btnClicked($event);">8</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="7" (click)="btnClicked($event);">7</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="6" (click)="btnClicked($event);">6</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="5" (click)="btnClicked($event);">5</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="4" (click)="btnClicked($event);">4</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="3" (click)="btnClicked($event);">3</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="2" (click)="btnClicked($event);">2</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="1" (click)="btnClicked($event);">1</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group text-center">
+              <a class="btnStyle bg-white w-100 h-50" (click)="deleteLastVal();">
+                <i class="bi bi-eraser display-1"></i>
+              </a>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="." (click)="btnClicked($event);">.</button>
+            </div>
+          </section>
+
+          <section class="col col-4">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btnStyle w-100 h-50" value="0" (click)="btnClicked($event);">0</button>
+            </div>
+          </section>
+        </div>
+
+        <div class="divStyle">
+          <a>
+            <i class="bi bi-check" (click)="btnCalculatedClicked();"></i>
+          </a>
+
+          <a>
+            <i class="bi bi-x-lg" (click)="btnClose();"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

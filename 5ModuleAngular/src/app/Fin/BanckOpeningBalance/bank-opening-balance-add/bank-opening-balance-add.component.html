@@ -1,0 +1,261 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate" data-en="Banck Opening Balance"> أرصدة اول المدة بنوك </h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/fin/banckOpeningBalanceList" class="translateData" value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" class="translate" data-en="Save" (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+
+              <form [formGroup]="gl_banks_opening_balance" (keydown.enter)="$event.preventDefault()">
+
+                <div class="card-body" >
+                  <div class="row">
+                    <section class="col-lg-7">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6" [hidden]="n_doc_no <= 0">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Doc No"> رقم المستند </label>
+                            <div class="col-sm-6">
+                              <input type="text" class="form-control" formControlName="n_doc_no" readonly/>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate " data-en="Financial Year"> العام المالي </label>
+                            <div class="col-sm-8">
+                              <input type="number" class="form-control" formControlName="d_Financial_year" />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label mt-3 translate" data-en="Doc Date">تاريخ المستند</label>
+                            <div class="col-sm-8">
+                              <mat-form-field>
+                                <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_doc_date" required>
+                                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Main Bank:">البنك الرئيسي:</label>
+                            <div class="col-sm-8">
+                              <select-server-side
+                              [selectForm]="gl_banks_opening_balance"
+                              [controlName]="'n_bank_id'"
+                              [TextField]="'s_bank_name'"
+                              [ValueField]="'n_bank_id'"
+                              [searching]="mainBanksSearching"
+                              [filteredServerSide]="mainBanksFilteredServerSide"
+                              (OnSearch)="mainBanksSearch($event)">
+                              </select-server-side>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Currency"> العملة </label>
+                            <div class="col-sm-8">
+                              <select class="form-select" formControlName="n_currency_id" (change)="currencyChanged();">
+                                <option *ngFor="let c of curencyList" [value]="isEnglish?c.s_currency_name_eng:c.n_currency_id"> {{ c.s_currency_name }} </option>
+                              </select>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6" [hidden]="n_currency_id == localCurrency || n_currency_id == 0">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Factor" > المعامل </label>
+                            <div class="col-sm-5">
+                              <input type="number" class="form-control" formControlName="n_currency_coff" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Ar Decription"> وصف عربي </label>
+                            <div class="col-sm-8">
+                              <textarea type="text" class="form-control" formControlName="s_arabic_description" rows="2" ></textarea>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Description"> وصف انجليزي </label>
+                            <div class="col-sm-8">
+                              <textarea type="text" class="form-control" formControlName="s_english_description" rows="2" ></textarea>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="col-lg-5">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-5 col-form-label">اجمالي المدين:</label>
+                            <div class="col-sm-7">
+                              <input type="number" class="form-control text-center" formControlName="n_total_debit" placeholder="0" readonly />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-5 col-form-label">اجمالي الدائن:</label>
+                            <div class="col-sm-7">
+                              <input type="number" class="form-control text-center" formControlName="n_total_credit" placeholder="0" readonly />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row d-flex justify-content-center align-items-center mt-3">
+                        <section class="col col-6 text-center">
+                          <div class="form-group">
+                            <button type="button" class="btn btn-outline-primary translate" data-en="Load Bank Branches" (click)="fillTable();">تحميل فروع البنوك</button>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="row">
+                  <section class="col-lg-12">
+                    <div class="card p-3">
+                      <div class="row">
+                        <div class="col-12 table-responsive">
+                          <table class="custom-table table-striped" formArrayName="gl_banks_opening_balanceDetails">
+                            <thead>
+                              <tr>
+                                <th scope="col" class="text-center" style="min-width: 25px;"> # </th>
+                                <th scope="col" class="text-center" style="min-width: 150px;" class="translate" data-en="Bank Branch No"> كود فرع البنك </th>
+                                <th scope="col" class="text-center" style="min-width: 200px;" class="translate" data-en="Bank Branch Name"> اسم الفرع </th>
+                                <th scope="col" class="text-center" style="min-width: 100px;" class="translate" data-en="Debit"> مدين </th>
+                                <th scope="col" class="text-center" style="min-width: 100px;" class="translate" data-en="Credit"> دائن </th>
+                                <th scope="col" class="text-center" style="min-width: 150px;" class="translate" data-en="Currency"> العملة </th>
+                                <th scope="col" class="text-center" style="min-width: 100px;" class="translate" data-en="Factor"> معامل التحويل </th>
+                                <th scope="col" class="text-center" style="min-width: 200px;" class="translate" data-en="Ar Description"> الوصف عربي </th>
+                                <th scope="col" class="text-center" style="min-width: 200px;" class="translate" data-en="Description"> الوصف انجليزي </th>
+                                <th scope="col" class="text-center" style="min-width: 200px;" class="translate" data-en="Name"> الاسم </th>
+                                <th scope="col" class="text-center" style="min-width: 45px;">  </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr [formGroupName]="i" *ngFor="let row of gl_banks_opening_balanceDetails.controls; let i = index;">
+                                <td scope="row" class="text-center" style="min-width: 25px;"> {{ i + 1 }} </td>
+                                <td style="min-width: 150px;">
+                                  <div class="position-relative">
+                                    <i class="fa fa-search position-absolute" (click)="loadBranches(i)" data-toggle="modal"></i>
+                                    <input class="form-control has-search" type="text" formControlName="n_bank_branch_id" id="Item_{{i}}" (keypress)="onKeyBranchesSearch($event, i)" >
+                                  </div>
+                                </td>
+                                <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_bank_branch_name" readonly /> </td>
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_debit" placeholder="0" (change)="CalcTotalDebCred();" />
+                                </td>
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_credit" placeholder="0" (change)="CalcTotalDebCred();" />
+                                </td>
+
+                                <td style="min-width: 150px;">
+                                  <select class="form-select" formControlName="n_currency_id" (change)="currencyChanged();">
+                                    <option *ngFor="let c of curencyList" [value]="c.n_currency_id"> {{  isEnglish?c.s_currency_name_eng:c.s_currency_name }} </option>
+                                  </select>
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_currency_coff" />
+                                </td>
+
+                                <td style="min-width: 200px;">
+                                  <textarea class="form-control" formControlName="s_arabic_description" rows="2"></textarea>
+                                </td>
+
+                                <td style="min-width: 200px;">
+                                  <textarea class="form-control" formControlName="s_english_description" rows="2"></textarea>
+                                </td>
+
+                                <td style="min-width: 200px;">
+                                  <input type="text" class="form-control" formControlName="s_cost_center_id2" />
+                                </td>
+
+                                <td style="min-width: 45px;">
+                                  <i class="bi bi-x-square" (click)="remove_DetailsRow(i); CalcTotalDebCred();" tabindex="-1"></i>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-12 text-center">
+                            <div class="button-plus">
+                              <i class="bi bi-plus"></i>
+                              <a (click)="add_DetailsRow()" class="translate" data-en="Add">أضافة</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

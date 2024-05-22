@@ -1,0 +1,272 @@
+
+<header>
+    <div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        
+            
+             
+            <h2 class="translate" data-en="Supplier Direction" >توجيهة الموردين</h2>
+                 <div class="buttons">
+                   
+                    
+                   
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/ap/supplierDirection" class="translate" data-en="Exit">خروج</a>
+                     
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      
+                        <input type="button" [disabled]="!supplierDirection.valid" class="translate" data-en="Save" value="حفظ"  (click)="save()" value="حفظ">
+                        
+                    </div>
+                  </div>
+  
+                 
+                
+           
+               
+              
+     
+  
+  
+        
+          
+    
+        
+                </div>
+    
+              </section>
+  </div>
+              
+  </header>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="content-wrapper rtl"  style="margin-top:90px">
+      <!-- Content Header (Page header) -->
+    
+      <section class="content">
+        <div class="container-fluid">
+        
+       
+    
+         <div class="row">
+          <div class="col-12">
+            <form [formGroup]="supplierDirection" (keydown.enter)="$event.preventDefault()">
+  
+              <input type="number" style="display: none;" class="form-control" formControlName="n_acc_dir_no">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+  
+  
+              <div class="card">
+                
+                <div class="row">
+                 
+                    <section class="col-4">
+                           
+                      <div class="form-group">
+                        <label class="label translate" data-en="AR Direction Name">الاسم</label>
+                       
+                        <div class="input-group">
+                          <input class="form-control" formControlName="s_acc_dir_name" >
+                        </div>
+                      </div>
+  
+                      
+                    </section>
+                
+                </div>
+                <div class="row">
+                  
+                  <section class="col-4">
+                           
+                    <div class="form-group">
+             
+                      <label class="label translate" data-en="Direction Name">الاسم الانجليزي</label>
+                      <div class="input-group">
+                        <input        class="form-control" formControlName="s_acc_dir_name_eng" >
+                      </div>
+                    </div>
+  
+                    
+                  </section>
+                </div>
+              </div>
+              <div class="card">
+                 <div class="row">
+                  <div class="col-3">
+                    <p class="translate" data-en="Invoice Type">نوع الفاتورة</p>
+                  </div>
+                  <div class="col-3">
+                    <p class="translate" data-en="Type">النوع</p>
+                  </div>
+  
+  
+                  <div class="col-3">
+                    <p class="translate" data-en="Accout No">رقم الحساب</p>
+                  </div>
+                  <div class="col-3">
+                    <p class="translate" data-en="Account Name">اسم الحساب</p>
+                  </div>
+                 </div>
+        
+                <div formArrayName="detailsDirections">
+                  <div [formGroupName]="i" *ngFor="let items of detailsDirections.controls ;let i=index">
+                    <div class="row">
+                      <section class="col-3">
+                        <div class="form-group">
+                         
+                          <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width: 100%"    formControlName="n_voice_type_id"  >
+                        
+                            <option value="1" disabled>فاتورة</option>
+                            <option value="2" disabled>فاتورة مرتد</option>
+                     
+                          </select>
+                        </div>
+                    </section>
+                        <section class="col-3">
+                          <div class="form-group">
+                           
+                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width: 100%"    formControlName="n_type_id"  >
+                          
+                              <option value="1" disabled>مشتريات نقدية</option>
+                              <option value="2" disabled>مشتريات أجلة</option>
+                              <option value="3" disabled>مصروفات مشتريات</option>
+                              <option value="4" disabled>خصم مكتسب</option>
+                              <option value="5" disabled>مرتد مشتريات نقدي</option>
+                              <option value="6" disabled>مرتد مشتريات أجل</option>
+                              <option value="7" disabled>مصروفات مرتد   </option>
+                              <option value="8" disabled>ضريبة مكتسب</option>
+                              <option value="9" disabled>ضريبة مبيعات</option>
+                              
+                              <option value="10" disabled>ضريبة خصم</option>
+                 
+                              <option value="11" disabled>ضريبة أضافه مشتريات</option>
+                        
+                              <option value="12" disabled>ضريبة مبيعات مرتد</option>
+                              <option value="13" disabled>ضريبة خصم مرتد</option>
+
+                              <option value="14" disabled>ضريبة أضافه مرتد</option>
+  
+                       
+                            </select>
+                          </div>
+                      </section>
+  
+  
+                        <section class="col-3 ">
+                         
+                          
+                            <div class="form-group justify-content-start">
+                         
+                              <div class="position-relative">
+                                <i class="fa fa-search position-absolute"  data-toggle="modal" id="acc5" (click)="openAccounts(i)"  ></i>
+                                <input class="form-control has-search" type="text" formControlName="s_account_no" (input)="getItemsNow($event,i)" >
+                               
+                              </div>
+                            
+                            </div>
+                        
+  
+                          
+                        </section>
+                        <section class="col-3">
+                             
+                          <div class="form-group">
+                   
+                            
+                            <div class="input-group">
+                              <input   class="form-control"  readonly formControlName="s_account_name" >
+                            </div>
+                          </div>
+  
+                          
+                        </section>
+  
+                  </div>
+                    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+                  </div>
+                  
+                
+               
+    
+    
+     
+          
+               
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+               
+        
+                </div>
+              </div>
+              
+           
+             
+            
+    
+            </form>
+          </div>
+    
+    
+         </div>
+    
+    
+    
+    
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    
+    
+    
+    
+    

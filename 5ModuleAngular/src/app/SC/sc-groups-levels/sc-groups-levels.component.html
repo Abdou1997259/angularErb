@@ -1,0 +1,125 @@
+<header style="margin-top:-2px">
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+      <!-- Content Header (Page header) -->
+      
+          
+           
+               <h2 class="translate" data-en="Items Group Level">مستويات مجموعات الاصناف</h2>
+               <div class="buttons">
+                 
+            
+                 
+                 
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <button (click)="Save()"  class="translate" data-en="Save">حفظ
+              
+                  
+                        
+                      </button>
+                     
+                  </div>
+                </div>
+
+               
+              
+         
+             
+            
+   
+
+
+      
+        
+  
+              </div>
+  
+            </section>
+</div>
+</header>
+<div class="content-wrapper rtl" >
+  <section class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card card-dark">
+            
+            <div class="card-body">
+              <div class="" style="background-color: transparent">
+                <div dir="rtl">
+               
+                 <div class="formGroup">
+                  <label class="label">
+                  <span style="font-size: 20px"
+                   class="translate" data-en="Level Number"  >عدد المستويات</span
+                  ></label>
+                <input class="form-control"  [readonly]="b_data"type="number"(input)="OnInput($event)" value="{{ rowCount }}"/>
+               </div>
+              
+
+                  <div class="mb-3">
+                    <span *ngIf="b_data && !isEnglish"  class="text-danger " >لا يمكن اضافة مستويات علي المستويات الموجودة</span >
+                    <span *ngIf="b_data && isEnglish" class="text-danger"  >You can't add new level in exicting levels</span >
+                  </div>
+
+                  <form class="example-form" [formGroup]="myForm" (keydown.enter)="$event.preventDefault()">
+                    <table
+                      class="table col-md-6"
+                      id="tblAccountsLevels"
+                      formArrayName="formList"
+                    >
+                      <thead>
+                        <tr>
+                          <th scope="col"><mat-icon>settings</mat-icon></th>
+                          <th scope="col" class="translate" data-en="Level">المستوى</th>
+                          <th scope="col" class="translate" data-en="Digits Number">عدد الأرقام</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          [formGroupName]="i"
+                          *ngFor="let item of formList.controls; let i = index"
+                        >
+                          <th scope="row">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                          </th>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              value="{{ item.get('n_level_id')?.value }}"
+                              readonly
+                              formControlName="n_level_id"
+                            />
+                          </td>
+
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              value="{{ item.get('n_level_width')?.value }}"
+                              min="0"
+                              formControlName="n_level_width"
+                              [readonly]="b_data"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="card-footer mb-5">
+                     
+                    </div>
+                  </form>
+                  <!-- *ngFor="let item of arr; let i = index" -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

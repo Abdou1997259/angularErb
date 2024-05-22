@@ -1,0 +1,159 @@
+  <!-- Content Wrapper. Contains page content -->
+  <header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+                 <h2 class="translate" data-en="Import Order">أمر شراء</h2>
+                 <div class="buttons">
+                    <div class="button" *ngIf="cannew">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <a routerLink="/ap/importsorders" class="translatedata" data-en="New">جديد
+                        </a>
+                    </div>
+                  </div>
+                </div>
+
+              </section>
+  </div>
+
+  </header>
+
+
+
+
+
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+    <div class="row" *ngIf="showspinner" >
+      <hr/>
+      <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+    </div>
+   
+    <div class="custom-table-responsive">
+      <table  class="custom-table-add" >
+    
+        <thead >
+          <tr>
+          <td colspan="13" width="100%" >
+           
+             <div>
+              <div class="s-icons">
+                <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                <i class="bi bi-file-earmark-excel"></i>
+                <i class="bi bi-info"></i>
+              </div> 
+              <h2 class="translate" data-en="Import Order">أمر شراء</h2>     
+              
+              <div class="f-icons">
+                <i class="bi bi-layout-text-window-reverse"></i>
+                <i class="bi bi-microsoft"></i>
+              </div>                        
+            </div> 
+          
+          </td>
+
+       </tr>
+        <tr>
+          <th>
+            <input type="text" class="form-control" *ngIf="!isEnglish" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString" placeholder="بحث">
+            <input type="text" class="form-control" *ngIf="isEnglish" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString" placeholder="searching...">
+          </th>
+          <th colspan="12"></th>
+        </tr>
+     
+       <tr  >
+        <th class="translate text-center" data-en="Order No">رقم الآمر</th>
+        <th class="translate text-center" data-en="Order Date">تاريخ الآمر</th>
+        <th class="translate text-center" data-en="Supplier" data-en="Supplier">المورد</th>
+        <th class="translate text-center" data-en="Sales Man">المندوب</th>
+        <th class="translate text-center" data-en="Store">المخزن</th>
+        <th class="translate text-center" data-en="Notes">ملاحظات</th>
+        <th class="translate text-center" data-en="Confirmed">معمد</th>
+        <th class="translate text-center" data-en="Total">الاجمالي</th>
+        <th class="translate text-center" data-en="Total Dicount">إجمالي الخصم</th>
+        <th class="translate text-center" data-en="Net">صافي الآمر</th>
+        <th *ngIf="canedit"></th> 
+        <th *ngIf="candelete"> 
+        <th></th> 
+
+      </tr>
+
+
+      
+        </thead>
+        <tbody>
+          <tr *ngFor="let purchase of importOrdersList">
+            <td class="text-center" >{{purchase.n_import_no}}  </td>
+            <td class="text-center" >{{purchase.d_import_date}}  </td>
+            <td class="text-center" >{{purchase.s_supplier_name}}  </td>
+            <td class="text-center" >{{purchase.s_employee_name}}  </td>
+            <td class="text-center" >{{purchase.s_store_name}}  </td>
+            <td class="text-center" >{{purchase.s_notes}}  </td>
+            <td class="text-center" >{{purchase.b_Confirm}}  </td>
+            <td class="text-center" >{{purchase.n_net_value}}  </td>
+            <td class="text-center" >{{purchase.n_discount}}  </td>
+            <td class="text-center" >{{purchase.n_purcahse_net}}  </td>
+            <td > <a routerLink="/ap/importsorders/{{purchase.n_import_no}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات أمر الشراء" class="translatedata" data-en="Edit"  >تعديل</a></td>
+            <td > <a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowId(purchase.n_import_no)" class="translatedata" data-en="Remove" >حذف</a></td>
+            <td > <a href="{{ReportUrl}}PrintReport?docNo={{purchase.n_import_no}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+          </tr>
+         <tr >
+          <td colspan="4">
+            <div class="page">
+              <pagination [boundaryLinks]="true" [totalItems]="PagingCount"  [maxSize]="5"
+                    [(ngModel)]="currentPage"
+                    (pageChanged)="pageChanged($event)"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                  </pagination>
+           
+            </div>
+  
+          </td>
+  
+        </tr>
+        </tbody>
+      
+</table>
+
+    </div>   
+
+
+            <!-- /.card-header -->
+
+             
+            </div>
+                      </section>
+  </div>
+
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                هل انت متاكد من حذف هذا الآمر؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" #closebutton >اغلاق</button>
+                <button type="button" class="btn btn-primary" (click)="DeleteRow()" data-dismiss="modal" #closebutton>حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <p></p>
+<!-- Modal -->
+
+
+
+
+

@@ -1,0 +1,19 @@
+
+<form [formGroup]="selectForm"> 
+    <mat-form-field [ngStyle]="{'min-width':Fieldwidth,'min-height':FiedlHeight}">
+        <mat-select  [formControlName]="controlName" [multiple]="true" (selectionChange)="DisplayArray($event)"   [formControl]="selectCtrl" placeholder="" >
+          <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
+          <mat-option>
+            <ngx-mat-select-search [formControl]="FilteringCtrl"  [searching]="searching"></ngx-mat-select-search>
+          </mat-option>
+           <mat-select-trigger>
+            {{arrayofStrings}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let obj of filteredServerSide | async" [value]="obj[ValueField]" #options >
+          
+             <span #options> {{obj[TextField]}}</span>
+             
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>

@@ -1,0 +1,203 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate"> البدلات </h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/hr/allowanceslist" class="translate"  data-en="Exit"value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!py_allowances.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+
+              <form [formGroup]="py_allowances" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="card-body" >
+                    <div class="row">
+
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6" *ngIf="this.allowanceId > 0">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Document code:">كود البدل:</label>
+                                    <input type="number" class="form-control w-50" formControlName="n_allowance_id" readonly>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Notes:">تصنيف البدل:</label>
+                                    <select class="form-select" formControlName="n_allowance_category">
+                                      <option *ngFor="let c of AllowanceCatData" [ngValue]="c.code">{{ c.name_arabic }}</option>
+                                    </select>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Payment Arabic name:">اسم البدل عربي:<span style="color: red;">*</span> </label>
+                                    <input type="text" class="form-control" formControlName="s_allowance_name" />
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Payment English name:">اسم البدل انجليزي:</label>
+                                    <input type="text" class="form-control" formControlName="s_allowance_name_eng" />
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-12">
+                                <div class="row mt-3">
+                                  <section class="col col-3">
+                                    <div class="form-group">
+                                      <label>
+                                        <input type="radio" name="gender" formControlName="b_value" [value]="true" />
+                                        قيمة
+                                      </label>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-2">
+                                    <div class="form-group">
+                                      <label>
+                                        <input type="radio" name="gender" formControlName="b_percent" [value]="true" />
+                                        نسبة
+                                      </label>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6" *ngIf="b_isRatio">
+                                    <div class="input-group w-25">
+                                      <input type="number" class="form-control text-center" formControlName="n_percent" style="background-color: #f06989;" placeholder="0">
+                                      <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-5">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Addon" formControlName="b_Addon" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Addon">
+                                      يضاف الي قيمة اليوم عند احتساب اضافي
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_addtoReward" formControlName="b_addtoReward" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_addtoReward">
+                                      يدخل في مكافئة نهاية الخدمة
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_addtoVacation" formControlName="b_addtoVacation" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_addtoVacation">
+                                      يدخل في بدل الاجازة
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Vacation_discount_Free" formControlName="b_Vacation_discount_Free" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Vacation_discount_Free">
+                                      لا يخضع للخصم
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="n_YearlyIncrease" formControlName="n_YearlyIncrease" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="n_YearlyIncrease">
+                                      يخضع للزيادة السنوية
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_add_to_insurance" formControlName="b_add_to_insurance" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_add_to_insurance">
+                                      يخضع للتأمينات الاجتماعية
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

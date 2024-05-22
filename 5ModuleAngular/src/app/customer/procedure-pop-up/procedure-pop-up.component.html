@@ -1,0 +1,110 @@
+
+<!--  
+    <h1 mat-dialog-title>Hi  </h1>
+<div mat-dialog-content>
+  <p>What's your favorite color?</p>
+  <mat-form-field>
+    <input matInput multiple [(ngModel)]="data.color">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.color" cdkFocusInitial>Ok</button>
+</div>
+  -->
+
+
+ 
+<!-- 
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Favorite food</mat-label>
+      <input matInput placeholder="Ex. Pizza" value="Sushi">
+    </mat-form-field>
+  
+    <mat-form-field class="example-full-width">
+      <mat-label>Leave a comment</mat-label>
+      <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+    </mat-form-field>
+  </form>
+   -->
+
+
+   <div class="card card-success">
+    <div class="card-header">
+      <h3 class=" d-flex justify-content-center">إضافة إجراء</h3>
+    </div>
+    
+  
+    <form #procForm="ngForm" > 
+    <div class="card-body" > 
+      <div class="row" *ngIf="showspinner"> 
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+      </div>
+        <div class="row">
+            <div class="col-md-12">
+  
+              <div class="card card-danger">
+                
+                <div class="card-body">
+                
+                    <div class="form-group">
+                        <label>العنوان:</label>
+      
+                        <div class="input-group"> 
+                          <input type="text" name="procTitle" [(ngModel)]="procedure.procTitle" class="form-control"
+                           required   >
+                        </div>
+                       
+                        
+    
+                        <!-- /.input group -->
+                      </div> 
+
+                  <div class="form-group">
+                    <label>الاجراء:</label>
+  
+                    <div class="input-group"> 
+                      <textarea type="text"  name="procDetails" [(ngModel)]="procedure.procDetails" class="form-control"
+                       required   ></textarea>
+                    </div>
+                    
+
+                    <!-- /.input group -->
+                  </div> 
+
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+   
+  
+            </div>
+       
+          </div>
+ 
+
+    </div>
+    <!-- /.card-body -->
+     
+   
+    <div class="card-footer">
+        <div class="row"> 
+            <div class="col-md-12"> 
+                <input type="button" class="btn btn-primary mr-2" 
+               value="حفظ"  (click)="createProc()" 
+               [disabled]="showspinner"
+               > 
+                <a  class="btn btn-danger mr-2"   (click)="onNoClick()" >  خروج </a>
+             </div>
+          </div>
+    </div>
+
+<!-- <mat-dialog-actions>
+    <button class="mat-raised-button" (click)="onNoClick()">Close</button>
+    <button class="mat-raised-button mat-primary"  [mat-dialog-close]="data.color" cdkFocusInitial>Save</button>
+</mat-dialog-actions> -->
+  </form>
+  </div>
+

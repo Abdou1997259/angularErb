@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>الوحدات</h1>
+      <button class="btn btn-danger" (click)="onCloseClick()">X</button>
+    </div>
+  </div>
+</div>
+
+  <div class="row">
+      <div class="col-12">
+          <div class="form-group">
+              <label class="translate" data-em="General Search">بحث عام</label>
+
+              <div class="input-group">
+                <input type="text" class="form-control" (keyup)="DoSearch();"  [(ngModel)]="searchString"    >
+              </div>
+              <!-- /.input group -->
+            </div>
+      </div>
+  </div>
+
+
+   <table
+      class="table table-striped table-bordered dt-responsive" style="width:100%;text-align: center;" >
+    <thead >
+    <tr class="table-primary">
+      <!-- <th  style="text-align: center;">رقم العميل</th> -->
+      <th style="text-align: center;" class="translate" data-en="Code">رقم الوحدة</th>
+      <th style="text-align: center;" class="translate" data-en="Name">اسم الوحدة</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr    *ngFor="let item of unitsList" (click)="selectItem(item)" >
+      <td  >{{item.n_unit_id}}  </td>
+      <td  >{{item.s_unit_name}}  </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+<div class="d-flex justify-content-center pt-1">
+
+  <pagination [boundaryLinks]="true" [totalItems]="unitsCount"  [maxSize]="5"
+  [(ngModel)]="currentPage"
+  (pageChanged)="pageChanged($event)"
+  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+</pagination>
+
+</div>
+
+

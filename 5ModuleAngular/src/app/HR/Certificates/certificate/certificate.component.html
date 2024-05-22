@@ -1,0 +1,89 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate"> المؤهلات </h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/hr/certificateslist" class="translate"  data-en="Exit"value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!py_cerificates.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+
+              <form [formGroup]="py_cerificates" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="card-body" >
+                    <div class="row">
+
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6" *ngIf="this.certificateId > 0">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Certificate code:">كود المؤهل:</label>
+                                    <input type="number" class="form-control w-50" formControlName="n_certificate_id" readonly>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Certificate Arabic name:">اسم المؤهل عربي:<span style="color: red;">*</span> </label>
+                                    <input type="text" class="form-control" formControlName="s_certificate_name" />
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Certificate English name:">اسم المؤهل انجليزي:</label>
+                                    <input type="text" class="form-control" formControlName="s_certificate_name_eng" />
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

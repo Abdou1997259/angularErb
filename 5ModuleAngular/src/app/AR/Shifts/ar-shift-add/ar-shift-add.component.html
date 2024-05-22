@@ -1,0 +1,207 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate" data-en="Add Sales Invoice">أضافة وردية</h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/ar/shiftslst" class="translate" data-en="Exit" value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!Pos_shifts.valid" value="حفظ" class="transalte" data-en="Save" (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+      <div class="container-fluid">
+  
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+  
+        <div class="row">
+          <div class="col-12">
+            <div class="invoice p-3 mb-3">
+              
+              <form [formGroup]="Pos_shifts" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="tab-content container" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-main" role="tabpanel" aria-labelledby="pills-main-tab">
+                  <div class="card-body" >
+                    <div class="row">
+  
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+  
+                            <div class="row">
+                              <section class="col col-6" *ngIf="this.docNo !=null && this.docNo > 0">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Invoice No">رقم الوردية:</label>
+                                    <div class="input-group">
+                                      <input type="number" class="form-control" formControlName="n_doc_no" readonly>
+                                    </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label ><span class="label translate" data-en="Date">تاريخ الوردية:</span><span style="color:red">&nbsp;*</span></label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_doc_date" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label><span  class="label translate" data-en="Shift Type">نوع الوردية:</span><span style="color:red">&nbsp;*</span></label>                                                            
+                                  <div class="input-group">
+                                    <select class="form-select" formControlName="n_shift_id"  >
+                                      <option *ngFor="let c of shiftTypesList" [ngValue]="c.n_Pos_Shift_Id">{{ c.s_Pos_Shift_Name }}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6 mt-5 text-center">
+                                <div class="form-group">
+                                  <label class="checkbox">
+                                    <input type="checkbox" formControlName="b_is_closed" />
+                                    <i></i> <span class="translate pr-2" data-en="Close shift">اغلاق الوردية</span>
+                                  </label>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                  </div>
+                </div>
+
+         
+                <div class="row" >
+                  <div class="col-12 table-responsive">
+                    <table class="custom-table" formArrayName="Pos_shifts_Details">
+                      <thead>
+                        <tr>
+                          <th style="min-width: 20px; text-align: center;" >#</th>
+                          <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Item Code">رقم البائع</th>
+                          <th style="min-width: 200px; text-align: center;" class="translatedata" data-en="Item Name">إسم البائع</th>
+                          <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Unit Code">رقم الخزينة</th>
+                          <th style="min-width: 200px; text-align: center;" class="translatedata" data-en="Unit Name">اسم الخزينة</th>
+                          <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Qty">مبلغ البداية</th>
+                          <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Perice Per Unit">الكاش بالصندوق</th>
+                          <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Total">شبكة</th>
+                          <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Dedcution n">اقفال</th>
+                          <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Dedcution V">عدد فواتير البيع</th>
+                          <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Expences V">عدد فواتير المرتد</th>
+                          <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Invoice Discount v">مستند العجز والزيادة</th>
+                          <th style="min-width: 35px; text-align: center;" class="translatedata" data-en="Remove" >حذف</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr [formGroupName]="i" *ngFor="let item of Pos_shifts_Details.controls; let i = index;">
+                          <td class="text-center" style="min-width: 20px;"> {{ i + 1 }} </td>
+
+                          <td style="min-width: 130px;">
+                            <div class="position-relative">
+                              <i class="fa fa-search position-absolute" (click)="LoadSalers(i);" data-toggle="modal"></i>
+                              <input class="form-control" type="text" formControlName="n_saler_id" (change)="ChangeSaler(i);">
+                            </div>
+                          </td>
+                  
+                          <td style="min-width: 200px;">
+                            <input type="text"  class="form-control" formControlName="s_employee_name" readonly>
+                          </td>
+
+                          <td style="min-width: 130px;">
+                            <div class="position-relative">
+                              <i class="fa fa-search position-absolute" (click)="LoadCashes(i);" data-toggle="modal"></i>
+                              <input class="form-control" type="text" formControlName="n_cash_id" (change)="ChangeCashe(i);">
+                            </div>
+                          </td>
+                  
+                          <td style="min-width: 200px;">
+                            <input type="text"  class="form-control" formControlName="s_cash_name" readonly>
+                          </td>
+
+                          <td style="min-width: 100px;">
+                            <input type="number"  class="form-control" formControlName="n_open_balance" >
+                          </td>
+
+                          <td style="min-width: 100px;">
+                            <input type="number"  class="form-control" formControlName="n_FoundCash" >
+                          </td>
+
+                          <td style="min-width: 100px;">
+                            <input type="number"  class="form-control" formControlName="n_found_credit_value" >
+                          </td>
+
+                          <td style="min-width: 100px;" class="text-center">
+                            <input type="checkbox" formControlName="b_is_closed" >
+                          </td>
+
+                          <td style="min-width: 100px;">
+                            <input type="number"  class="form-control" formControlName="n_sales_count" >
+                          </td>
+                          
+                          <td style="min-width: 100px;">
+                            <input type="number"  class="form-control" formControlName="n_Returnsales_count" >
+                          </td>
+                          
+                          <td style="min-width: 100px;">
+                            <input type="number"  class="form-control" formControlName="n_multi_doc_no" >
+                          </td>
+
+                          <td style="min-width: 35px;">
+                            <a  (click)="RemoveShiftDetailsRow(i)" class="button-minus"> <i class="bi bi-x-square"></i> </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <br><br><br>
+                  <div class="row p-3">
+                    <div class="col-md-12 text-center">
+                      <div class="button-plus">
+                        <i class="bi bi-plus"></i>
+                        <a (click)="AddShiftDetailsRow()" class="translate" data-en="Add">إضافة صنف</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <br/>
+
+            </div>
+      
+          </div>
+ 
+      </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+</div>
+
+

@@ -1,0 +1,19 @@
+
+<!-- <link  *ngIf="!isEnglish" type="text/css" rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCSSUrlar)'>
+<link  *ngIf="isEnglish" type="text/css" rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCSSUrleng)'> -->
+
+
+<link  type="text/css" rel="stylesheet" href='/assets/css/styles-ar.css'  *ngIf="!isEnglish">
+
+<link  type="text/css" rel="stylesheet" href='/assets/css/styles-en.css'  *ngIf="isEnglish">
+
+
+<div class="wrapper">
+  <app-header [ImgFlag]="flagImg" (ChangeLangClick)="ChangeMe($event)"></app-header>
+
+  <router-outlet>
+      <app-loader *ngIf="showLoader"></app-loader>
+  </router-outlet>
+
+  <app-footer *ngIf="!mainsShow"></app-footer>
+</div>

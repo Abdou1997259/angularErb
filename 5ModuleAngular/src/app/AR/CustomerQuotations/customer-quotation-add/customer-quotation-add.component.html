@@ -1,0 +1,751 @@
+<header style="margin-top:-2px">
+  <div class="content-wrapper" >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="Customer Balance">عرض سعر عميل</h2>
+        <div class="buttons">
+          <div class="button">
+            <i class="bi bi-bookmark-x "></i>
+            <a routerLink="/ar/customerBalanceList" class="translate" data-en="Exit">خروج</a>
+          </div>
+          <div class="button">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+            <input type="button" [disabled]="!ar_Customer_Quotation.valid" class="translate" data-en="Save" value="حفظ"  (click)="Save()" value="حفظ">
+           </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;"  [ngClass]="{'disabled':showspinner}">
+  <!-- Content Header (Page header) -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-dark">
+          <div class="card-header" style="height: 50px;">
+            <h3  class="d-flex justify-content-center translate" data-en="Cutomer Quotation Price">عرض سعر عميل</h3>
+          </div>
+          </div>
+          <!-- Main content -->
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="ar_Customer_Quotation" (keydown.enter)="$event.preventDefault()">
+
+              <div class="card-body">
+                <div class="row">
+
+                  <section class="col-lg-7">
+                    <div class="card p-3">
+                      <div class="row">
+
+                        <section class="col col-6" [hidden]="n_Quotation_no <= 0">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Customer Quotation No">رقم العرض</label>
+                            <div class="col-sm-6">
+                              <input type="text" class="form-control" formControlName="n_Quotation_no" readonly/>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Invoice Date">تاريخ الفاتورة<span style="color:red">&nbsp;*</span></label>
+                            <div class="col-sm-8">
+                              <mat-form-field>
+                                <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_Quotation_date" required>
+                                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </section>
+
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate"  data-en="Starting Quotation Date">بداية العرض<span style="color:red">&nbsp;*</span></label>
+                            <div class="col-sm-8">
+                              <mat-form-field>
+                                <input matInput [matDatepicker]="datepicker2" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker2.open()"  formControlName="d_quotation_start" required>
+                                <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker2 disabled="false"></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label "><span class="translate" data-en="Ending Quotation Date">نهاية العرض</span><span style="color:red">&nbsp;*</span></label>
+                            <div class="col-sm-9">
+                              <mat-form-field>
+                                <input matInput [matDatepicker]="datepicker3" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker3.open()"  formControlName="d_quotation_end" required>
+                                <mat-datepicker-toggle matSuffix [for]="datepicker3"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker3 disabled="false"></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label"> <span class="translate" data-en="Customer">العميل</span><span style="color:red">&nbsp;*</span> </label>
+                            <div class="col-sm-9">
+                              <select-server-side
+                              [selectForm]="ar_Customer_Quotation"
+                              [controlName]="'n_customer_id'"
+                              [TextField]="'s_customer_name'"
+                              [ValueField]="'n_customer_id'"
+                              [searching]="searchingCustomer"
+                              [filteredServerSide]="filteredCustomerServerSide"
+                              (OnSearch)="searchCustomers($event)">
+                              </select-server-side>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Sales Man"> مندوب المبيعات </label>
+                            <div class="col-sm-8">
+                              <select-server-side
+                              [selectForm]="ar_Customer_Quotation"
+                              [controlName]="'n_salesman_id'"
+                              [TextField]="'s_salesman_name'"
+                              [ValueField]="'n_salesman_id'"
+                              [searching]="searchingSalesman"
+                              [filteredServerSide]="filteredSalesmanServerSide"
+                              (OnSearch)="searchSalesman($event)">
+                              </select-server-side>
+                            </div>
+                          </div>
+                        </section>
+
+                        <!-- <section class="col col-12">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">العميل<span style="color:red">&nbsp;*</span></label>
+                            <div class="col-sm-6">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                <i class="fa fa-search position-absolute" (click)="LoadCustomers($event)" data-toggle="modal"></i>
+                                <input class="form-control has-search" [ngClass]="isCustomerExist ? 'border-success': 'border-danger'" type="text" formControlName="s_customer_name"
+                                (focus)="serachOpen($event)"  id="input-search-2" (keyup)="searchSalesCustomers($event)" (blur)="searchHide(2)"  autocomplete="off"
+
+                                >
+                                <div class="search-list" id="serach-list-id-2">
+                                  <table class="search-table">
+                                      <thead>
+                                        <tr>
+                                          <th>رقم  </th>
+                                          <th>الاسم</th>
+
+                                        </tr>
+
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let type of searchingsCustomers ;let i=index" (click)="selectItem(i,2,'s_customer_name','n_customer_id')">
+                                            <td [id]="'tdF'+ i">{{type.n_customer_id}}</td>
+                                            <td [id]="'tdS'+ i">{{type.s_customer_name}}</td>
+
+                                          </tr>
+
+
+
+                                      </tbody>
+
+                                    </table>
+                                  </div>
+                                <input type="hidden" formControlName="n_customer_id" >
+                              </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </section> -->
+
+                        <!-- <section class="col col-12">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">مندوب المبيعات</label>
+                            <div class="col-sm-6">
+                              <div class="position-relative">
+                                <div class="custom-search">
+                                <i class="fa fa-search position-absolute" (click)="LoadSalers($event)" data-toggle="modal"></i>
+                                <input class="form-control has-search" [ngClass]="isSalerExist ? 'border-success' : ''" type="text" formControlName="s_salesman_name"
+                                (focus)="serachOpen($event)"  id="input-search-1" (keyup)="searchSalesMenBegin($event)" (blur)="searchHide(1)"  autocomplete="off"
+
+                                >
+                                <div class="search-list" id="serach-list-id-1">
+                                  <table class="search-table">
+                                      <thead>
+                                        <tr>
+                                          <th>رقم  </th>
+                                          <th>الاسم</th>
+
+                                        </tr>
+
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let type of searchingsSalesMen ;let i=index" (click)="selectItem(i,1,'s_salesman_name','n_salesman_id')">
+                                            <td [id]="'tdF'+ i">{{type.n_salesman_id}}</td>
+                                            <td [id]="'tdS'+ i">{{type.s_salesman_name}}</td>
+
+                                          </tr>
+
+
+
+                                      </tbody>
+
+                                    </table>
+                                  </div>
+                                <input type="hidden" formControlName="n_salesman_id" >
+                              </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </section> -->
+                      </div>
+
+                      <div class="row">
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Currency">العملة</label>
+                            <div class="col-sm-9">
+                              <select class="form-select" formControlName="n_currency_id" (change)="currencyChanged()">
+                                <option [ngValue]="0">------------------------</option>
+                                <option *ngFor="let c of currenciesList" [value]="c.n_currency_id">{{ isEnglish? c.s_currency_name_eng: c.s_currency_name }}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Delivery Place">مكان التسليم</label>
+                            <div class="col-sm-8">
+                              <select class="form-select" formControlName="n_delivery_place">
+                                <option [ngValue]="0">------------------------</option>
+                                <option *ngFor="let d of deliveryPlacesList" [value]="d.code">{{ isEnglish?d.Name_English:d.name_arabic }}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </section>
+
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6" [hidden]="n_currency_id == 0 || n_currency_id == localCurrency">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Factor">المعامل</label>
+                            <div class="col-sm-4">
+                              <input type="number" class="form-control" formControlName="n_currency_coff"/>
+                            </div>
+                          </div>
+                        </section>
+
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Attachment Person">مندوب العميل</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" formControlName="s_AttachmentPerson"/>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label translate" data-en="Doc Reference">المرجع</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" formControlName="s_DocReference"/>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                    </div>
+                  </section>
+
+                  <section class="col-lg-5">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-8">
+                          <div class="form-group">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" formControlName="b_confirm" />
+                              <label class="form-check-label pr-2 translate" data-en="Confirm">تعميد</label>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-8">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Trans Source">مصدر الحركة</label>
+                            <div class="col-sm-9">
+                              <select class="form-select" formControlName="n_trans_source_no" (change)="TransSourceChanged()">
+                                <option *ngFor="let o of transSourceList" [ngValue]="o.n_trans_source_id">{{isEnglish?o.s_source_name_eng: o.s_source_name }}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-4" [hidden]="transNo <= 0">
+                          <div class="form-group">
+                            <button type="button" class="btn btn-outline-primary w-100 translate" data-en="Trans Source">عرض الحركة</button>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-8">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Cost Center">مركز التكلفة:</label>
+                            <div class="col-sm-9">
+                              <select-server-side
+                              [selectForm]="ar_Customer_Quotation"
+                              [controlName]="'s_cost_center_id'"
+                              [TextField]="'s_cost_center_name'"
+                              [ValueField]="'s_cost_center_id'"
+                              [searching]="searchingCost"
+                              [filteredServerSide]="filteredCostCenterServerSide"
+                              (OnSearch)="searchCost($event)">
+                              </select-server-side>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-8">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Cost Center 2">مركز التكلفة2:</label>
+                            <div class="col-sm-9">
+                              <select-server-side
+                              [selectForm]="ar_Customer_Quotation"
+                              [controlName]="'s_cost_center_id2'"
+                              [TextField]="'s_cost_center_name'"
+                              [ValueField]="'s_cost_center_id'"
+                              [searching]="searchingCost"
+                              [filteredServerSide]="filteredCostCenter2ServerSide"
+                              (OnSearch)="searchCost2($event)">
+                              </select-server-side>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-12">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label translate" data-en="Reference">بخصوص</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" formControlName="s_Referance" rows="2"></textarea>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="row">
+                  <section class="col-lg-12">
+                    <div class="card p-3">
+                      <div class="row">
+                        <div class="col-12 table-responsive">
+                          <table  id="tblCustomerQuotationsDetails" class="custom-table" formArrayName="ar_Customer_Quotation_Details">
+                            <thead>
+                              <tr>
+                                <th  style="min-width: 25px" class="translate" data-en="No">م</th>
+                                <th  style="min-width: 140px" class="translate" data-en="Item No">رقم الصنف</th>
+                                <th  style="min-width: 200px" class="translate" data-en="Item Name">اسم الصنف</th>
+                                <th  style="min-width: 140px" class="translate" data-en="Unit Code">كود الوحدة</th>
+                                <th  style="min-width: 200px" class="translate" data-en="Unit Name">اسم الوحدة</th>
+                                <th  style="min-width: 120px" class="translate" data-en="Batch">الباتش</th>
+                                <th  style="min-width: 200px" class="translate" data-en="Expiry date">تاريخ الصلاحية</th>
+                                <th  style="min-width: 100px" class="translate" data-en="QTY">الكمية</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Price Per Unit">سعر الوحدة</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Total Items">إجمالي الصنف</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Discount n">ن الخصم</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Discount v">ق الخصم</th>
+                                <th  style="min-width: 100px" class="translate" data-en="N/offer discount">ن/خصم العرض</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Discount offer">خصم العرض</th>
+                                <th  style="min-width: 100px" class="translate" data-en="N/extra discount1">ن/خصم اضافي1</th>
+                                <th  style="min-width: 100px" class="translate" data-en="N/extra discount2">ن/خصم اضافي2</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Net">الصافي</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Bouns Qty">كمية البونص</th>
+                                <th  style="min-width: 150px" class="translate" data-en="Delivery Place">تاريخ التسليم</th>
+                                <th  style="min-width: 200px" class="translate" data-en="Periorty">الاولوية</th>
+                                <th  style="min-width: 100px" class="translate" data-en="Order No">رقم الطلب</th>
+                                <th  style="min-width: 250px" class="translate" data-en="Notes">ملاحظات</th>
+                                <th  style="min-width: 45px"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr [formGroupName]="i" *ngFor="let item of ar_Customer_Quotation_Details.controls; let i = index;">
+                                <th scope="row" class="text-center" style="min-width: 25px;"> {{ i + 1 }} </th>
+
+                                <td style="min-width: 140px;">
+                                  <div class="position-relative" >
+                                    <i class="fa fa-search position-absolute en-left-sm" (click)="loadItems(i)" data-toggle="modal"></i>
+                                    <input class="form-control has-search" type="text" formControlName="s_item_id" (change)="ChangeItem(i)">
+                                  </div>
+                                </td>
+                                <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_item_name" readonly /> </td>
+
+                                <td style="min-width: 140px;">
+                                  <div class="position-relative">
+                                    <i class="fa fa-search position-absolute en-left-sm" (click)="loadUnits(i)" data-toggle="modal"></i>
+                                    <input class="form-control has-search" type="number" formControlName="n_unit_id" (change)="ChangeUnit(i)">
+                                  </div>
+                                </td>
+                                <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_unit_name" readonly /> </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="text" class="form-control" formControlName="sBatchNO" />
+                                </td>
+
+                                <td style="min-width: 200px;">
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker4" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker4.open()"  formControlName="d_ExpireDate">
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker4"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker4 disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_qty" placeholder="0" (change)="calcRows(i);calcMaster();" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_unit_price" placeholder="0" (change)="calcRows(i);calcMaster();" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_item_value" readonly placeholder="0" (ngModelChange)="calcNetVal(i);calcMaster();" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="nItemDiscountP" placeholder="0" (change)="calcTaxP(i);calcMaster();" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="nItemDiscountV" placeholder="0" (change)="calcTaxV(i);calcMaster();" (ngModelChange)="calcNetVal(i);" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="nInvDiscountP" placeholder="0" (change)="calcTaxInvP(i);calcMaster();" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="nInvDiscountV" placeholder="0" (change)="calcTaxInvV(i);calcMaster();" (ngModelChange)="calcNetVal(i);" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_over_Discount_Ratio" placeholder="0" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_over_Discount2_Ratio" placeholder="0" />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_item_net_value" placeholder="0" readonly />
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="number" class="form-control" formControlName="n_Bonus" placeholder="0" />
+                                </td>
+
+                                <td style="min-width: 200px;">
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker5" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker5.open()"  formControlName="d_ExpectedDate">
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker5"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker5 disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </td>
+
+                                <td style="min-width: 200px;">
+                                  <select class="form-select" formControlName="n_Highpriority">
+                                    <option *ngFor="let p of priorityList" [ngValue]="p.n_priority_id"> {{ isEnglish?p.s_priority_name_eng:p.s_priority_name }} </option>
+                                  </select>
+                                </td>
+
+                                <td style="min-width: 100px;">
+                                  <input type="text" class="form-control" formControlName="n_trans_source_doc_no" />
+                                </td>
+
+                                <td style="min-width: 250px;">
+                                  <textarea class="form-control" formControlName="s_notes"></textarea>
+                                </td>
+
+                                <td style="min-width: 45px;">
+
+                                  <i (click)="Remove_ar_Customer_Quotation_Details_Row(i)" class="bi bi-x-square" tabindex="-1"></i>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12 text-center">
+
+                            <div class="button-plus">
+                              <i class="bi bi-plus"></i>
+                              <a (click)="Add_ar_Customer_Quotation_Details_Row()"class="translate" data-en="Add Item">أضافة صنف</a>
+                           </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <div class="card-body mt-5">
+                <div class="row">
+                  <section class="col-lg-6">
+                    <div class="card p-3">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">أقساط</button>
+                          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">خصومات</button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                          <div class="row">
+                            <div class="col-12 table-responsive">
+                              <table  id="tblCustomerInstallments" class="custom-table" formArrayName="ar_Customer_Quot_Install">
+                                <thead>
+                                  <tr>
+                                    <th  style="width: 25px"  class="translate" data-en="No">م</th>
+                                    <th  style="width: 100px" class="translate" data-en="Installment Serial">رقم الدفعة</th>
+                                    <th  style="width: 100px" class="translate" data-en="Installment Value">القيمة</th>
+                                    <th  style="width: 200px" class="translate" data-en="Date Of Payment">تاريخ السداد</th>
+                                    <th  style="width: 200px" class="translate" data-en="Way of Payment">طريقة السداد</th>
+                                    <th  style="width: 45px"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr [formGroupName]="i" *ngFor="let item of ar_Customer_Quot_Install.controls; let i = index;">
+                                    <th scope="row" class="text-center" style="width: 25px;"> {{ i+1 }} </th>
+
+                                    <td style="width: 100px;">
+                                      <input type="text" class="form-control" formControlName="n_installment_serial" />
+                                    </td>
+
+                                    <td style="width: 100px;">
+                                      <input type="number" class="form-control" formControlName="n_installment_value" placeholder="0" />
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                      <mat-form-field>
+                                        <input matInput [matDatepicker]="datepicker3" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker3.open()"  formControlName="d_installment_date">
+                                        <mat-datepicker-toggle matSuffix [for]="datepicker3"></mat-datepicker-toggle>
+                                        <mat-datepicker #datepicker3 disabled="false"></mat-datepicker>
+                                      </mat-form-field>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                      <select class="form-select" formControlName="n_payment_type">
+                                        <option *ngFor="let p of paymentWays" [ngValue]="p.code"> {{isEnglish?p.Name_English: p.name_arabic }} </option>
+                                      </select>
+                                    </td>
+
+                                    <td style="width: 45px;">
+
+                                      <i class="bi bi-x-square"  (click)="Remove_ar_Customer_Quot_Install_Row(i)" tabindex="-1"></i>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12 text-center">
+
+                                <div class="button-plus">
+                                  <i class="bi bi-plus"></i>
+                                  <a (click)="Add_ar_Customer_Quot_Install_Row()" class="translate" data-en="Add Installemnt">أضافة دفعة</a>
+                               </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                          <div class="row">
+                            <div class="col-12 table-responsive">
+                              <table  id="tblCustomerDiscounts" class="custom-table" formArrayName="ar_Customer_Quotation_Discounts">
+                                <thead>
+                                  <tr>
+                                    <th  style="width: 25px"  class="translate" data-en="Code">م</th>
+                                    <th  style="width: 100px" class="translate" data-en="User Name">المستخدم</th>
+                                    <th  style="width: 200px" class="translate" data-en="Discount Rate">نسبة الخصم</th>
+                                    <th  style="width: 45px"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr [formGroupName]="i" *ngFor="let item of ar_Customer_Quotation_Discounts.controls; let i = index;">
+                                    <th scope="row" class="text-center" style="width: 25px;"> {{ i+1 }} </th>
+
+                                    <td></td>
+                                    <td></td>
+
+                                    <td style="width: 45px;">
+                                      <i (click)="Remove_ar_Customer_Quotation_Discounts_Row(i)" tabindex="-1" class="bi bi-x-square"></i>
+
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12 text-center">
+
+                                <div class="button-plus">
+                                  <i class="bi bi-plus"></i>
+                                  <a (click)="Add_ar_Customer_Quotation_Discounts_Row()" class="translate" data-en="Add Discount">أضافة خصم</a>
+                               </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="col-lg-6">
+                    <div class="card p-3">
+                      <div class="row">
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Insurance Value">مبلغ التأمين</label>
+                            <div class="col-sm-9">
+                              <input type="number" class="form-control" formControlName="n_insurValue" placeholder="0" />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Transport Value">قيمة النقل</label>
+                            <div class="col-sm-9">
+                              <input type="number" class="form-control" formControlName="n_TransportValue" placeholder="0" />
+                            </div>
+                          </div>
+                        </section>
+
+                      </div>
+
+                      <div class="row">
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Extra Discount">خصم العرض</label>
+                            <div class="col-sm-9">
+                              <input type="number" class="form-control" formControlName="n_extra_discount" placeholder="0" />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Extra Discount Ration">ن/الخصم</label>
+                            <div class="col-sm-9">
+                              <input type="number" class="form-control" formControlName="n_extra_discount_ratio" placeholder="0" />
+                            </div>
+                          </div>
+                        </section>
+
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Total Value">اجمالي العرض</label>
+                            <div class="col-sm-9">
+                              <input type="number" class="form-control" formControlName="n_total_value" placeholder="0" readonly />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Total Discount">الخصم</label>
+                            <div class="col-sm-9">
+                              <input type="number" class="form-control" formControlName="n_total_discount" placeholder="0" readonly />
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-5 col-form-label translate" data-en="Ser Discount Ratio">ن/خصم مستخدم</label>
+                            <div class="col-sm-7">
+                              <input type="number" class="form-control" formControlName="serDiscRatio" placeholder="0" />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label translate" data-en="Net Value">الصافي</label>
+                            <div class="col-sm-9">
+                              <input type="number" class="form-control" formControlName="n_net_value" placeholder="0" readonly />
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+            </form>
+            <div class="card-footer mb-4" >
+              <div class="row">
+
+                <div class="col-md-2">
+                  <app-attachments [ID]="this.n_Quotation_no" [DataArea]="this.ar_Customer_Quotation.value.n_DataAreaID" [Folder]="'CustomerBalance'" [SubFolder]="'Attachments'" *ngIf="this.n_Quotation_no !=null && this.n_Quotation_no > 0"></app-attachments>
+                </div>
+              </div>
+
+
+              <div class="row" *ngIf="showspinner">
+                <hr/>
+                <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+              </div>
+
+            </div>
+          </div>
+          <!-- /.invoice -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>

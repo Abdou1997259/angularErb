@@ -1,0 +1,497 @@
+<header>
+    <div class="content-wrapper" >
+        <section class="content" >
+            <div class="container-fluid">
+            <h2 class="translate" >سند قبض</h2>
+                <div class="buttons">
+                    <div class="button" >
+                        <i class="bi bi-bookmark-x "></i>
+                        <input type="button" routerLink="/fin/revenuelist" class="translate"  data-en="Exit"value="خروج">
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <input type="button" [disabled]="!RevenueForm.valid" value="حفظ" class="translate" data-en="Save"  (click)="save()" value="حفظ">
+                    </div>
+                </div>
+            </div>
+  
+        </section>
+    </div>
+  </header>
+  <br/>
+  
+  <div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+      <!-- Content Header (Page header) -->
+    
+      <section class="content">
+        <div class="container-fluid">
+    
+          <div class="row" *ngIf="showspinner">
+            <hr/>
+            <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+          </div>
+    
+    
+    
+          <div class="row">
+            <div class="col-12">
+            
+              <!-- Main content -->
+              <div class="invoice p-3 mb-3">
+    
+                <form [formGroup]="RevenueForm" (keydown.enter)="$event.preventDefault()">
+                  <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                  <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                  <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                  <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                  <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                  <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+    
+                  <div class="card-body" >
+                      <div class="row">
+    
+                          <section class="col-lg-7">
+                            <div class="card p-3">
+                              <div class="row">
+                                <section class="col col-6" *ngIf="this.DocNo !=null && this.DocNo > 0">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Doc No">رقم المستند:</label>
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="n_doc_no" readonly>
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6" *ngIf="this.DocNo !=null && this.DocNo > 0">
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Serial No">مسلسل الحركة:</label>
+                                        <div class="input-group">
+                                          <input type="number" class="form-control" formControlName="n_serial" readonly>
+                                        </div>
+                                    </div>
+                                  </section>
+                              </div>
+  
+                              <div class="row">
+                                  <section class="col col-6">
+                                      <div class="form-group">
+                                          <label class="label"><span class="translate" data-en="Doc Date">تاريخ المستند:</span><span style="color:red">&nbsp;*</span></label>
+                                          <mat-form-field>
+                                            <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_doc_date" required>
+                                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                          </mat-form-field>
+                                      </div>
+                                  </section>
+                                  <section class="col col-4">
+                                    <div class="form-group">
+                                        <label class="label"><span class="translate" data-en="Currency">العملة:</span><span style="color:red">&nbsp;*</span></label>                                                            
+                                        <div class="input-group">
+                                             <select class="form-select" formControlName="n_currency_id" (change)="CheckIsMain()" >
+                                            <option *ngFor="let c of CurrencyData" [ngValue]="c.n_currency_id">{{ c.s_currency_name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-2" [hidden]="!bisMainCurrency">
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Factor">المعامل:</label>                                                            
+                                        <div class="input-group">
+                                          <input type="number" class="form-control" formControlName="n_currency_coff" value="1" >
+                                        </div>
+                                    </div>
+                                  </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-12">
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Description">الوصف العام:</label>
+                                        <div class="input-group">
+                                          <input type="text" class="form-control" formControlName="s_description" >
+                                        </div>
+                                    </div>
+                                  </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                    <div class="form-group">
+                                        <label class="label "><span class="translate" data-en="Total Value">المبلغ:</span><span style="color:red">&nbsp;*</span></label>                                                            
+                                        <div class="input-group">
+                                          <input type="number" class="form-control" formControlName="n_total_value" >
+                                        </div>
+                                    </div>
+                                  </section>
+                              </div>
+                          </div> 
+
+                          <div class="card p-3">
+                              <div class="row">     
+                                <section class="col col-6">
+                                    <div class="form-group">
+                                        <label class="label"><span class="translate" data-en="Source Debit">الجهة:</span><span style="color:red">&nbsp;*</span></label>                                                            
+                                        <div class="input-group">
+                                            <select class="form-select" formControlName="n_source_debit" (change)="ChangeDebitItems()">
+                                              <option *ngFor="let c of DebitTypes" [ngValue]="c.n_financial_source_no">{{ c.s_financial_source_name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  </section> 
+                                  <section class="col col-6">
+                                    <div class="form-group">
+                                      <label class="label"><span class="translate" data-en="Source Name">رقم الجهة:</span><span style="color:red">&nbsp;*</span></label>                      
+                                        <select-server-side
+                                        [selectForm]="RevenueForm"
+                                        [controlName]="'s_source_debit'"
+                                        [TextField]="'s_source_name'"
+                                        [ValueField]="'n_source_id'"
+                                        [searching]="searchingDebit"
+                                        [filteredServerSide]="filteredDebitServerSide"
+                                        (OnSearch)="searchDebit($event)">
+                                        </select-server-side>
+                                    </div>
+                                  </section>
+                              </div>
+                          </div>
+
+                          <div class="card p-3">
+                            <div class="row">     
+                              <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label"><span class="translate" data-en="Source Credit">الجهة:</span><span style="color:red">&nbsp;*</span></label>                                                            
+                                      <div class="input-group">
+                                          <select class="form-select" formControlName="n_source_credit" (change)="ChangeCreditItems()">
+                                            <option *ngFor="let c of CreditTypes" [ngValue]="c.n_financial_source_no">{{isEnglish?c.s_financial_source_name_eng: c.s_financial_source_name }}</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                </section> 
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="label"><span class="translate" data-en="Source Name">رقم الجهة:</span><span style="color:red">&nbsp;*</span></label>                      
+                                      <select-server-side
+                                      [selectForm]="RevenueForm"
+                                      [controlName]="'s_source_credit'"
+                                      [TextField]="'s_source_name'"
+                                      [ValueField]="'n_source_id'"
+                                      [searching]="searchingCredit"
+                                      [filteredServerSide]="filteredCreditServerSide"
+                                      (OnSearch)="searchCredit($event)">
+                                      </select-server-side>
+                                  </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="card p-3">
+                            <div class="row">     
+                                <section class="col col-6">
+                                    <div class="form-group">
+                                    <label class="label translate" data-en="Cost Center 1">مركز التكلفة 1:</label>                      
+                                        <select-server-side
+                                        [selectForm]="RevenueForm"
+                                        [controlName]="'s_cost_center_id'"
+                                        [TextField]="'s_cost_center_name'"
+                                        [ValueField]="'s_cost_center_id'"
+                                        [searching]="searchingCost"
+                                        [filteredServerSide]="filteredCostCenterServerSide"
+                                        (OnSearch)="searchCost($event)">
+                                        </select-server-side>
+                                    </div>
+                                </section>
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="label translate" data-en="Show Journal" style="visibility: hidden;" >عرض القيد</label>                                                            
+                                    <div class="input-group">
+                                      <input type="button" id="btnJournal" class="btn btn-secondary btn-lg btn-block translate" data-en="Show Journal" value="عرض القيد" (click)="JournalShow()">
+                                    </div>
+                                </div>
+                                </section>
+                            </div>
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                <label class="label translate" data-en="Cost Center 2">مركز التكلفة 2:</label>                      
+                                    <select-server-side
+                                    [selectForm]="RevenueForm"
+                                    [controlName]="'s_cost_center_id2'"
+                                    [TextField]="'s_cost_center_name'"
+                                    [ValueField]="'s_cost_center_id'"
+                                    [searching]="searchingCost"
+                                    [filteredServerSide]="filteredCostCenter2ServerSide"
+                                    (OnSearch)="searchCost2($event)">
+                                    </select-server-side>
+                                </div>
+                              </section>
+                            </div>
+                        </div>
+                      </section>
+
+                          <section class="col-lg-5 ">
+                            <div class="card p-3" *ngIf="isBank || isBank2">
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Cheque No">رقم الشيك:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="s_cheque_no" >
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Due Date">تاريخ الاستحقاق:</label>
+                                      <mat-form-field>
+                                        <input matInput [matDatepicker]="datepicker1" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker1.open()"  formControlName="d_due_date">
+                                        <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #datepicker1 disabled="false"></mat-datepicker>
+                                      </mat-form-field>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Coolection Bank">البنك المسحوب عليه:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="s_collection_bank" >
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Cheque Benifer">اسم المستفيد:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="s_cheque_Benifer" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="checkbox">
+                                      <input type="checkbox" formControlName="b_Cheque_Status">
+                                      <i></i> <span class="translate" data-en="Cheque Status">تم السداد</span>
+                                    </label>
+                                  </div>
+                                </section>
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="checkbox">
+                                      <input type="checkbox" formControlName="b_cheque_ReceiveDone">
+                                      <i></i> <span class="translate" data-en="Cheque ReceiveDone">تم الاستلام</span>
+                                    </label>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row" *ngIf="isRecieved">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Receving Date">تاريخ الاستلام:</label>
+                                      <mat-form-field>
+                                        <input matInput [matDatepicker]="datepicker2" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker2.open()"  formControlName="d_cheque_received_date">
+                                        <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #datepicker2 disabled="false"></mat-datepicker>
+                                      </mat-form-field>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                            <div class="card p-3" *ngIf="isTransfer">
+                              <div class="row">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Transfer Type">نوع الحوالة:</label>                                                            
+                                      <div class="input-group">
+                                          <select class="form-select" formControlName="n_transferType" >
+                                          <option *ngFor="let c of TransferData" [ngValue]="c.code">{{isEnglish?c.Name_English: c.name_arabic }}</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Due Date">تاريخ الاستحقاق:</label>
+                                      <mat-form-field>
+                                        <input matInput [matDatepicker]="datepicker3" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker3.open()"  formControlName="d_cheque_received_date">
+                                        <mat-datepicker-toggle matSuffix [for]="datepicker3"></mat-datepicker-toggle>
+                                        <mat-datepicker #datepicker3 disabled="false"></mat-datepicker>
+                                      </mat-form-field>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Transfer No">رقم الحوالة:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_transfer_no" >
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Cheque Benifer">اسم المستفيد:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_cheque_Benifer" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="IBAN">الايبان:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_IBAN" >
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="SwiftCode">السويفت كود:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_SwiftCode" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Transfer To Account">رقم الحساب المحول له:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_TransferToAccount" >
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Country">البلد:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_Country" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="City">المدينة:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="sCity" >
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label">العنوان:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="sAddress" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label">عمولة البنك:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="n_bank_commission" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>                       
+                              <div class="row">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="checkbox">
+                                      <input type="checkbox" formControlName="b_Cheque_Status">
+                                      <i></i> تم السداد
+                                    </label>
+                                  </div>
+                                </section>
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="checkbox">
+                                      <input type="checkbox" formControlName="b_received">
+                                      <i></i> تم الاستلام
+                                    </label>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                            <div class="card p-3" *ngIf="isCard">
+                              <div class="row">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label">نوع البطاقة:</label>                                                            
+                                      <div class="input-group">
+                                          <select class="form-select" formControlName="n_credit_card_type" >
+                                            <option *ngFor="let c of CardData" [ngValue]="c.n_credit_card_no">{{ c.s_credit_card_name }}</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label">رقم البطاقة:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_credit_card_no" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label">كود التحقق:</label>                                                            
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_credit_card_no_Auth" >
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                              <div class="row">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label">تاريخ انتهاء البطاقة:</label>
+                                      <mat-form-field>
+                                        <input matInput [matDatepicker]="datepicker4" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker4.open()"  formControlName="d_credit_card_expiry_date">
+                                        <mat-datepicker-toggle matSuffix [for]="datepicker4"></mat-datepicker-toggle>
+                                        <mat-datepicker #datepicker4 disabled="false"></mat-datepicker>
+                                      </mat-form-field>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </section>
+                  </div> 
+                  </div>
+    
+     
+    <div class="card-footer mb-4" >
+      <div class="row">
+        
+           <div class="col-md-2">
+            <app-attachments [ID]="this.DocNo" [DataArea]="this.RevenueForm.value.n_DataAreaID" [Folder]="'Revenue'" [SubFolder]="'Attachments'" *ngIf="this.DocNo !=null && this.DocNo > 0"></app-attachments>
+           </div>
+        </div>
+    
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+    
+    </div>
+    
+                  </form>
+    
+              </div>
+              <!-- /.invoice -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>

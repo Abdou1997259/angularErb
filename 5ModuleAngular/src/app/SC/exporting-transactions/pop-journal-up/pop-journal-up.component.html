@@ -1,0 +1,18 @@
+
+<app-journals style="margin-top: 200px;"
+ [accountNo1]="accountNo1" 
+ [accountNo2]="accountNo2"
+ [accountName1]="accountName1" 
+ [accountName2]="accountName2"
+ [History]="History"
+ [Credit1]="0"
+ [Debit1]="Debit"
+ [Credit2]="Credit"
+ [Debit2]="0"
+ [Currency]="Currency_Name"
+ [descArab]="descArab"
+ [descEng]="descEng"
+ (eventEmitter)="getGLFromGroup($event)"
+ >
+
+</app-journals>

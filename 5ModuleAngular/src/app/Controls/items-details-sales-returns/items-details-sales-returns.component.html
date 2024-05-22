@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="translate" data-en="Items">الاصناف</h1>
+      <button class="btn btn-danger" (click)="onCloseClick()">X</button>
+    </div>
+  </div>
+</div>
+
+
+     <div class="mt-0">
+      <table class="table table-striped table-bordered dt-responsive">
+        <thead >
+          <tr>
+            <th><input type="text" class="form-control" (keyup)="DoSearch();"  [(ngModel)]="itemId"></th>
+            <th><input type="text" class="form-control" (keyup)="DoSearch();"  [(ngModel)]="itemName"></th>
+            <th><input type="text" class="form-control" (keyup)="DoSearch();"  [(ngModel)]="unitId"></th>
+            <th><input type="text" class="form-control" (keyup)="DoSearch();"  [(ngModel)]="unitName"></th>
+          </tr>
+
+          <tr>
+            <th style="text-align: center;"  class="translate" data-en="Item No">رقم الصنف</th>
+            <th style="text-align: center;"  class="translate" data-en="Item Name">الاسم</th>
+            <th style="text-align: center;"  class="translate" data-en="Unit Code">ك الوحدة</th>
+            <th style="text-align: center;"  class="translate" data-en="Unit Name">اسم الوحدة</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of List" (click)="selectItem(item)" >
+          <td style="text-align: center;" >{{item.s_item_id}}  </td>
+          <td style="text-align: center;" >{{item.s_item_name}}  </td>
+          <td style="text-align: center;" >{{item.n_unit_id}}  </td>
+          <td style="text-align: center;" >{{item.s_unit_name}}  </td>
+        </tr>
+        </tbody>
+
+      </table>
+     </div>
+
+  <div class="d-flex justify-content-center pt-1">
+
+    <pagination [boundaryLinks]="true" [totalItems]="unitsCount"  [maxSize]="5"
+    [(ngModel)]="currentPage"
+    (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+  </pagination>
+
+  </div>
+
+
+

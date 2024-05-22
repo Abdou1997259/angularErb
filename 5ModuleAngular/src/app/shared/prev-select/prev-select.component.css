@@ -1,0 +1,11 @@
+.mat-option:nth-child(2) .mat-pseudo-checkbox {
+    display: none;
+}
+.hide {
+    display: none;
+
+}
+.mat-option-text{
+    display: inline-block;
+    margin-right: 11px;
+}

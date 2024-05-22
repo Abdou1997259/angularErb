@@ -1,0 +1,968 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+            <h2 class="translate" data-en="Add Purchase Invoice">أضافة فاتورة شراء</h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/ap/purchaseinvoicelist" class="translate" data-en="Exit" value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" class="translate" data-en="Save"[disabled]="!InvoiceForm.valid" value="حفظ"  (click)="save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-12">
+
+            <div class="invoice p-3 mb-3">
+              <form [formGroup]="InvoiceForm" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="tab-content container" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-main" role="tabpanel" aria-labelledby="pills-main-tab">
+                  <div class="card-body" >
+                    <div class="row">
+
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+
+                            <div class="row">
+                              <section class="col col-6" *ngIf="this.DocNo !=null && this.DocNo > 0">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Invoice No">رقم الفاتورة:</label>
+                                    <div class="input-group">
+                                      <input type="number" class="form-control" formControlName="n_purchase_invoice_no" readonly>
+                                    </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6" >
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Book Doc">الرقم الدفترى:</label>
+                                    <div class="input-group">
+                                      <input type="text" class="form-control" formControlName="s_book_doc_no" >
+                                    </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+
+                              <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label"><span class="translate" data-en="Invoice Data">تاريخ الفاتورة:</span><span style="color:red">&nbsp;*</span></label>
+                                      <mat-form-field>
+                                        <!-- <mat-label>YYYY/MM/DD</mat-label> -->
+                                        <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_purchase_invoice_date" required>
+                                        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                      </mat-form-field>
+                                  </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label"><span class="translate" data-en="Invoice Type">نوع الفاتورة:</span><span style="color:red">&nbsp;*</span></label>
+                                    <div class="input-group">
+                                        <select class="form-select" formControlName="n_ivoice_type_id" >
+                                          <option *ngFor="let c of InvoiceData" [ngValue]="c.n_ivoice_type_id">{{ c.s_name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </section>
+
+                            </div>
+
+                            </div>
+
+                            <div class="card p-3">
+                              <div class="row">
+
+                                <section class="col col-6">
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Supplier Invoice Date">تاريخ فاتورة المورد:</label>
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker1" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker1.open()"  formControlName="d_supplier_invoice_date" >
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker1 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Due Data">تاريخ الاستحقاق:</label>
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker2" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker2.open()"  formControlName="d_due_date" >
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker2 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                  </section>
+
+                              </div>
+                          </div>
+
+                            <div class="card p-3">
+                            <div class="row">
+
+                                <section class="col col-6">
+                                    <div class="form-group">
+                                      <label class="label"><span class="translate" data-en="Supplier">المورد:</span><span style="color:red">&nbsp;*</span></label>
+                                        <!-- <select-server-side
+                                        [selectForm]="InvoiceForm"
+                                        [controlName]="'n_supplier_id'"
+                                        [TextField]="'s_supplier_name'"
+                                        [ValueField]="'n_supplier_id'"
+                                        [searching]="searchingSupplier"
+                                        (onSelectionChange)="changeSupplier()"
+                                        [filteredServerSide]="filteredSupplierServerSide"
+                                        (OnSearch)="searchSupplier($event)">
+                                        </select-server-side> -->
+                                        <look-up-ap [form]="InvoiceForm" [SearchID]="'sup'" [inputName]="'n_supplier_id'" [mylookupID]="'n_supplier_id'" [colSize]="'col-5'" [colSizeName]="'col-7'" [nameCol]="'SupplierName'" [TitleAr]="'الموردين'" [TitleEn]="'Suppliers'" (onValueChange)="changeSupplier($event[0]);"></look-up-ap>
+                                    </div>
+                                </section>
+
+                                <section class="col col-6">
+                                    <div class="form-group">
+                                      <label class="label translate" data-en="SalesMan">مندوب المشتريات:</label>
+                                        <select-server-side
+                                        [selectForm]="InvoiceForm"
+                                        [controlName]="'n_purchaseMan_id'"
+                                        [TextField]="'s_employee_name'"
+                                        [ValueField]="'n_employee_id'"
+                                        [searching]="searchingMan"
+                                        [filteredServerSide]="filteredManServerSide"
+                                        (OnSearch)="searchMan($event)">
+                                        </select-server-side>
+                                    </div>
+                                </section>
+                              </div>
+
+                            <div class="row">
+
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="label translate" data-en="Store">المخزن:<span style="color:red">&nbsp;*</span></label>
+                                      <select-server-side
+                                      [selectForm]="InvoiceForm"
+                                      [controlName]="'n_store_id'"
+                                      [TextField]="'s_store_name'"
+                                      [ValueField]="'n_store_id'"
+                                      [searching]="searchingStore"
+                                      [filteredServerSide]="filteredStoreServerSide"
+                                      (OnSearch)="searchStore($event)">
+                                      </select-server-side>
+                                  </div>
+                              </section>
+
+                                <section class="col col-4">
+                                    <div class="form-group">
+                                        <label class="label"><span class="translate" data-en="Currency">العملة:</span><span style="color:red">&nbsp;*</span></label>
+                                        <div class="input-group">
+                                            <select class="form-select" formControlName="n_currency_id" (change)="CheckIsMain()" >
+                                            <option *ngFor="let c of CurrencyData" [ngValue]="c.n_currency_id">{{ c.s_currency_name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="col col-2" [hidden]="!bisMainCurrency">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Factor">المعامل:</label>
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="n_currency_coff" value="1" >
+                                      </div>
+                                  </div>
+                              </section>
+
+                            </div>
+
+                            <div class="row">
+                                <section class="col col-6">
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Ar Description">الوصف عربى:</label>
+                                        <div class="input-group">
+                                          <input type="text" class="form-control" formControlName="s_description_arabic" >
+                                        </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group">
+                                      <label class="label translate" data-en="Description">الوصف انجليزى:</label>
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="s_description_eng" >
+                                      </div>
+                                    </div>
+                                  </section>
+                            </div>
+                          </div>
+
+                        </section>
+
+                        <section class="col-lg-5 ">
+                          <div class="card p-3">
+
+                            <div class="row">
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Trans Source">مصدر الحركة:</label>
+                                    <div class="input-group">
+                                        <select class="form-select" formControlName="n_trans_source_no" (change)="changeTransStatus()">
+                                        <option *ngFor="let c of TranSourceData" [ngValue]="c.n_trans_source_id">{{isEnglish?c.s_source_name_eng: c.s_source_name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-4" *ngIf="isSelectedTrans">
+                                <div class="form-group">
+                                  <label class="form-label">&nbsp;</label>
+                                  <button type="button" class="form-control btn btn-outline-info w-100 translate" (click)="showSourcesTypes()"  data-en="Trans Show">عرض الحركة</button>
+                                </div>
+                              </section>
+                            </div>
+
+                            <!-- <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label">المشروع:</label>
+                                    <div class="input-group">
+                                        <select class="form-select" formControlName="n_project_id" >
+                                        <option *ngFor="let c of ProjectData" [ngValue]="c.n_project_id">{{ c.s_project_name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </section>
+                              <section class="col col-6" >
+                                  <div class="form-group">
+                                      <label class="label">مسلسل أ:</label>
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="n_serial_inv_type" >
+                                      </div>
+                                  </div>
+                                </section>
+                            </div> -->
+
+                            <div class="row">
+
+                                <section class="col col-6" >
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Account With Supplier">رقم الحساب لدى المورد:</label>
+                                        <div class="input-group">
+                                          <input type="number" class="form-control" formControlName="s_account_with_supp" >
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="col col-6" >
+                                    <div class="form-group">
+                                        <label class="label translate" data-en="Invoice No Supplier">رقم فاتورة المورد:</label>
+                                        <div class="input-group">
+                                          <input type="text" class="form-control" formControlName="n_invoice_no_supp" >
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+
+                        </div>
+
+                        <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-12">
+                                  <div class="form-group">
+                                    <label class="checkbox">
+                                      <input type="checkbox" formControlName="b_use_multi_cost_center" (ngModelChange)="showDetailsCost()">
+                                      <i></i><span class="translate" data-en="Use Multi Cost Center"> مرتبط بعدة مراكز تكلفة</span>
+                                    </label>
+                                  </div>
+                              </section>
+                            </div>
+                            <div class="row" *ngIf="!isMultiCost">
+                                <section class="col col-12">
+                                  <div class="form-group">
+                                    <label class="label translatedata" data-en="Cost Center">مركز التكلفة:</label>
+                                    <!-- <select-server-side
+                                    [selectForm]="InvoiceForm"
+                                    [controlName]="'s_cost_center_id'"
+                                    [TextField]="'s_cost_center_name'"
+                                    [ValueField]="'s_cost_center_id'"
+                                    [searching]="searchingCost"
+                                    [filteredServerSide]="filteredCostCenterServerSide"
+                                    (OnSearch)="searchCost($event)">
+                                    </select-server-side> -->
+                                    <look-up-ap [form]="InvoiceForm" [SearchID]="'cost'" [inputName]="'s_cost_center_id'" [mylookupID]="'s_cost_center_id'" [colSize]="'col-5'" [colSizeName]="'col-7'" [nameCol]="'CostName'" [TitleAr]="'مركز التكلفة'" [TitleEn]="'Cost Center'"></look-up-ap>
+                                  </div>
+                                </section>
+                            </div>
+                            <div class="row" *ngIf="!isMultiCost">
+                              <section class="col col-12">
+                                <div class="form-group">
+                                  <label class="label translatedata" data-en="Cost Center 2">مركز التكلفة 2:</label>
+                                  <!-- <select-server-side
+                                  [selectForm]="InvoiceForm"
+                                  [controlName]="'s_cost_center_id2'"
+                                  [TextField]="'s_cost_center_name'"
+                                  [ValueField]="'s_cost_center_id'"
+                                  [searching]="searchingCost"
+                                  [filteredServerSide]="filteredCostCenter2ServerSide"
+                                  (OnSearch)="searchCost2($event)">
+                                  </select-server-side> -->
+                                  <look-up-ap [form]="InvoiceForm" [SearchID]="'cost'" [inputName]="'s_cost_center_id2'" [mylookupID]="'s_cost_center_id2'" [colSize]="'col-5'" [colSizeName]="'col-7'" [nameCol]="'CostName2'" [TitleAr]="'2 مركز التكلفة'" [TitleEn]="'Cost Center 2'"></look-up-ap>
+                                </div>
+                              </section>
+                            </div>
+
+                        </div>
+
+                        <div class="card p-3">
+                          <div class="row">
+                            <section class="col col-6">
+                              <div class="form-group">
+                                  <label class="label"><span class="translate" data-en="Direction">التوجية:</span><span style="color:red">&nbsp;*</span></label>
+                                  <div class="input-group">
+                                      <select class="form-select" formControlName="n_acc_dir_id" >
+                                        <option *ngFor="let c of AccDirData" [ngValue]="c.n_acc_dir_no">{{ isEnglish?c.s_acc_dir_name_eng:c.s_acc_dir_name }}</option>
+                                      </select>
+                                  </div>
+                              </div>
+                            </section>
+                            <section class="col col-6">
+                              <div class="form-group">
+                                <label class="label"></label>
+                                <div class="input-group">
+                                  <label class="checkbox">
+                                    <input type="checkbox" formControlName="b_quantity_match">
+                                    <i></i> <span class="translate" data-en="Qty Match"> تمت المطابقة</span>
+                                  </label>
+                                </div>
+
+                              </div>
+                            </section>
+                          </div>
+                          <div class="row">
+                            <section class="col col-12">
+                              <input type="button" id="btnJournal" class="btn btn-secondary btn-lg btn-block translate" data-en="Show Journal" value="عرض القيد" (click)="JournalShow()">
+                            </section>
+                          </div>
+                        </div>
+
+                      </section>
+                  </div>
+                </div>
+
+
+                <div class="row" >
+                  <div class="col-12 table-responsive">
+                    <table  *ngIf="invoiceDetails.controls.length > 0" class="custom-table" formArrayName="invoiceDetails">
+                      <thead>
+                      <tr>
+                        <th style="min-width: 20px; text-align: center;" class="translatedata" data-en="Item Code">#</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Item Code">كود الصنف</th>
+                        <th style="min-width: 200px; text-align: center;" class="translatedata" data-en="Item Name">اسم الصنف</th>
+                        <th style="min-width: 110px; text-align: center;" class="translatedata" data-en="Unit Code">كود الوحدة</th>
+                        <th style="min-width: 160px; text-align: center;" class="translatedata" data-en="Unit Name">اسم الوحدة</th>
+                        <th style="min-width: 100px; text-align: center;" class="translatedata" data-en="Qty">الكمية</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Perice Per Unit">سعر الوحدة</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Total">الاجمالى</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Dedcution n">ن الخصم</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Dedcution V">ق الخصم</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Expences V">ق المصروفات</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Invoice Discount v">ق خصم الفاتورة</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Net without tax">الصافى بدون ضريبة</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="z/sales">ض/المبيعات</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="z/discount">ض/خصم</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Z/extra">ض/إضافية</th>
+                        <th style="min-width: 130px; text-align: center;" class="translatedata" data-en="Net">الصافى</th>
+                        <th style="min-width: 130px; text-align: center;" *ngIf="isMultiCost" class="translatedata" data-en="Cost Center1">ك مرك
+                        <th style="min-width: 200px; text-align: center;" *ngIf="isMultiCost" class="translatedata" data-en="Cost Center2">مركز
+                        <th style="min-width: 130px; text-align: center;" *ngIf="isMultiCost" class="translatedata" data-en="Cost Center3">ك مرك
+                        <th style="min-width: 200px; text-align: center;" *ngIf="isMultiCost" class="translatedata" data-en="Cost Center4">مركز
+                        <!-- <th style="min-width: 130px;" >الكمية بالوحدة الاساسية</th> -->
+                        <th style="min-width: 150px; text-align: center;"  class="translatedata" data-en="Notes" >ملاحظات</th>
+                        <th style="min-width: 35px; text-align: center;" class="translatedata" data-en="Remove"  >حذف</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                      <tr  [formGroupName]="i" *ngFor="let det of invoiceDetails.controls; let i=index">
+                        <td style="min-width: 20px;">
+                          {{det.value.nLineNo}}
+                        </td>
+                        <td style="min-width: 130px;">
+                          <div class="position-relative">
+                            <i class="fa fa-search position-absolute en-left-sm" (click)="LoadItems(i);" data-toggle="modal"></i>
+                            <input class="form-control {{det.value.s_item_color}}" type="text" formControlName="s_item_id" (change)="ChangeItem(i);">
+                          </div>
+                        </td>
+
+                        <td style="min-width: 200px;">
+                          <input type="text"  class="form-control" formControlName="s_item_name" readonly>
+                        </td>
+
+                        <td style="min-width: 110px;">
+                          <div class="position-relative">
+                            <i class="fa fa-search position-absolute en-left-sm" (click)="LoadUnits(i)" data-toggle="modal"></i>
+                            <input class="form-control {{det.value.s_unit_color}}" type="number" formControlName="n_unit_id" (change)="ChangeUnit(i);">
+                          </div>
+                        </td>
+
+                        <td style="min-width: 160px;">
+                          <!-- <select class="form-select {{det.value.s_unit_color}}" formControlName="n_unit_id" id="Item_{{i}}">
+                            <option *ngFor="let c of UnitsData" [ngValue]="c.n_unit_id">{{ c.s_unit_name }}</option>
+                          </select> -->
+                          <input type="text"  class="form-control" formControlName="s_unit_name" readonly>
+                        </td>
+                        <td style="min-width: 100px;">
+                          <input type="number"  class="form-control {{det.value.s_qty_color}}" formControlName="n_qty" (change)="calcRows(i,0);setExpense();">
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control {{det.value.s_price_color}}" formControlName="n_unit_price" (change)="calcRows(i,0);setExpense();">
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_item_value" (change)="calcRows(i,0)" readonly>
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="nItemDiscountP" (change)="calcTaxP(i)">
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="nItemDiscountV" (change)="calcTaxV(i)">
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_item_expenses" (change)="calcRows(i,0)" readonly>
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="nInvDiscountV" (change)="calcRows(i,0)" readonly>
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_item_net_value_WithoutTax" (change)="calcRows(i,0)" readonly>
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_item_sales_Tax" (change)="calcRows(i,1)">
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_item_discount_tax" (change)="calcRows(i,0)" readonly>
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_item_additional_tax" (change)="calcRows(i,0)" readonly>
+                        </td>
+                        <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_item_net_value" (change)="calcRows(i,0)" readonly>
+                        </td>
+                        <td style="min-width: 130px;" *ngIf="isMultiCost">
+                          <div class="position-relative">
+                            <i class="fa fa-search position-absolute en-left-sm" (click)="LoadCostCenter1(i)"></i>
+                            <input class="form-control" type="text" formControlName="s_cost_center_id" (change)="ChangeDetailsCost1(i);">
+                          </div>
+                        </td>
+                        <td style="min-width: 200px;" *ngIf="isMultiCost">
+                          <input type="text"  class="form-control" formControlName="s_cost_center_name" readonly>
+                        </td>
+                        <td style="min-width: 130px;" *ngIf="isMultiCost">
+                          <div class="position-relative">
+                            <i class="fa fa-search position-absolute en-left-sm" (click)="LoadCostCenter2(i);"></i>
+                            <input class="form-control " type="text" formControlName="s_cost_center_id2" (change)="ChangeDetailsCost2(i);">
+                          </div>
+                        </td>
+                        <td style="min-width: 200px;" *ngIf="isMultiCost">
+                          <input type="text"  class="form-control" formControlName="s_cost_center_name2" readonly>
+                        </td>
+                        <!-- <td style="min-width: 130px;">
+                          <input type="number"  class="form-control" formControlName="n_qty_main_unit" (change)="checkTax(i)" readonly>
+                        </td> -->
+                        <td style="min-width: 150px;">
+                          <input type="text"  class="form-control" formControlName="s_notes">
+                        </td>
+                        <td style="min-width: 35px;">
+                          <a  (click)="RemoveInvoiceDetail(i)" class="button-minus"> <i class="bi bi-x-square"></i> </a>
+                        </td>
+
+
+                      </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <br><br><br>
+                  <div class="row p-3">
+                    <div class="col-md-12 text-center">
+                      <div class="button-plus">
+                        <i class="bi bi-plus"></i>
+                        <a (click)="addInvoiceDetails()" data-en="Item Add" class="translate">إضافة صنف</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <br/>
+
+
+              <div class="row p-3">
+
+                <div class="row">
+
+                    <div class="card p-3">
+
+                      <div class="row">
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                              <label class="label translate" data-en="Total Qty">اجمالى الكمية:</label>
+                              <div class="input-group">
+                                <input type="number" class="form-control" formControlName="n_total_qty" readonly>
+                              </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                              <label class="label translate" data-en="Total Modified Price">اجمالى السعر المعدل:</label>
+                              <div class="input-group">
+                                <input type="number" class="form-control" formControlName="n_total_modified_price" readonly>
+                              </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="card p-3">
+                        <div class="row">
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="No Of Items">عدد الاصناف:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_no_of_items" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Extra Expenses">مصروفات محملة:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_extra_expenses_Loaded" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Net Value Bouns">صافى الفاتورة بالبونص:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_net_valueWithBonus" readonly>
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+                        <div class="row">
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Total Value">اجمالى الفاتورة:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_total_value" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Extra Expenses Unload">مصروفات غير محملة:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_extra_expenses_UnLoaded" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Net Value">صافى الفاتورة:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_net_value" readonly>
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+                        <div class="row">
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Total Discount">اجمالى الخصم:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_total_discount" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Sales tax">القيمة المضافة:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_sales_tax" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Expenses Tax">ض/المصروفات:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_expenses_tax" readonly>
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-3">
+                          <div class="form-group">
+                            <label class="checkbox">
+                              <input type="checkbox" formControlName="b_advanced_payment" (ngModelChange)="SetAdvanceTab()">
+                              <i></i> <span class="translate" data-en="Advanced Payment"> دفعات مقدمة</span>
+                            </label>
+                          </div>
+                        </section>
+                        <div class="card p-3" *ngIf="bAdvance">
+                          <div class="row">
+                            <section class="col col-6">
+                              <div class="form-group">
+                                  <label class="label translate" data-en="Advanced Payment Value">قيمة الدفعات المقدمة:</label>
+                                  <div class="input-group">
+                                    <input type="number" class="form-control" formControlName="n_advanced_payment_value">
+                                  </div>
+                              </div>
+                            </section>
+                          </div>
+                          <div class="row">
+                            <div class="col col-6 card p-1">
+                              <div class="card-header text-center translate" data-en="Guarantees Reserved Primary Percent">
+                                الضمان المحتجز الابتدائى
+                              </div>
+                              <div class="row p-3">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Ratio">النسبة:</label>
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="n_guarantees_reserved_primary_percent" (change)="reservationFirstP()">
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Value">القيمة:</label>
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="n_guarantees_reserved_primary_value" (change)="reservationFirstV()">
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                            <div class="col col-6 card p-1">
+                              <div class="card-header text-center">
+                                الضمان المحتجز النهائى
+                              </div>
+                              <div class="row p-3">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Gurarant Reserved Final Percent ">النسبة:</label>
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="n_guarantees_reserved_final_percent" (change)="reservationLastP()">
+                                      </div>
+                                  </div>
+                                </section>
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                      <label class="label translate" data-en="Guarantess Reserved Final Value">القيمة:</label>
+                                      <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="n_guarantees_reserved_final_value" (change)="reservationLastV()">
+                                      </div>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <section class="col col-3">
+                          <div class="form-group">
+                            <label class="checkbox">
+                              <input type="checkbox" formControlName="b_has_extra_expnses" (change)="SetExtraTab()">
+                              <i></i> <span class="translate" data-en="Has Extra Expenses"> مصروفات اضافية</span>
+                            </label>
+                          </div>
+                        </section>
+                        <div class="card p-3" *ngIf="bExtra">
+                          <div class="row">
+                            <div class="col-12 table-responsive">
+                              <table *ngIf="expenseDetails.controls.length > 0" class="custom-table" formArrayName="expenseDetails">
+                                <thead>
+                                <tr>
+                                  <th style="min-width: 100px; text-align: center;" class="translate" data-en="Expense Code">كود المصروف</th>
+                                  <th style="min-width: 160px; text-align: center;" class="translate" data-en="Expense Name">اسم المصروف</th>
+                                  <th style="min-width: 50px; text-align: center;"  class="translate" data-en="Taxes included">شامل الضريبة</th>
+                                  <th style="min-width: 130px; text-align: center;" class="translate" data-en="Expense Value">قيمة المصروف</th>
+                                  <th style="min-width: 160px; text-align: center;" class="translate" data-en="Currency">العملة</th>
+                                  <th style="min-width: 100px; text-align: center;" class="translate" data-en="Factor">المعامل</th>
+                                  <th style="min-width: 130px; text-align: center;" class="translate" data-en="Tax Value">قيمة الضريبة</th>
+                                  <th style="min-width: 130px; text-align: center;" class="translate" data-en="Value in local currency ">القيمة بالعملة المحلية</th>
+                                  <th style="min-width: 50px; text-align: center;"  class="translate" data-en="loader">محمل</th>
+                                  <th style="min-width: 130px; text-align: center;" class="translate" data-en="The corresponding account">الحساب المقابل</th>
+                                  <th style="min-width: 200px; text-align: center;" class="translate" data-en="Name of the corresponding account">اسم الحساب المقابل</th>
+                                  <th style="min-width: 150px; text-align: center;" class="translate" data-en="Description">الوصف</th>
+                                  <th style="min-width: 35px; text-align: center;"  class="translate" data-en="Remove">حذف</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  <tr [formGroupName]="i" *ngFor="let det of expenseDetails.controls; let i=index">
+                                    <td style="min-width: 100px;">
+                                      <div class="position-relative">
+                                        <i class="fa fa-search position-absolute en-left-sm" (click)="LoadExpenses(i);"></i>
+                                        <input class="form-control {{det.value.s_expense_color}}" type="text" formControlName="s_expense_code" (change)="ChangeExpense(i);">
+                                      </div>
+                                    </td>
+                                    <td style="min-width: 160px;">
+                                      <input type="text" class="form-control" formControlName="s_expense_name" readonly>
+                                    </td>
+                                    <td style="min-width: 50px;">
+                                      <input type="checkbox" formControlName="b_has_tax" (change)="setExpense()">
+                                    </td>
+                                    <td style="min-width: 130px;">
+                                      <input type="number" class="form-control {{det.value.s_value_color}}" formControlName="nExpensesValue" (change)="setExpense()">
+                                    </td>
+                                    <td style="min-width: 160px;">
+                                      <select class="form-select" formControlName="n_currency_id" (change)="setCoffDisable(i);setExpense();">
+                                        <option *ngFor="let c of CurrencyData" [ngValue]="c.n_currency_id">{{ c.s_currency_name }}</option>
+                                      </select>
+                                    </td>
+                                    <td style="min-width: 100px;">
+                                      <input type="number" class="form-control" formControlName="nCoff" (change)="setExpense()">
+                                    </td>
+                                    <td style="min-width: 130px;">
+                                      <input type="number" class="form-control" formControlName="n_sales_tax" readonly>
+                                    </td>
+                                    <td style="min-width: 130px;">
+                                      <input type="number" class="form-control" formControlName="n_value" readonly>
+                                    </td>
+                                    <td style="min-width: 50px;">
+                                      <input type="checkbox" formControlName="n_loaded" (change)="setExpense()">
+                                    </td>
+                                    <td style="min-width: 100px;">
+                                      <div class="position-relative">
+                                        <i class="fa fa-search position-absolute en-left-sm" (click)="LoadAccounts(i);"></i>
+                                        <input class="form-control {{det.value.s_acc_color}}" type="text" formControlName="opp_acc" (change)="ChangeAcc(i);">
+                                      </div>
+                                    </td>
+                                    <td style="min-width: 200px;">
+                                      <input type="text" class="form-control" formControlName="opp_acc_name" readonly>
+                                    </td>
+                                    <td style="min-width: 200px;">
+                                      <input type="text"  class="form-control" formControlName="s_descrip">
+                                    </td>
+                                    <td style="min-width: 35px;">
+                                      <a  (click)="RemoveExpenseDetail(i)" class="button-minus"> <i class="bi bi-x-square"></i> </a>
+                                    </td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="row p-3">
+                              <div class="col-md-12 text-center">
+                                <div class="button-plus">
+                                  <i class="bi bi-plus"></i>
+                                  <a (click)="addExpenseDetails();setDisable();" class="translate" data-en="Add Expense">إضافة مصروف</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      </div>
+                      <div class="card p-3">
+
+                        <div class="row">
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Extra Expences">قيمة المصروفات:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_extra_expenses" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-3">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Total Item Discount Ratio">نسبة الخصم:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_total_item_discount_ratio" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-5">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Local Total Expenses">مصروفات بالعملة المحلية:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_local_total_expenses" readonly>
+                                </div>
+                            </div>
+                          </section>
+
+                        </div>
+                        <div class="row">
+
+                          <!-- <section class="col col-4">
+                            <div class="form-group">
+                              <label class="checkbox">
+                                <input type="checkbox" formControlName="b_dist_expense_by_modify_price">
+                                <i></i> توزيع المصروفات بناءً على السعر المعدل
+                              </label>
+                            </div>
+                          </section>
+
+                          <section class="col col-4">
+                            <div class="form-group">
+                              <label class="checkbox">
+                                <input type="checkbox" formControlName="b_dist_expense_by_quantity">
+                                <i></i> توزيع المصروفات بناءً على الكمية
+                              </label>
+                            </div>
+                          </section> -->
+                          <section class="col col-3">
+                            <div class="form-group">
+                              <label class="checkbox">
+                                <input type="checkbox" formControlName="b_invoice_import">
+                                <i></i><span class="translate" data-en="Invoice Import "> فاتورة استيراد</span>
+                              </label>
+                            </div>
+                          </section>
+                          <section class="col col-2">
+                            <div class="form-group">
+                              <label class="checkbox">
+                                <input type="checkbox" formControlName="b_has_extra_discount" (change)="setDiscount()">
+                                <i></i><span class="translate" data-en="Has Extra Discount"> خصم الفاتورة</span>
+                              </label>
+                            </div>
+                          </section>
+                          <section class="col col-3" *ngIf="isDiscounted">
+                            <div class="form-group">
+                                <div class="input-group">
+                                  <label class="label translate" data-en="Discoount Ratio">ن خصم الفاتوره:</label>&nbsp;
+                                  <input type="number" class="form-control" formControlName="n_discount_ratio" (change)="calcDiscountP()">
+                                </div>
+                            </div>
+                          </section>
+                          <section class="col col-3" *ngIf="isDiscounted">
+                            <div class="form-group">
+                                <div class="input-group">
+                                  <label class="label translate" data-en="Extra Discount">قيمة الخصم:</label>&nbsp;
+                                  <input type="number" class="form-control" formControlName="n_extra_discount" (change)="calcDiscountV()">
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+                        <div class="row">
+                          <section class="col col-3">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Discout Tax">ض/خصم:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_discount_tax" readonly>
+                                </div>
+                            </div>
+                          </section>
+                          <section class="col col-3" >
+                            <div class="form-group">
+                                <label class="label translate" data-en="Discount Tax Ratio">نسبة:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_discount_tax_ratio" (ngModelChange)="SetTaxes()">
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+
+                        <div class="row">
+                          <section class="col col-3">
+                            <div class="form-group">
+                                <label class="label translate" data-en="Additional Tax">ض/إضافية:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_additional_tax" readonly>
+                                </div>
+                            </div>
+                          </section>
+                          <section class="col col-3" >
+                            <div class="form-group">
+                                <label class="label translate" data-en="Addtional Tax Ratio">نسبة:</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control" formControlName="n_additional_tax_ratio" (ngModelChange)="SetTaxes()" >
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </form>
+
+
+                  <div class="card-footer mb-4" >
+                    <div class="row">
+                        <div class="col-md-10">
+                        </div>
+                        <div class="col-md-2">
+                          <app-attachments [ID]="this.DocNo" [DataArea]="this.InvoiceForm.value.n_DataAreaID" [Folder]="'Items'" [SubFolder]="'Attachments'" *ngIf="this.DocNo !=null && this.DocNo > 0"></app-attachments>
+                        </div>
+                      </div>
+
+
+                      <div class="row" *ngIf="showspinner">
+                        <hr/>
+                        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                      </div>
+
+                  </div>
+                </div>
+                <!-- /.invoice -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
+

@@ -1,0 +1,10 @@
+.mat-form-field {
+    
+    width: 25%;
+}
+form input {
+    width: 25% !important;
+}
+.col-md-12{
+    margin:-2px 0 !important;
+}

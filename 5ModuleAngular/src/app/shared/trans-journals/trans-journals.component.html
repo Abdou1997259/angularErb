@@ -1,0 +1,304 @@
+<div class="row">
+  <form [formGroup]="JournalForm">
+        <div class="row">
+            <section class="col-lg-7">
+              <div class="card p-3">
+                <div class="row">
+                  <section class="col col-6" >
+                    <div class="form-group">
+                        <label class="label translate" data-en="Journal No">رقم القيد:</label>
+                        <div class="input-group">
+                          <input type="number" class="form-control" formControlName="n_doc_no" readonly>
+                        </div>
+                    </div>
+                  </section>
+                  <section class="col col-6">
+                    <div class="form-group">
+                        <label class="label translate" data-en="Date">التاريخ:</label>
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" formControlName="d_doc_date" readonly>
+                          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                          <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                        </mat-form-field>
+
+                    </div>
+                  </section>
+                </div>
+                <div class="row">
+                  <section class="col col-6">
+                    <div class="form-group">
+                        <label class="label translate" data-en="Journal No">نوع اليومية:</label>                                  
+                          <select class="form-select" formControlName="n_journal_id" >
+                            <option *ngFor="let c of journalsType" [ngValue]="c.n_journal_id">{{ c.s_journal_name }}</option>
+                          </select>                             
+                    </div>
+                  </section>
+                  <section class="col col-6">
+                    <div class="form-group">
+                      <label class="label translate" data-en="Currency">العملة:</label>                      
+                        <select class="form-select" formControlName="n_currency_id" >
+                            <option *ngFor="let c of currencyType" [ngValue]="c.n_currency_id">{{ c.s_currency_name }}</option>
+                        </select>    
+                    </div>
+                  </section>
+                </div>  
+                <div class="row">
+                  <section class="col col-6">
+                    <div class="form-group">
+                        <label class="label translate" data-en="Ar Description">الوصف عربى:</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="s_arabic_description" >
+                        </div>
+                    </div>
+                  </section>
+                  <section class="col col-6">
+                    <div class="form-group">
+                      <label class="label translate" data-en="Description">الوصف انجليزى:</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="s_english_description" >
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </section>
+            <section class="col-lg-5 ">
+              <div class="card p-3" *ngIf="this.data.edit">
+                <div class="row">
+                  <section class="col col-12">
+                    <a href="{{ReportUrl}}PrintReport?docNo={{n_doc_no}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print Journal">طباعة القيد</a>
+                    <!-- <input type="button" class="btn btn-primary btn-lg btn-block" *ngIf="!isEnglish" id="btnPost" value="طباعة القيد" >
+                    <input type="button" class="btn btn-primary btn-lg btn-block" *ngIf="isEnglish" id="btnPost" value="Print Journal" > -->
+                  </section>
+                </div>
+                <br/>
+                <div class="row" *ngIf="!this.postStatus">
+                  <section class="col col-12">
+                    <input type="button" class="btn btn-success btn-lg btn-block"  *ngIf="!isEnglish"  value="ترحيل" (click)="Post()">
+                    <input type="button" class="btn btn-success btn-lg btn-block"  *ngIf="isEnglish" value="Confirm" (click)="Post()">
+                  </section>
+                </div>
+                <br/>
+                <div class="row" *ngIf="this.postStatus">
+                  <section class="col col-12">
+                    <input type="button" class="btn btn-danger btn-lg btn-block" id="btnUnPost"  *ngIf="!isEnglish" value="الغاء الترحيل" (click)="UnPost()">
+                    <input type="button" class="btn btn-danger btn-lg btn-block" id="btnUnPost"  *ngIf="isEnglish" value="Unconfirm" (click)="UnPost()">
+                  </section>
+                </div>
+            </div>
+          </section>
+          </div>
+
+   <!-- Table row -->
+   <ul class="nav nav-tabs mb-5" id="pills-tab" role="tablist">
+    <li class="nav-item mr-2" role="presentation">
+      <button class="nav-link active"  *ngIf="isEnglish"  id="pills-pre-tab" data-bs-toggle="pill" data-bs-target="#pills-pre"
+        type="button" role="tab" aria-controls="pills-desc" aria-selected="false" >
+        Current Journal
+      </button>
+      <button class="nav-link active" *ngIf="!isEnglish" id="pills-pre-tab" data-bs-toggle="pill" data-bs-target="#pills-pre"
+      type="button" role="tab" aria-controls="pills-desc" aria-selected="false" >
+      القيد الحالى
+    </button>
+    </li>
+
+    <li class="nav-item mr-2" role="presentation" *ngIf="this.data.edit">
+      <button class="nav-link" *ngIf="isEnglish"  id="pills-saved-tab" data-bs-toggle="pill" data-bs-target="#pills-saved"
+        type="button" role="tab" aria-controls="pills-saved" aria-selected="false" >
+      Reserved Journal
+      </button>
+      <button class="nav-link" *ngIf="!isEnglish"  id="pills-saved-tab" data-bs-toggle="pill" data-bs-target="#pills-saved"
+      type="button" role="tab" aria-controls="pills-saved" aria-selected="false" >
+      القيد المحفوظ
+    </button>
+    </li>
+  </ul>
+
+  <div class="tab-content container" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-pre" role="tabpanel" aria-labelledby="pills-pre-tab">
+      <div class="row">
+        <div class="col-12 table-responsive">
+          <table class="custom-table" formArrayName="currentDetails">
+            <thead>
+            <tr>
+              <th style="min-width: 130px;" *ngIf="!isEnglish">رقم الحساب</th>
+              <th style="min-width: 130px;" *ngIf="isEnglish">Account No</th>
+              <th style="min-width: 200px;" *ngIf="!isEnglish">اسم الحساب</th>
+              <th style="min-width: 130px;" *ngIf="isEnglish">Account Name</th>
+              <th style="min-width: 100px;" *ngIf="!isEnglish">مدين</th>
+              <th style="min-width: 100px;" *ngIf="isEnglish">Debit</th>
+              <th style="min-width: 100px;" *ngIf="!isEnglish">دائن</th>
+              <th style="min-width: 100px;" *ngIf="isEnglish">Credit</th>
+              <th style="min-width: 200px;" *ngIf="!isEnglish">الوصف العربى</th>
+              <th style="min-width: 200px;" *ngIf="isEnglish">Description</th>
+              <th style="min-width: 130px;" *ngIf="!isEnglish">مركز التكلفة</th>
+              <th style="min-width: 130px;" *ngIf="isEnglish">Cost Center </th>
+              <th style="min-width: 200px;" *ngIf="!isEnglish">اسم مركز التكلفة</th>
+              <th style="min-width: 200px;" *ngIf="isEnglish">Cost Center s_name</th>
+            </tr>
+            </thead>
+            <tbody>
+      
+            <tr  [formGroupName]="i" *ngFor="let det of currentDetails.controls; let i=index">
+      
+                <td style="min-width: 130px;">
+                    <div class="position-relative">
+                    <i class="fa fa-search position-absolute en-left-sm"  data-toggle="modal"></i>
+                    <input class="form-control" type="text" formControlName="s_account_no" readonly>
+                    </div>
+                </td>
+      
+                <td style="min-width: 200px;">
+                  <input type="text"  class="form-control" formControlName="s_account_name" readonly>
+                </td>
+      
+                <td style="min-width: 100px;">
+                  <input type="number" class="form-control"  formControlName="n_debit" readonly>
+                </td>
+      
+                <td style="min-width: 100px;">
+                  <input type="number" class="form-control"  formControlName="n_credit" readonly>
+                </td>
+      
+                <td style="min-width: 200px;">
+                  <input type="text"  class="form-control" formControlName="s_detailed_arabic_description" readonly>
+                </td>
+      
+                <td style="min-width: 130px;">
+                   <div class="position-relative">
+                    <i class="fa fa-search position-absolute en-left-sm" data-toggle="modal"></i>
+                    <input class="form-control " type="text" formControlName="s_cost_center_id"  readonly>
+                  </div>
+                </td>
+    
+                <td style="min-width: 200px;">
+                  <input type="text" class="form-control"  formControlName="s_cost_center_name" readonly>
+                </td>
+    
+            </tr>
+      
+            </tbody>
+          </table>
+      
+        </div>
+      </div>
+      <div class="row p-3">
+        <section class="col-lg-4 ">
+          <div class="form-group">
+            <label class="label translate" data-en="Debit Total"> اجمالى المدين</label>
+            <div class="input-group">
+              <input type="text"  class="form-control"  readonly formControlName="n_total_debit1">
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-4">
+          <div class="form-group">
+            <label class="label translate" data-en="Credit Total">اجمالى الدائن</label>
+            <div class="input-group">
+              <input type="text"  class="form-control"  readonly formControlName="n_total_credit1">
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-4">
+          <div class="form-group">
+            <label class="label translate" data-en="diffreence">الفرق</label>
+            <div class="input-group">
+              <input type="text"  class="form-control"  readonly formControlName="n_difference1" >
+            </div>
+          </div>
+        </section>
+      
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-saved" role="tabpanel" aria-labelledby="pills-saved-tab">
+      <div class="row">
+        <div class="col-12 table-responsive">
+          <table class="custom-table" formArrayName="savedDetails">
+            <thead>
+            <tr>
+              <th style="min-width: 130px;" class="tranlsate" data-en="Account NO"      >رقم الحساب</th>
+              <th style="min-width: 200px;" class="tranlsate" data-en="Account Name"    >اسم الحساب</th>
+              <th style="min-width: 100px;" class="tranlsate" data-en="Debit"           >مدين</th>
+              <th style="min-width: 100px;" class="tranlsate" data-en="Credit"          >دائن</th>
+              <th style="min-width: 200px;" class="tranlsate" data-en="Ar Description"  >الوصف العربى</th>
+              <th style="min-width: 130px;" class="tranlsate" data-en="Cost Center No"  >مركز التكلفة</th>
+              <th style="min-width: 200px;" class="tranlsate" data-en="Cost Center Name">اسم مركز التكلفة</th>
+            </tr>
+            </thead>
+            <tbody>
+      
+            <tr  [formGroupName]="i" *ngFor="let det of savedDetails.controls; let i=index">
+              <td style="min-width: 130px;">
+                <div class="position-relative">
+                <i class="fa fa-search position-absolute en-left-sm"  data-toggle="modal"></i>
+                <input class="form-control" type="text" formControlName="s_account_no" readonly>
+                </div>
+              </td>
+    
+              <td style="min-width: 200px;">
+                <input type="text"  class="form-control" formControlName="s_account_name" readonly>
+              </td>
+    
+              <td style="min-width: 100px;">
+                <input type="number" class="form-control"  formControlName="n_debit" readonly>
+              </td>
+    
+              <td style="min-width: 100px;">
+                <input type="number" class="form-control"  formControlName="n_credit" readonly>
+              </td>
+    
+              <td style="min-width: 200px;">
+                <input type="text"  class="form-control" formControlName="s_detailed_arabic_description" readonly>
+              </td>
+    
+              <td style="min-width: 130px;">
+                <div class="position-relative">
+                  <i class="fa fa-search position-absolute en-left-sm" data-toggle="modal"></i>
+                  <input class="form-control " type="text" formControlName="s_cost_center_id"  readonly>
+                </div>
+              </td>
+
+              <td style="min-width: 200px;">
+                <input type="text" class="form-control"  formControlName="s_cost_center_name" readonly>
+              </td>
+
+            </tr>
+      
+            </tbody>
+          </table>
+      
+        </div>
+      </div>
+      <div class="row p-3">
+        <section class="col-lg-4 ">
+          <div class="form-group">
+            <label class="label translate" data-en="Total Debit">اجمالى المدين</label>
+            <div class="input-group">
+              <input type="text"  class="form-control"  readonly formControlName="n_total_debit">
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-4">
+          <div class="form-group">
+            <label class="label translate" data-en="Total Credit">اجمالى الدائن</label>
+            <div class="input-group">
+              <input type="text"  class="form-control"  readonly formControlName="n_total_credit">
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-4">
+          <div class="form-group">
+            <label class="label translate" data-en="Difference">الفرق</label>
+            <div class="input-group">
+              <input type="text"  class="form-control"  readonly formControlName="n_difference" >
+            </div>
+          </div>
+        </section>
+      
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+
+  

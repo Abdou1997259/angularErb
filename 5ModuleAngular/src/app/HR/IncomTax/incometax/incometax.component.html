@@ -1,0 +1,163 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate"> اضافة قانون ضرائب </h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/hr/incomtaxlist" class="translate"  data-en="Exit"value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!py_Incom_Tax.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+
+              <form [formGroup]="py_Incom_Tax" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="card-body" >
+                    <div class="row">
+
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6" *ngIf="this.docNo > 0">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Document Number:">المسلسل:</label>
+                                  <input type="number" class="form-control w-50" formControlName="n_doc_no" readonly>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label"> <span class="translate" data-en="From Date">من تاريخ</span> </label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_From_date">
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label"> <span class="translate" data-en="To Date">آلي تاريخ</span> </label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker2" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker2.open()"  formControlName="d_To_Date">
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker2 disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Annual Tax Discount:">الاعفاء السنوى:</label>
+                                  <input type="number" class="form-control" formControlName="n_Annual_Tax_Discount" placeholder="0.0" />
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-12">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="Notes:"> ملاحظات </label>
+                                    <textarea type="text" class="form-control" formControlName="s_Notes" rows="2" ></textarea>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-9">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col-lg-12">
+                                <div class="row">
+                                  <div class="col-12 table-responsive">
+                                    <table  id="tblMultiTransDetails" class="custom-table table-striped" formArrayName="py_Incom_Tax_Details">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col" class="text-center translate" data-en="#" style="min-width: 25px" >م</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 100px">الشرائح</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 50px">من</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 50px">الى</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 50px">النسبة</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr [formGroupName]="i" *ngFor="let item of py_Incom_Tax_Details.controls; let i = index;">
+
+                                          <td scope="row" class="text-center" style="min-width: 25px;">
+                                            {{ i + 1 }}
+                                          </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="text" class="form-control" formControlName="s_Layer" readonly/>
+                                          </td>
+
+                                          <td style="min-width: 50px;">
+                                            <input type="number" class="form-control" formControlName="n_Start" placeholder="0.0"/>
+                                          </td>
+
+                                          <td style="min-width: 50px;">
+                                            <input type="number" class="form-control" formControlName="n_End" placeholder="0.0"/>
+                                          </td>
+
+                                          <td style="min-width: 50px;">
+                                            <input type="number" class="form-control" formControlName="n_Percentage" placeholder="0.0"/>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

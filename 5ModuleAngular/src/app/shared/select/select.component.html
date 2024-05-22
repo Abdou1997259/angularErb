@@ -1,0 +1,15 @@
+ <form [formGroup]="selectForm"> 
+  <mat-form-field>
+    <mat-select [formControlName]="controlName"  
+     [formControl]="selectCtrl" placeholder="" 
+     #singleSelect>
+      <mat-option>
+        <ngx-mat-select-search [formControl]="FilterCtrl"></ngx-mat-select-search>
+      </mat-option> 
+      <mat-option *ngFor="let obj of dataSource | async" [value]="obj[ValueField]">
+        {{obj[TextField]}}
+      </mat-option>
+    </mat-select> 
+  </mat-form-field>
+</form>
+ 

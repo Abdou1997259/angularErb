@@ -1,0 +1,205 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate"> اضافة تاشيرة </h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/hr/visalist" class="translate"  data-en="Exit"value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!py_Visa_Issue.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+
+              <form [formGroup]="py_Visa_Issue" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="card-body" >
+                    <div class="row">
+
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6" *ngIf="this.docNo > 0">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Document Number:">المسلسل:</label>
+                                  <input type="number" class="form-control w-50" formControlName="n_doc_no" readonly>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label"> <span class="translate" data-en="Doc Date">التاريخ</span><span style="color:red">&nbsp;*</span> </label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_doc_date" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Organization/Company"> المؤسسة/الشركة </label>
+                                  <select-server-side
+                                    [selectForm]="py_Visa_Issue"
+                                    [controlName]="'n_Sponser_id'"
+                                    [TextField]="'s_Sponser_name'"
+                                    [ValueField]="'n_Sponser_id'"
+                                    [searching]="searchingSponser"
+                                    [filteredServerSide]="filteredSponserServerSide"
+                                    (OnSearch)="searchSponser($event)" >
+                                  </select-server-side>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="ُExport Number:"> رقم الصادر </label>
+                                    <input type="text" class="form-control" formControlName="s_Export_no" />
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                    <label class="label translate" data-en="payment reference number:">رقم مرجع السداد:</label>
+                                    <input type="text" class="form-control" formControlName="s_pay_ref" />
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col-lg-12">
+                                <div class="row">
+                                  <div class="col-12 table-responsive">
+                                    <table  id="tblMultiTransDetails" class="custom-table table-striped" formArrayName="py_Visa_Issue_Details">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col" class="text-center translate" data-en="#" style="min-width: 25px" >م</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 50px">العدد</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 50px">كود المهنة</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 100px">اسم المهنة</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 50px">كود الجنسية</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 100px">اسم الجنسية</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 150px">جهة القدوم</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 150px">مكتب الاستقدام</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 50px">المتبقي</th>
+                                          <th scope="col" class="text-center" style="min-width: 45px"></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr [formGroupName]="i" *ngFor="let item of py_Visa_Issue_Details.controls; let i = index;">
+
+                                          <td scope="row" class="text-center" style="min-width: 25px;">
+                                            {{ i + 1 }}
+                                          </td>
+
+                                          <td style="min-width: 50px;">
+                                            <input type="number" class="form-control" formControlName="n_count" placeholder="0" />
+                                          </td>
+
+                                          <td style="min-width: 50px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="LoadJobsLKP(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" type="text" formControlName="n_job_id" (change)="ChangeJob(i);">
+                                            </div>
+                                          </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="text" class="form-control" formControlName="s_job_name" readonly />
+                                          </td>
+
+                                          <td style="min-width: 50px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="LoadNationalitiesLKP(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" type="text" formControlName="n_nationality_id" (change)="ChangeNationality(i);">
+                                            </div>
+                                          </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="text" class="form-control" formControlName="s_nationality_name" readonly />
+                                          </td>
+
+                                          <td style="min-width: 150px;">
+                                            <input type="text" class="form-control" formControlName="s_Location" />
+                                          </td>
+
+                                          <td style="min-width: 150px;">
+                                            <input type="text" class="form-control" formControlName="s_Recruitment_office" />
+                                          </td>
+
+                                          <td style="min-width: 50px;">
+                                            <input type="number" class="form-control" formControlName="n_remain" />
+                                          </td>
+
+                                          <td style="min-width: 45px;">
+                                            <i (click)="RemoveVisaIssueDetailsRow(i)" class="bi bi-x-square text-center" tabindex="-1"></i>
+                                          </td>
+
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12 text-center">
+                                      <div class="button-plus">
+                                        <i class="bi bi-plus"></i>
+                                        <a (click)="Add_py_Visa_Issue_Details_Row()" class="translate" data-en="Add">أضافة</a>
+                                     </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

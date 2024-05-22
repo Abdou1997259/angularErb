@@ -1,0 +1,142 @@
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link  type="text/css" rel="stylesheet" href='/assets/css/styles-ar.css '  *ngIf="!isEnglish"> 
+
+<link  type="text/css" rel="stylesheet" href='/assets/css/styles-en.css '  *ngIf="isEnglish"> 
+
+		<!-- <div class="d-flex align-items-stretch">
+			<nav id="sidebar" class="img" style="background-image: url(./assets/img/bg_1.jpg);">
+				<div class="p-4">
+		  		<h1><a href="#" class="logo text-center">مدائن الجزيرة <span>Xceer ERP</span></a></h1>
+	        <ul class="list-unstyled components mb-5">
+            <li class="text-center">السنوات المالية</li>
+	          <li *ngFor="let year of years; let i = index;" [class.active]="i === activeIndex">
+	            <a (click)="getCompanies(year.nYear); activeIndex = i" style="cursor: pointer;"><span ></span> {{year.nYear}}</a>
+	          </li>
+	        </ul>
+
+	      </div>
+    	</nav> -->
+
+      
+
+        <!-- Page Content  -->
+      <!-- <div id="content" class="p-4 p-md-5 pt-5" *ngIf="!isSelectedYear">
+        <div class="col-md-12" ><h1 class="text-danger">آختر السنة المالية....</h1></div>
+ 
+      </div> 
+      <div id="content">
+       
+        <div class="company" *ngIf="isSelectedYear">
+          <div class="container">
+            <div class="box" *ngFor="let company of companiesLst">
+
+              <a (click)="navigateToLogin(company.compId)">
+            
+                 <i class="bi bi-building"></i>
+                  <h4 class="title">{{ company.compName }}</h4>
+                 
+          
+              </a>
+              <div class="info">
+              
+              </div>
+          
+      
+               <div class="card" style="border-radius: 4%;">
+                <div class="card-header text-center" style="background-color: #4492f0;color: white;">
+                  {{ company.compId }}
+                </div>
+                <div class="card-body text-center">
+                  <h5 class="card-title text-center"></h5>
+                  <p class="card-text fs-3" style="font-family: Arial Black;color: #4492f0;">{{ company.compName }}</p>
+                  <a href="#" style="color: black;">دخول</a>
+                </div>
+              </div> 
+            </div>
+          </div>
+    </div>
+      </div>
+		</div> -->
+
+
+  <header >
+    <div class="container" #headerContainer>
+      <ul class="links" #Links>
+        <li ><a href="#" class="translate" data-en="Home">الصفحة الرئيسيه </a></li>
+        <li class="finan" >
+          <a href="#" class="translate" data-en="Year">السنوات المالية</a>
+          <ul class="company-years-dropdown">
+            <li *ngFor="let year of years; let i = index;" [class.active]="i === activeIndex">
+              <a (click)="getCompanies(year.nYear); activeIndex = i" style="cursor: pointer;"><span ></span> {{year.nYear}}</a>
+            </li>
+    
+          </ul>
+        </li>
+        <li >
+          <a href="#" class="translate" data-en="Contact US">لتواصل</a>
+        </li>
+    
+         <li class="finan">
+          <a  href="#"  class="translate" data-en="Language">اللغة</a>
+          <ul class="company-years-dropdown" style="    top: 32px;
+          left: -126px;
+          height: 104px;
+      ">
+            <li *ngFor="let l of lang; let i =index;" [class.active]="i === activeIndex">
+              <a (click)="getLang(l);translatefun();" style="cursor: pointer;" ><span ></span> {{l}}</a>
+            </li>
+    
+          </ul>
+
+         </li>
+      </ul>
+
+      
+     
+      <img src="../../assets/img/LogoBase.png" alt="" class="logo">
+   
+
+    </div>
+  </header>
+
+  <div class="landing">
+    
+
+  </div>
+
+
+  
+       
+    <div class="company">
+      <div class="container">
+        <div class="box" *ngFor="let company of companiesLst">
+
+          <a (click)="navigateToLogin(company.compId)">
+        
+             <i class="bi bi-building"></i>
+              <h4 class="title">{{ company.compName }}</h4>
+              <!-- <h4 class="title" *ngIf="isEnglish">{{ company.CompNameEng }}</h4> -->          
+          </a>
+          <div class="info">
+          
+          </div>
+      
+  
+           
+        </div>
+      </div>
+<!-- <div class="main-footer-custom">
+   <div class="container">
+    <div class="text">
+      <h3>مدائن الجزيرة لقتنية المعلومات</h3>
+      <a href="www.Ultra-Visions.com">www.Ultra-Visions.com</a>
+
+     </div>
+     <img src="../../assets/img/Ultra-visions.png">
+   
+
+   </div>
+
+</div> -->

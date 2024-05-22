@@ -1,0 +1,112 @@
+ 
+ 
+ 
+   <!-- Content Wrapper. Contains page content -->
+   <div class="content-wrapper rtl">
+    <!-- Content Header (Page header) -->
+   
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+           
+
+          <div class="card">
+
+            <div class="card-header">
+              <h3 class="card-title"><a _blank (click)="PrintProcedures()" class="btn btn-warning">طباعة</a></h3>
+
+              <h3 class="card-title"><a routerLink="/customer" class="btn btn-danger">رجوع</a></h3>
+
+              <div > 
+                <a  (click)="openDialog(currentId)" class="btn btn-primary"  style="color:white;" > إضافة إجراء جديد</a>
+                 
+              </div> 
+
+            </div>
+            
+            
+            <!-- /.card-header -->
+
+            
+         
+            <div class="card-body">
+
+              <div class="row" *ngIf="showspinner"> 
+                <hr/>
+                <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+              </div>
+
+            <div class="card card-success">
+            
+              <div class="card-header" *ngIf="customerProcedures.length == 0 && !showspinner">
+                <div >
+                  <div class=" card-success d-flex justify-content-center "  >
+                    <h3  >لا يوجد إجراءات مدخله للعميل    </h3>
+                  </div>
+                </div>
+              </div>
+                
+              <div class="card-header" *ngIf="customerProcedures.length >0">
+                <div >
+                  <div class=" card-success d-flex justify-content-center "  >
+                    <h3  >إجراءات العميل : {{customerProcedures[0].s_customer_name}} </h3>
+
+                 
+
+                  </div>
+                </div>
+              </div>
+                
+           </div>
+            <div class="card text-center"  *ngFor="let proc of customerProcedures" >
+                
+
+              
+
+                <div class="card-header" style="background-color:#007bff; color: white;"> 
+                    {{proc.s_proc_name}}  
+                   
+                  </div>
+                 
+                <div class="card-body">
+                  
+                  <p class="card-text">{{proc.s_proc_details}}</p>
+                  <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+                <div class="card-footer text-muted">
+                    تم إضافتة عن طريق المستخدم :    {{proc.s_user_name}}  في تاريخ {{proc.d_proc_date}} 
+                     
+                </div>
+              </div>
+
+             
+ 
+            </div>
+          
+             
+
+          
+       
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+
+ <p></p>
+<!-- Modal -->
+
+
+
+ 
+
+ 

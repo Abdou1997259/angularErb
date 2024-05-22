@@ -1,0 +1,121 @@
+.card
+{
+  margin-top: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+
+
+i {
+    font-size: 1.2rem;
+    color: rgb(0,104,215);
+    top: .75rem;
+    left: .75rem
+  }
+  input
+  {
+      margin-bottom: 15px;
+      margin-left: 10px;
+  }
+
+@media  only screen and (min-width:988px) and (max-width:1125px) {
+
+    .dropDown
+    {
+        
+        display: inline
+    }
+}
+
+
+input .ng_invalid
+{
+  border: 1px solid red
+}
+
+
+input
+{
+    margin-bottom: 15px;
+}
+
+.card
+{
+  margin-top: 20px;
+    padding-top:10px;
+    padding-bottom: 60px;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100%;
+}
+
+i {
+    font-size: 1.2rem;
+    color: rgb(0,104,215);
+    top: .75rem;
+    left: .75rem
+  }
+
+
+input.ng-invalid.ng-touched
+{
+    border:1px solid red;
+    outline: none;
+}
+
+.isEdit {
+  display: none;
+}
+
+.isMultiAcc {
+  visibility: hidden;
+}
+
+i {
+  font-size: 1rem;
+  /* color: #aaa; */
+  color: rgb(0,104,215);
+  top: .75rem;
+  left: .75rem
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* .has-search .form-control {
+  padding-right: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: auto;
+  color: #aaa;
+} */
+.card-dark:not(.card-outline)>.card-header, .card-dark:not(.card-outline)>.card-header a {
+  color: #fff;
+  margin-top: 50px;
+}
+
+
+
+table
+{
+  border-bottom: 1px solid white;
+}
+
+
+
+.my-custom-dialog-class {
+    padding: 0;
+    margin-right: 250px !important;
+
+  }

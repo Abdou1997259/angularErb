@@ -1,0 +1,1849 @@
+
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+
+
+
+                 <h2 class="translate" data-en="Sales configuration">  تهيئه نظام العملاء</h2>
+                 <div class="buttons">
+
+
+
+                  <div class="button">
+                      <i class="bi bi-bookmark-x "></i>
+                      <a routerLink="/modules" class="translate" data-en="Exit">خروج</a>
+
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <button (click)="save()" class="translate" data-en="Save">حفظ
+
+
+
+                      </button>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </div>
+
+            </section>
+  </div>
+
+
+
+  </header>
+<div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+        <div class="container-fluid" style=" margin-top: 104px;">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                   <form [formGroup]="salesConfigurationForm" (keydown.enter)="$event.preventDefault()">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                    <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+                    <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link translate active" data-en="Setting" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">الاعدادت</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link translate" data-en="Additional Setting" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"> أعدادات أضافية</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link translate" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" data-en="Montoiring">المراقبة</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link translate" id="pre-tab" data-bs-toggle="tab" data-bs-target="#pre" type="button" role="tab" aria-controls="pre" data-en="Accounts" aria-selected="false">الحسابات</button>
+                         </li>
+                         <li class="nav-item" role="presentation">
+                          <button class="nav-link translate" id="discount-tab" data-bs-toggle="tab" data-bs-target="#discount" type="button" role="tab" aria-controls="discount" data-en="Discount Policy" aria-selected="false">سياسة الخصم</button>
+                       </li>
+                         <li class="nav-item" role="presentation">
+                            <button class="nav-link translate" id="act-tab" data-bs-toggle="tab" data-bs-target="#activities" type="button" role="tab" aria-controls="activities" data-en="Special Activities" aria-selected="false">أنشطة حاصة</button>
+                         </li>
+                     </ul>
+                     <div class="tab-content" id="myTabContent">
+                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                             <div class="row">
+                                <div class="card">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_openNewInstance">
+                                                    <label class="form-check-label translate" data-en="Possibility of opening more than one invoice" for="flexCheckDefault1">
+                                                     أمكانية فتح أكثر من فاتورة
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" formControlName="b_use_last_item_price">
+                                                    <label class="form-check-label translate" data-en="Use Last Item Price" for="flexCheckDefault2">
+                                                      التعامل مع أخر سعر للعميل للصنف
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" formControlName="b_seeBalanceInInvoice">
+                                                    <label class="form-check-label translate" data-en="The display of the item balance on the invoice." for="flexCheckDefault3">
+                                                        عرض رصيد الصنف علي الفاتورة
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4" formControlName="b_LimitOnInvoice">
+                                                    <label class="form-check-label translate" data-en="Defining a payment period for deferred invoices." for="flexCheckDefault4">
+                                                        تحديد فترة سداد للفواتير الاجل
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault5" formControlName="b_salesman_with_store">
+                                                    <label class="form-check-label translate" data-en="Linking a representative with a warehouse." for="flexCheckDefault5">
+                                                        ربط مندوب مع مخزن
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault6" formControlName="b_use_customer_warranty">
+                                                    <label class="form-check-label translate" data-en="Tracking the customer's warranty period." for="flexCheckDefault6">
+                                                        متابعة فترة ضمان العميل
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7" formControlName="b_salesm_man_required">
+                                                    <label class="form-check-label translate" data-en="The customer's representative is mandatory." for="flexCheckDefault7">
+                                                        مندوب العميل الزامي
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault8" formControlName="b_use_Invoice_creditLimit">
+                                                    <label class="form-check-label translate" data-en="Activating the credit limit during the transaction." for="flexCheckDefault8">
+                                                        تفعيل حد الائتمان بالعملية
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_quantity_default">
+                                                    <label class="form-check-label translate" data-en="Defalut Qty=1" for="flexCheckDefault9">
+                                                        افتراضي الكمية=1
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault10" formControlName="b_vat_before_discount_in_salesservices">
+                                                    <label class="form-check-label translate" data-en="Calculating the tax before the discount on the service invoice." for="flexCheckDefault10">
+                                                        احتساب الضريبة قبل الخصم فى فاتورة الخدمات
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault11" formControlName="b_Monitoring_sale_price_items">
+                                                    <label class="form-check-label translate" data-en="Monitoring the selling price of items." for="flexCheckDefault11">
+                                                        مراقبة سعر البيع للاصناف
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-custom ">
+                                              <div class="form-check">
+                                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault21" formControlName="b_Use_Fractions"   [(ngModel)]="hidetheinput">
+                                                  <label class="form-check-label translate" data-en="The policy of rounding fractions." for="flexCheckDefault21" >
+                                                      سياسة جبر الكسور
+                                                  </label>
+                                              </div>
+                                            </div>
+
+                                            <div class="container mt-3 mb-3" *ngIf="hidetheinput">
+                                              <div class="row justify-content-center align-items-center">
+                                                <div class="col-lg-7">
+                                                  <fieldset class="border-primary" style="border:1px solid;">
+                                                    <div class="row justify-content-center align-items-center mt-3">
+                                                      <div class="col-lg-3" custom-input>
+                                                        <div class="form-group row">
+                                                          <label for="inputPassword" class="form-label col-sm-3 translate" data-en="From">من:</label>
+                                                          <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputPassword" formControlName="n_FractionFrom_one">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="col-lg-3" custom-input>
+                                                        <div class="form-group row">
+                                                          <label for="inputPassword" class="form-label col-sm-3 translate" data-en="To">الي:</label>
+                                                          <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputPassword" formControlName="n_FractionTo_one">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="col-sm-1" style="width: 2.333333%;" custom-input>
+                                                        <label for="inputPassword" class="form-label">=</label>
+                                                      </div>
+
+                                                      <div class="col-lg-3 mr-0" custom-input>
+                                                        <div class="form-group row">
+                                                          <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputPassword" form formControlName="n_FractionResult_one">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                                    </div>
+
+                                                    <div class="row justify-content-center align-items-center mt-3">
+                                                      <div class="col-lg-3" custom-input>
+                                                        <div class="form-group row">
+                                                          <label for="inputPassword" class="form-label col-sm-3 translate" data-en="From">من:</label>
+                                                          <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputPassword" formControlName="n_FractionFrom_Two">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="col-lg-3" custom-input>
+                                                        <div class="form-group row">
+                                                          <label for="inputPassword" class="form-label col-sm-3 translate" data-en="To">الي:</label>
+                                                          <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputPassword" formControlName="n_FractionTo_two">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="col-sm-1" style="width: 2.333333%;" custom-input>
+                                                        <label for="inputPassword" class="form-label">=</label>
+                                                      </div>
+
+                                                      <div class="col-lg-3 mr-0" custom-input>
+                                                        <div class="form-group row">
+                                                          <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputPassword" form formControlName="n_FractionResult_two">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="row justify-content-center align-items-center mt-3">
+                                                      <div class="col-8">
+                                                        <section class="col-lg-12 col-custom">
+                                                          <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label"><span class="translate" data-en="Account"> الحساب:<span style="color:red">*</span> </span></label>
+                                                            <div class="col-sm-6">
+                                                              <select-server-side
+                                                              [selectForm]="salesConfigurationForm"
+                                                              [controlName]="'s_Fraction_Account'"
+                                                              [TextField]="'s_account_name'"
+                                                              [ValueField]="'s_account_no'"
+                                                              [searching]="FractionAccountsSearching"
+                                                              [filteredServerSide]="FractionAccountsFilteredServerSide"
+                                                              (OnSearch)="FractionAccountsSearch($event)">
+                                                              </select-server-side>
+                                                            </div>
+                                                          </div>
+                                                        </section>
+                                                      </div>
+                                                    </div>
+                                                  </fieldset>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault13" formControlName="b_customer_discount">
+                                                    <label class="form-check-label translate" data-en="Special discount for customers." for="flexCheckDefault13">
+                                                        خصم خاص للعملاء
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault14" formControlName="b_Use_Partial_price">
+                                                    <label class="form-check-label translate" data-en="Selling at retail price." for="flexCheckDefault14">
+                                                        البيع بسعر التجزئه
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault15" formControlName="b_use_invType_Price">
+                                                    <label class="form-check-label translate" data-en="Price according to invoice type in sales." for="flexCheckDefault15">
+                                                        السعر حسب نوع الفاتورة فى المبيعات
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault16" formControlName="b_distribute_Expenses_on_Inv_revenue">
+                                                    <label class="form-check-label translate" data-en="Distributing expenses on revenue in the invoice." for="flexCheckDefault16">
+                                                        توزيع المصروفات علي الايراد في الفاتورة
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-custom ">
+                                              <div class="form-check">
+                                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault12" formControlName="b_close_advance_payments_in_invoice">
+                                                  <label class="form-check-label translate" data-en="Closing down payments in the invoice." for="flexCheckDefault12">
+                                                      اقفال الدفعات المقدمة في الفاتورة
+                                                  </label>
+                                              </div>
+                                          </div>
+
+                                          <div class="col-lg-3" >
+                                            <div class="form-group row">
+                                                <label class="label col-sm-5 mt-2 translate" data-en="Default sales settings.">أفتراضي المبيعات</label>
+                                                <div class="col-sm-7">
+                                                  <select class="form-select form-select-lg mt-0 notInclude" aria-label=".form-select-lg example" style="margin-top: 5px"   formControlName="n_SalesTypeDefault" >
+                                                    <option value="0">.............</option>
+                                                    <option *ngIf="!isEnglish"  value="1"> نقدي</option>
+                                                    <option *ngIf="isEnglish" value="1"> monetary</option>
+                                                    <option *ngIf="!isEnglish" value="2">أجل</option>
+                                                    <option *ngIf="isEnglish" value="2">postpone</option>
+                                                    <option *ngIf="!isEnglish" value="3">شبكة</option>
+                                                    <option *ngIf="isEnglish" value="3">network</option>
+                                                    <option *ngIf="!isEnglish" value="4">نقدي + شبكة</option>
+                                                    <option *ngIf="isEnglish" value="4">monetary + network</option>
+                                                  </select>
+                                                </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-lg-3" >
+                                            <div class="form-group row">
+                                                <label class="label col-sm-6 mt-2 translate" data-en="Default sales return settings.">أفتراضي مرتد المبيعات</label>
+                                                <div class="col-sm-6">
+                                                  <select class="form-select form-select-lg mt-0 notInclude" aria-label=".form-select-lg example" style="margin-top: 5px"   formControlName="n_salesReturnType_Default" >
+                                                    <option value="0">.............</option>
+                                                    <option value="1" *ngIf="!isEnglish"> مرتد نقدي</option>
+                                                    <option value="1" *ngIf="isEnglish"> Cash back</option>
+                                                    <option value="2" *ngIf="!isEnglish">مرتد أجل</option>
+                                                    <option value="2" *ngIf="isEnglish">Postpone Return</option>
+                                                  </select>
+                                                </div>
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                </div>
+                             </div>
+
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <label class="translate" data-en="Search">البحث</label>
+                                <div class="card mt-0 p-3">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                          <div class="col-lg-6 col-custom ">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault17" formControlName="b_serch_item_type">
+                                                <label class="form-check-label translate" data-en="Use item type in search." for="flexCheckDefault17">
+                                                   أستخدم نوع الصنف في البحث
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-custom ">
+                                          <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault18" formControlName="b_showItemCostInInv">
+                                              <label class="form-check-label translate" data-en="Displaying the cost price in the search." for="flexCheckDefault18">
+                                                 عرض سعر التكلفة في البحث
+                                              </label>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-custom ">
+                                          <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault19" formControlName="b_serch_item_Group">
+                                              <label class="form-check-label translate" data-en="Using item group in search." for="flexCheckDefault19">
+                                              أستخدام مجموعة الصنف في البحث
+                                              </label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-lg-6">
+                                <label class="translate" data-en="Reports">التقارير</label>
+                                <div class="card mt-0 p-3">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="row">
+                                        <div class="col-lg-6 col-custom ">
+                                          <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault20" formControlName="b_use_dateonrep">
+                                              <label class="form-check-label translate" data-en="Using today's date on the report screen." for="flexCheckDefault20">
+                                                 أستخدام تاريخ اليوم في شاشة التقارير
+                                              </label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-lg-8">
+                                <label class="translate" data-en="Printing">الطباعة</label>
+                                <div class="card mt-0 p-3">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="row">
+                                        <div class="col-lg-4 col-custom ">
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_print_journals_after_save">
+                                            <label class="form-check-label translate" data-en="Printing the invoice voucher with saving." for="flexCheckDefault1">
+                                              طباعة قيد الفاتورة مع الحفظ
+                                            </label>
+                                          </div>
+                                          <hr />
+                                        </div>
+                                      </div>
+
+                                      <div class="row">
+                                        <div class="col-lg-4" >
+                                          <div class="form-group">
+                                            <label class="label translate" data-en="Printing a cash receipt voucher.">طباعة سند استلام نقدية</label>
+                                            <select class="form-select form-select-lg mb-3 notInclude" aria-label=".form-select-lg example" style="margin-top: 5px" formControlName="n_print_re" >
+                                              <option value="0">.............</option>
+                                              <option *ngIf="!isEnglish" value="1">عدم الطباعة</option>
+                                              <option *ngIf="isEnglish" value="1">Don't Print</option>
+                                              <option *ngIf="!isEnglish" value="2">الطباعة</option>
+                                              <option *ngIf="isEnglish" value="2">Print</option>
+                                            </select>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-lg-4" >
+                                          <div class="form-group">
+                                            <label class="label translate" data-en="Printing a lost voucher.">طباعة سند صرف يضاعة</label>
+                                            <select class="form-select form-select-lg mb-3 notInclude" aria-label=".form-select-lg example" style="margin-top: 5px" formControlName="n_ex_print_re" >
+                                              <option value="0">.............</option>
+                                              <option *ngIf="!isEnglish" value="1">عدم الطباعة</option>
+                                              <option *ngIf="isEnglish" value="1"> Unprint</option>
+                                              <option *ngIf="!isEnglish" value="2">الطباعة</option>
+                                              <option *ngIf="isEnglish" value="2">Print</option>
+                                            </select>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-lg-4" >
+                                          <div class="form-group">
+                                            <label class="label translate" data-en="Printing options after saving." >خيارات الطباعة بعد الحفاظ</label>
+                                            <select class="form-select form-select-lg mb-3 notInclude" aria-label=".form-select-lg example" style="margin-top: 5px" formControlName="n_Print_option" >
+                                              <option value="0">.............</option>
+                                              <option *ngIf="!isEnglish" value="1">عدم الطباعة او العرض</option>
+                                              <option *ngIf="isEnglish" value="1">Do not print or display</option>
+                                              <option *ngIf="!isEnglish" value="2">طباعة مباشرة</option>
+                                              <option *ngIf="isEnglish" value="2">Direct printing</option>
+                                              <option *ngIf="!isEnglish" value="3">العرض اولا</option>
+                                              <option *ngIf="isEnglish" value="3"> Offer first</option>
+                                              <option *ngIf="!isEnglish" value="4">التأكيد قبل العرض</option>
+                                              <option *ngIf="isEnglish" value="4">Confirmation before bidding</option>
+                                              <option *ngIf="!isEnglish" value="5">التأكيد قبل الطباعة المباشرة</option>
+                                              <option *ngIf="isEnglish" value="5">Confirm before direct printing</option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                         </div>
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                          <div class="row mt-4">
+                            <div class="col-lg-12">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_Point_Of_Sale" (change)="b_use_Point_Of_SaleChanged()">
+                                          <label class="form-check-label translate" data-en="Using point of sale." for="flexCheckDefault1">
+                                            استخدام نقاط البيع
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom" *ngIf="is_b_use_Point_Of_SaleChanged">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_Active_shift">
+                                          <label class="form-check-label translate" data-en="Activating shifts." for="flexCheckDefault1">
+                                            تفعيل الورديات
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_UseServerDate">
+                                          <label class="form-check-label translate" data-en="Using server date." for="flexCheckDefault1">
+                                            استخدام تاريخ السيرفر
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_Least_sell_price_pos">
+                                          <label class="form-check-label translate" data-en="Monitoring the minimum selling price at points of sale." for="flexCheckDefault1">
+                                            مراقبة اقل سعر بيع في نقاط البيع
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-8 col-custom ">
+                                        <div class="row">
+                                          <div class="col-lg-6">
+                                            <div class="form-check" style="padding-left: 0;">
+                                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_cash_not_required_if_creditcash_in_pos">
+                                              <label class="form-check-label translate" data-en="Not forcing entry of cash value when choosing cash and network in POS." for="flexCheckDefault1">
+                                                عدم اجبار علي ادخال قيمة النقدي في حالة اختيار نقدي وشبكة في POS
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-lg-5">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_Show_InvoiceSerial_Desc">
+                                              <label class="form-check-label translate" data-en="Activating the appearance of the invoice serial number in the description." for="flexCheckDefault1">
+                                                تفعيل ظهور مسلسل الفاتورة في الوصف
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_Activate_max_allowed_count">
+                                          <label class="form-check-label translate" data-en="Activating the maximum allowed quantity of the item per day on the invoice." for="flexCheckDefault1">
+                                            تفعيل اقصي عدد مسموح للصنف علي مستوي اليوم بالفاتورة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_prevent_discount_advanced_payment">
+                                          <label class="form-check-label translate" data-en="Not deducting advance payments from the net service invoice amount." for="flexCheckDefault1">
+                                            عدم خصم الدفعات المقدمة من صافي فاتورة الخدمات
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_link_customerAcc_with_SalesManAcc">
+                                          <label class="form-check-label translate" data-en="Linking the customer's account with the representative's account." for="flexCheckDefault1">
+                                            ربط حساب العميل بحساب المندوب
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_show_posInvoice_in_salesInvoice">
+                                          <label class="form-check-label translate" data-en="Displaying POS invoices in regular sales invoices." for="flexCheckDefault1">
+                                            إظهار فواتير ال POS في فواتير المبيعات العادية
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_activate_returnsales_reaons">
+                                          <label class="form-check-label translate" data-en="Activating reasons for returns on the credit note." for="flexCheckDefault1">
+                                            تفعيل أسباب الرد بالمرتد
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_prevent_edit_salesinvoice_when_paid">
+                                          <label class="form-check-label translate" data-en="Preventing modification or deletion of paid invoices." for="flexCheckDefault1">
+                                            منع التعديل او الحذف علي الفواتير المسددة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_show_savemsg_in_pos_return">
+                                          <label class="form-check-label translate" data-en="Displaying a message 'Do you want to save?' in the point of sale return." for="flexCheckDefault1">
+                                            ظهور رسالة هل تريد الحفظ في مرتد نقاط البيع
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_returninvoie_Paid_same_as_invoicePaid">
+                                          <label class="form-check-label translate" data-en="The payment method for the return is the same as the invoice." for="flexCheckDefault1">
+                                            طريقة الدفع للمرتد نفس الفاتورة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_activate_item_cost_center">
+                                          <label class="form-check-label translate" data-en="Displaying the cost center associated with the item." for="flexCheckDefault1">
+                                            ظهور مركز التكلفة المرتبط بالصنف
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_Use_ServiceInvoice">
+                                          <label class="form-check-label translate" data-en="The services module." for="flexCheckDefault1">
+                                            موديول الخدمات
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_inv_category_required">
+                                          <label class="form-check-label translate" data-en="Category mandatory in sales invoice." for="flexCheckDefault1">
+                                            التصنيف الزامي في فاتورة المبيعات
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_hide_price_in_request_order">
+                                          <label class="form-check-label translate" data-en="Hiding the price on the delivery note screen." for="flexCheckDefault1">
+                                            إخفاء السعر في شاشة اذن تسليم
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_time">
+                                          <label class="form-check-label translate" data-en="Displaying the time." for="flexCheckDefault1">
+                                            اظهار الوقت
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_hide_oldInvoices">
+                                          <label class="form-check-label translate" data-en="Hiding previous invoices." for="flexCheckDefault1">
+                                            اخفاء الفواتير السابقة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_bonus_round_min">
+                                          <label class="form-check-label translate" data-en="Approximating bonuses to the nearest." for="flexCheckDefault1">
+                                            تقريب البوانص للآقل
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_activate_price_list">
+                                          <label class="form-check-label translate" data-en="Activating price list by customer." for="flexCheckDefault1">
+                                            تفعيل قائمة الاسعار حسب العميل
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-8">
+                                        <div class="row">
+                                          <div class="col-lg-5 col-custom">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_discount_by_qty">
+                                              <label class="form-check-label translate" data-en="Activating quantity-based discounts in promotions." for="flexCheckDefault1">
+                                                تفعيل الخصم علي اساس الكمية في التخفيضات
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-sm-1 mt-2">
+                                            <label for="inputPassword" class="form-label"> => </label>
+                                          </div>
+
+                                          <div class="col-lg-6">
+                                            <div class="form-check" style="padding-right: 0;">
+                                              <select class="form-select mt-0 w-50" aria-label=".form-select-lg example" formControlName="n_discount_qty_policy" >
+                                                <option value="0">.............</option>
+                                                <option *ngFor="let item of DiscountQtyPolictList" [value]="item.code">{{ item.name_arabic }}</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_item_color">
+                                          <label class="form-check-label translate" data-en="Activating color in the invoice." for="flexCheckDefault1">
+                                            تفعيل اللون في الفاتورة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_pos_total_journal_per_day">
+                                          <label class="form-check-label translate" data-en="The total daily sales in POS on a daily basis rather than on a shift basis." for="flexCheckDefault1">
+                                            إجمالي اليوميات في POS علي مستوي اليوم وليس الشيفت
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_prevent_returnPos_without_SellInvoice">
+                                          <label class="form-check-label translate" data-en="Preventing saving a return without a sales invoice number." for="flexCheckDefault1">
+                                            منع حفظ مرتد بدون رقم فاتورة مبيعات
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_prevent_make_posreturn_invoicePayment">
+                                          <label class="form-check-label translate" data-en="Preventing creating a point of sale return on an invoice associated with a receipt voucher." for="flexCheckDefault1">
+                                            منع عمل مرتد نقاط البيع علي فاتورة مرتبطة بسند قبض
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_multi_card_pos">
+                                          <label class="form-check-label translate" data-en="Activating network multiplicity for POS invoice." for="flexCheckDefault1">
+                                            تفعيل تعدد الشبكة لفاتورة POS
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_prevent_direct_sales_invoice">
+                                          <label class="form-check-label translate" data-en="Preventing direct invoices; they must originate from a transaction source." for="flexCheckDefault1">
+                                            منع عمل الفواتير المباشرة يجب ان تكون من مصدر حركة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_confirm_to_invoice_journal">
+                                          <label class="form-check-label translate" data-en="Activating rounding on sales invoices." for="flexCheckDefault1">
+                                            تفعيل التعميد علي فواتير المبيعات
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_show_profit_sales_invoice">
+                                          <label class="form-check-label translate" data-en="Displaying the profitability of commercial sales invoices." for="flexCheckDefault1">
+                                            إظهار ربحية فاتورة المبيعات التجارية
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                 </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-group">
+                                          <label class="form-label translate" data-en="Customer screen port:" >بورت شاشة العميل:</label>
+                                          <input type="number" class="form-control" formControlName="n_customer_display_port" placeholder = "0" />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-group">
+                                          <label class="form-label translate" data-en="The allowed return period in days:"> المدة المسموحة بالارتجاع بالايام: </label>
+                                          <input type="text" class="form-control" formControlName="n_allowed_return_period_days" placeholder = "0" />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-4 col-custom ">
+                                        <div class="form-group">
+                                          <label class="form-label translate" data-en="The subscription alert duration for customers:">مدة تنبية إشتراك العملاء:</label>
+                                          <input type="text" class="form-control" formControlName="n_participate_days_alert" placeholder = "0" />
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-8 col-custom ">
+                                        <div class="form-group">
+                                          <label class="form-label translate" data-en="Opening balance figures (,):">أرقام فتح الميزان (,):</label>
+                                          <input type="text" class="form-control " formControlName="s_pos_weight_pattern" />
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-6">
+                                        <div class="form-check" style="padding-right: 0;">
+                                          <label class="form-label translate" data-en="The type of action:">نوع الاجراء:</label>
+                                          <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="n_max_qty_reaction" >
+                                            <option value="0">.............</option>
+                                            <option *ngFor="let item of MaxQtyReactionList" [value]="item.code">{{ item.name_arabic }}</option>
+                                          </select>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-6">
+                                        <div class="form-check" style="padding-right: 0;">
+                                          <label class="form-label translate" data-en="Control:">التحكم:</label>
+                                          <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="n_returnsales_reaons_control_type" >
+                                            <option value="0">.............</option>
+                                            <option *ngFor="let item of RetuenSalesControlTypesList" [value]="item.code">{{ item.name_arabic }}</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                              <label class="translate" data-en="Value added tax (VAT)">القيمة المضافة</label>
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-6 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_Endure_VAT" (change)="b_Endure_VATChanged();">
+                                          <label class="form-check-label translate" data-en="Charging value-added tax (VAT) to the company" for="flexCheckDefault1">
+                                            تحميل ضريبة القيمة المضافة علي الشركة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <section class="col-lg-6 col-custom" *ngIf="is_b_Endure_VATChanged">
+                                        <div class="form-group">
+                                          <label class="label"><span class="translate" data-en="Calculating company expenses:">حساب مصروفات الشركة:</span></label>
+                                          <select-server-side
+                                          [selectForm]="salesConfigurationForm"
+                                          [controlName]="'s_Endure_VAT_Account'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="EndureVatAccSearching"
+                                          [filteredServerSide]="EndureVatAccFilteredServerSide"
+                                          (OnSearch)="EndureVatAccSearch($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </section>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                          <div class="row mt-4">
+                            <div class="col-lg-6">
+                              <label class="translate" data-en="Monitoring">المراقبة</label>
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-6 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_usecreditLimitForSalesMen">
+                                          <label class="form-check-label translate" data-en="Using monitoring of the credit limit for the representative" for="flexCheckDefault1">
+                                            استخدام متابعة حد الائتمان للمندوب
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-6 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_checkCustMobileNo">
+                                          <label class="form-check-label translate" data-en="Verifying the correctness of the customer's mobile number" for="flexCheckDefault1">
+                                            التاكد من صحة جوال العميل
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-5">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_follow_credit_limit" (change)="b_use_follow_credit_limitChanged();">
+                                          <label class="form-check-label translate" data-en="Using credit limit monitoring" for="flexCheckDefault1">
+                                            استخدام متابعة حد الائتمان
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-5 col-custom">
+                                        <div class="form-check" style="padding-right: 0;">
+                                          <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="n_credit_limit_reaction" >
+                                            <option value="0">.............</option>
+                                            <option *ngFor="let item of MaxQtyReactionList" [value]="item.code">{{ item.name_arabic }}</option>
+                                          </select>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-2 mt-2">
+                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#CancelModal" [disabled]="!isFollowCreditChecked">تطبيق الكل</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                              <label class="translate" data-en="Selling price">سعر البيع</label>
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_cost_price_in_invoice">
+                                          <label class="form-check-label translate" data-en="Using cost price on the invoice in case of absence of selling price" for="flexCheckDefault1">
+                                            استخدام سعر التكلفة علي الفاتورة في حالة عدم وجود سعر بيع
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_check_cost_with_price">
+                                          <label class="form-check-label translate" data-en="Monitoring selling price with cost" for="flexCheckDefault1">
+                                            مراقبة سعر البيع مع التكلفة
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_watch_profit_with_cost">
+                                          <label class="form-check-label translate" data-en="Monitoring profit margin with average cost price" for="flexCheckDefault1">
+                                            مراقبة نسبة الربح مع متوسط سعر التكلفة
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pre" role="tabpanel" aria-labelledby="pre-tab">
+                          <div class="row mt-4">
+                            <div class="col-lg-3">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-12 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_AddCustAsTypes">
+                                          <label class="form-check-label translate" data-en="Adding customers by type" for="flexCheckDefault1">
+                                            اضافة العملاء حسب النوع
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                              <!-- <label >المراقبة</label> -->
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-12 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_auto_add_charity_source_cost_center" (change)="b_auto_add_charity_source_cost_centerChanged();">
+                                          <label class="form-check-label translate" data-en="Linking to accounts" for="flexCheckDefault1">
+                                            ربط بالحسابات
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <label class="translate" data-en="Linking customers">ربط العملاء</label>
+                              <div class="row">
+                                <div class="col-lg-7">
+                                  <div class="card mt-0 p-3">
+                                    <div class="row">
+                                      <div class="col-lg-6">
+
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="border-radius: 50%; width: 17px; height: 14px;" type="checkbox" formControlName="b_use_one_acc_customer" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Using a unified account for all customers" for="flexCheckDefault1">
+                                            استخدام حساب موحد لكل العملاء
+                                          </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="border-radius: 50%; width: 17px; height: 14px;" type="checkbox" formControlName="b_use_multi_acc_customer" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Separate account for each customer" for="flexCheckDefault1">
+                                            حساب منفصل لكل عميل
+                                          </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="border-radius: 50%; width: 17px; height: 14px;" type="checkbox" formControlName="b_Gl_AutoCoding" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Adding customers automatically to accounts" for="flexCheckDefault1">
+                                            اضافة العملاء اليآ في الحسابات
+                                          </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="border-radius: 50%; width: 17px; height: 14px;" type="checkbox" formControlName="b_use_one_acc_CustType" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Unified account according to customer type" for="flexCheckDefault1">
+                                            حساب موحد حسب نوع العميل
+                                          </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="border-radius: 50%; width: 17px; height: 14px;" type="checkbox" formControlName="b_use_multi_acc_CustType" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Separate account for each customer based on their type" for="flexCheckDefault1">
+                                            حساب منفصل لكل عميل بنائآ على نوعه
+                                          </label>
+                                        </div>
+
+                                        <!-- <div>
+                                          <input class="form-check-input" type="checkbox" formControlName="b_use_one_acc_customer" id="b_use_one_acc_customer" [value]="true" name="options" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label for="b_use_one_acc_customer" class="mr-2">استخدام حساب موحد لكل العملاء</label>
+                                        </div> -->
+                                        <!-- <div>
+                                          <input type="radio" formControlName="b_use_multi_acc_customer" id="b_use_multi_acc_customer" [value]="true" name="options" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label for="b_use_multi_acc_customer" class="mr-2">حساب منفصل لكل عميل</label>
+                                        </div> -->
+                                        <!-- <div>
+                                          <input type="radio" formControlName="b_Gl_AutoCoding" id="b_Gl_AutoCoding" [value]="true" name="options" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label for="b_Gl_AutoCoding" class="mr-2">اضافة العملاء اليآ في الحسابات</label>
+                                        </div> -->
+                                        <!-- <div>
+                                          <input type="radio" formControlName="b_use_one_acc_CustType" id="b_use_one_acc_CustType" [value]="true" name="options" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label for="b_use_one_acc_CustType" class="mr-2">حساب موحد حسب نوع العميل</label>
+                                        </div> -->
+                                        <!-- <div>
+                                          <input type="radio" formControlName="b_use_multi_acc_CustType" id="b_use_multi_acc_CustType" [value]="true" name="options" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label for="b_use_multi_acc_CustType" class="mr-2">حساب منفصل لكل عميل بنائآ على نوعه</label>
+                                        </div> -->
+                                      </div>
+
+                                      <div class="col-lg-6">
+                                        <div class="row">
+                                          <section class="col-lg-9 col-custom">
+                                            <div class="form-group">
+                                              <label class="label"><span class="translate" data-en="Customer account number in the directory">رقم حساب العملاء بالدليل:</span></label>
+                                              <select-server-side
+                                              [selectForm]="salesConfigurationForm"
+                                              [controlName]="'s_related_account_no'"
+                                              [TextField]="'s_account_name'"
+                                              [ValueField]="'s_account_no'"
+                                              [searching]="RelatedAccSearching"
+                                              [disabled]="!isAutoAddCharitySourceCostCenter"
+                                              [filteredServerSide]="RelatedAccFilteredServerSide"
+                                              (OnSearch)="RelatedAccSearch($event)">
+                                              </select-server-side>
+                                            </div>
+                                          </section>
+                                        </div>
+
+                                        <div class="row">
+                                          <section class="col-lg-9 col-custom">
+                                            <div class="form-group">
+                                              <label class="label"><span class="translate" data-en="Main customers">رئيسي العملاء:</span></label>
+                                              <select-server-side
+                                              [selectForm]="salesConfigurationForm"
+                                              [controlName]="'s_Customers_Main_Account'"
+                                              [TextField]="'s_account_name'"
+                                              [ValueField]="'s_account_no'"
+                                              [searching]="CustomerMainAccSearching"
+                                              [disabled]="!isAutoAddCharitySourceCostCenter"
+                                              [filteredServerSide]="CustomerMainAccFilteredServerSide"
+                                              (OnSearch)="CustomerMainAccSearch($event)">
+                                              </select-server-side>
+                                            </div>
+                                          </section>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                      <div class="col-lg-12 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_expense_account" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Linking expense account at the item level" for="flexCheckDefault1">
+                                            ربط حساب المصروفات علي مستوي الصنف
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-12 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_income_account" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Linking revenue account at the item level" for="flexCheckDefault1">
+                                            ربط حساب الايراد علي مستوي الصنف
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-12 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_income_account_item_type" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Linking revenue account at the item type level" for="flexCheckDefault1">
+                                            ربط حساب الايراد علي مستوي نوع الصنف
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-lg-5">
+                                  <div class="card mt-0 p-3">
+                                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <div class="row">
+                                          <section class="col-lg-12 col-custom">
+                                            <div class="form-group row">
+                                              <label class="col-sm-5 col-form-label"><span class="translate" data-en="Adjustment account:">حساب التسوية:</span></label>
+                                              <div class="col-sm-6">
+                                                <select-server-side
+                                                [selectForm]="salesConfigurationForm"
+                                                [controlName]="'s_account_no'"
+                                                [TextField]="'s_account_name'"
+                                                [ValueField]="'s_account_no'"
+                                                [searching]="AccountsSearching"
+                                                [disabled]="!isAutoAddCharitySourceCostCenter"
+                                                [filteredServerSide]="AccountsFilteredServerSide"
+                                                (OnSearch)="AccountsSearch($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+
+                                          <section class="col-lg-12 col-custom">
+                                            <div class="form-group row">
+                                              <label class="col-sm-5 col-form-label"><span class="translate" data-en="Shortage and excess account in shifts:">حساب العجز والزيادة في الورديات:</span></label>
+                                              <div class="col-sm-6">
+                                                <select-server-side
+                                                [selectForm]="salesConfigurationForm"
+                                                [controlName]="'s_decrease_increase_shift_acc_no'"
+                                                [TextField]="'s_account_name'"
+                                                [ValueField]="'s_account_no'"
+                                                [searching]="DiscReateIncreaseSearching"
+                                                [disabled]="!isAutoAddCharitySourceCostCenter"
+                                                [filteredServerSide]="DiscReateIncreaseFilteredServerSide"
+                                                (OnSearch)="DiscReateIncreaseSearch($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+
+                                          <section class="col-lg-12 col-custom">
+                                            <div class="form-group row">
+                                              <label class="col-sm-5 col-form-label"><span class="translate" data-en="Maintenance contracts entitlement account:">حساب إستحقاق عقود الصيانة:</span></label>
+                                              <div class="col-sm-6">
+                                                <select-server-side
+                                                [selectForm]="salesConfigurationForm"
+                                                [controlName]="'s_CustContractMaintainance_Acc'"
+                                                [TextField]="'s_account_name'"
+                                                [ValueField]="'s_account_no'"
+                                                [searching]="CustContractMainAccSearching"
+                                                [disabled]="!isAutoAddCharitySourceCostCenter"
+                                                [filteredServerSide]="CustContractMainAccFilteredServerSide"
+                                                (OnSearch)="CustContractMainAccSearch($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+
+                                          <section class="col-lg-12 col-custom">
+                                            <div class="form-group row">
+                                              <label class="col-sm-5 col-form-label"><span class="translate" data-en="Accrued Revenue Account:">حساب الايراد المستحق:</span></label>
+                                              <div class="col-sm-6">
+                                                <select-server-side
+                                                [selectForm]="salesConfigurationForm"
+                                                [controlName]="'s_income_due_account'"
+                                                [TextField]="'s_account_name'"
+                                                [ValueField]="'s_account_no'"
+                                                [searching]="IncomeDueAccSearching"
+                                                [disabled]="!isAutoAddCharitySourceCostCenter"
+                                                [filteredServerSide]="IncomeDueAccFilteredServerSide"
+                                                (OnSearch)="IncomeDueAccSearch($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+
+                                          <section class="col-lg-12 col-custom">
+                                            <div class="form-group row">
+                                              <label class="col-sm-5 col-form-label"><span class="translate" data-en="Actual Revenue Account:">حساب الايراد الفعلي:</span></label>
+                                              <div class="col-sm-6">
+                                                <select-server-side
+                                                [selectForm]="salesConfigurationForm"
+                                                [controlName]="'s_income_real_account'"
+                                                [TextField]="'s_account_name'"
+                                                [ValueField]="'s_account_no'"
+                                                [searching]="IncomeRealAccSearching"
+                                                [disabled]="!isAutoAddCharitySourceCostCenter"
+                                                [filteredServerSide]="IncomeRealAccFilteredServerSide"
+                                                (OnSearch)="IncomeRealAccSearch($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-lg-7">
+                              <label class="translate" data-en="Properties">خصائص</label>
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-6 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_Invoice_GroupJournal" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Consolidated entries for the invoice" for="flexCheckDefault1">
+                                            قيود مجمعة للفاتورة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-6 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_Return_Group_journal" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Aggregate constraints on the apostate" for="flexCheckDefault1">
+                                            قيود مجمعة للمرتد
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-6 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_show_journal_in_trans" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Displaying daily constraints during movement" for="flexCheckDefault1">
+                                            عرض القيود اليومية اثناء الحركة
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-6 col-custom ">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_activate_JournalCost_with_Sales" [attr.disabled]="!isAutoAddCharitySourceCostCenter ? 'disabled' : null">
+                                          <label class="form-check-label translate" data-en="Activating cost constraint with the sales invoice" for="flexCheckDefault1">
+                                            تفعيل قيد التكلفة مع فاتورة المبيعات
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="discount" role="tabpanel" aria-labelledby="discount-tab">
+                          <div class="row mt-4">
+                            <div class="col-lg-8">
+                              <label class="translate" data-en="Discount policy">سياسة الخصومات</label>
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <table  id="tblar_discount_policy" class="custom-table" formArrayName="ar_discount_policy">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="#"> # </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="Name"> الاسم </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 40px;" data-en="Status"> الحالة </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="Order"> الترتيب </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="Delete"> حذف </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr [formGroupName]="i" *ngFor="let item of ar_discount_policy.controls; let i=index">
+                                          <td scope="row" style="min-width: 15px;"> {{ item.value.n_line_no }} </td>
+
+                                          <td style="min-width: 15px;">
+                                            <input type="text" class="form-control" formControlName="s_name" />
+                                          </td>
+
+                                          <td style="min-width: 40px;">
+                                            <select class="form-select" formControlName="n_status">
+                                              <option [ngValue]="0"> ------------------- </option>
+                                              <option *ngFor="let op of PolicyStatusList" [ngValue]="op.code"> {{ op.name_arabic }} </option>
+                                            </select>
+                                          </td>
+
+                                          <td style="min-width: 15px;">
+                                            <input type="number" class="form-control" formControlName="n_sort" />
+                                          </td>
+
+                                          <td class="text-center" style="min-width: 15px;">
+                                            <a (click)="RemoveDiscountPolicyDetail(i)">
+                                              <i class="bi bi-x-square"></i>
+                                            </a>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row p-3">
+                                    <div class="col-md-12 text-center">
+                                      <div class="button-plus">
+                                        <i class="bi bi-plus"></i>
+                                        <a (click)="addDiscountPolicyDetails()" class="translate" data-en="Add Line">إضافة سطر</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row" style="margin-top: 30px;">
+                            <div class="col-lg-8">
+                              <label class="translate" data-en="Discount policy on the item/category">سياسة الخصومات علي الصنف</label>
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <table  id="tblar_item_discount_policy" class="custom-table" formArrayName="ar_item_discount_policy">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="#"> # </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="Name"> الاسم </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 40px;" data-en="Status"> الحالة </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="Order"> الترتيب </th>
+                                          <th scope="col" class="text-center translate" style="min-width: 15px;" data-en="Delete"> حذف </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr [formGroupName]="i" *ngFor="let item of ar_item_discount_policy.controls; let i=index">
+                                          <td scope="row" style="min-width: 15px;"> {{ item.value.n_line_no }} </td>
+
+                                          <td style="min-width: 15px;">
+                                            <input type="text" class="form-control" formControlName="s_name" />
+                                          </td>
+
+                                          <td style="min-width: 40px;">
+                                            <select class="form-select" formControlName="n_status">
+                                              <option [ngValue]="0"> ------------------- </option>
+                                              <option *ngFor="let op of PolicyStatusList" [ngValue]="op.code"> {{ op.name_arabic }} </option>
+                                            </select>
+                                          </td>
+
+                                          <td style="min-width: 15px;">
+                                            <input type="number" class="form-control" formControlName="n_sort" />
+                                          </td>
+
+                                          <td class="text-center" style="min-width: 15px;">
+                                            <a (click)="RemoveItemDiscountPolicyDetail(i)">
+                                              <i class="bi bi-x-square"></i>
+                                            </a>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row p-3">
+                                    <div class="col-md-12 text-center">
+                                      <div class="button-plus">
+                                        <i class="bi bi-plus"></i>
+                                        <a (click)="addItemDiscountPolicyDetails()" class="translate" data-en="Add Line">إضافة سطر</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="acc-tab">
+                          <div class="row mt-4">
+                            <div class="col-lg-7">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_contract_no">
+                                      <label class="form-check-label translate" data-en="Utilizing event contracts" for="flexCheckDefault1">
+                                        استخدام عقود الحفلات
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_invoice_retention">
+                                      <label class="form-check-label translate" data-en="Activating the Retention system" for="flexCheckDefault1">
+                                        تفعيل نظام ال Retention
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-12 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_last_item_discount_drugs">
+                                      <label class="form-check-label translate" data-en="Handling the latest discount from the Ministry of Health for the customer at the item level in the drug warehouses" for="flexCheckDefault1">
+                                        التعامل باخر خصم وزارة الصحة للعميل علي مستوي الصنف في مستودعات الادوية
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_dr_in_pos">
+                                      <label class="form-check-label translate" data-en="The appearance of the doctor on the cashier's sales invoice" for="flexCheckDefault1">
+                                        ظهور الطبيب في فاتورة مبيعات الكاشير
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_useAgentPrice">
+                                      <label class="form-check-label translate" data-en="Activating the agent's price" for="flexCheckDefault1">
+                                        تفعيل سعر الوكيل
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_sellprice_taxable_in_resturant">
+                                      <label class="form-check-label translate" data-en="The price includes tax for restaurant invoices" for="flexCheckDefault1">
+                                        السعر شامل الضريبة لفاتورة المطاعم
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_sellprice_taxable_in_Pos">
+                                      <label class="form-check-label translate" data-en="The price includes tax for POS invoices" for="flexCheckDefault1">
+                                        السعر شامل الضريبة لفاتورة POS
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_get_salesinvoice_manual_fintrans">
+                                      <label class="form-check-label translate" data-en="Withdrawing sales manually from the reconciliation movement" for="flexCheckDefault1">
+                                        سحب المبيعات يدوي حركة التسويات
+                                      </label>
+                                    </div>
+                                  </div>
+
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_alarm_party">
+                                      <label class="form-check-label translate" data-en="Alert for event delivery times" for="flexCheckDefault1">
+                                        تنبيه بمواعيد تسليم الحفلات
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_allow_party_price_change">
+                                      <label class="form-check-label translate" data-en="Allowing modification of event contract prices" for="flexCheckDefault1">
+                                        السماح بتعديل سعر عقود الحفلات
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_activate_search_by_first_number">
+                                      <label class="form-check-label translate" data-en="Activating search by first digit" for="flexCheckDefault1">
+                                        تفعيل البحث بأول الرقم
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_vouchers_coupons">
+                                      <label class="form-check-label translate" data-en="Activating vouchers and coupons" for="flexCheckDefault1">
+                                        تفعيل القسائم والكوبونات
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-7 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_activate_prepaid_cards_in_pos">
+                                      <label class="form-check-label translate" data-en="Activating prepaid cards for the customer at the POS level" for="flexCheckDefault1">
+                                        تفعيل الكروت مسبقة الدفع علي مستوي العميل في POS
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-custom ">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_use_cost_center_with_retained_warranty">
+                                      <label class="form-check-label translate" data-en="Displaying the cost center with the warranty held in the invoice" for="flexCheckDefault1">
+                                        اظهار مركز التكلفة مع الضمان المحتجز في قيد الفاتورة
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                    <div class="form-group">
+                                      <label class="form-label translate" data-en="The minimum threshold for saving deferred invoices">الحد الادني لحفظ الفاتورة الاجل:</label>
+                                      <input type="number" class="form-control" formControlName="n_credit_invoice_min_value" placeholder = "0" />
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-12">
+                                    <fieldset >
+                                      <legend class="translate" data-en="Price-fixing policy">سياسة جبر الأسعار</legend>
+
+                                      <div class="container mt-3 mb-3">
+                                        <div class="row justify-content-center align-items-center">
+                                          <div class="col-lg-12">
+                                            <fieldset class="border-primary" style="border:1px solid;">
+                                              <div class="row justify-content-center align-items-center mt-3">
+                                                <div class="col-lg-4" custom-input>
+                                                  <div class="form-group row">
+                                                    <label for="inputPassword" class="form-label col-sm-3 translate" data-en="From">من</label>
+                                                    <div class="col-sm-9">
+                                                      <input type="text" class="form-control" id="inputPassword" formControlName="n_PriceFractionFrom_one">
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-lg-4" custom-input>
+                                                  <div class="form-group row">
+                                                    <label for="inputPassword" class="form-label col-sm-3 translate" data-en="To">الي</label>
+                                                    <div class="col-sm-9">
+                                                      <input type="text" class="form-control" id="inputPassword" formControlName="n_PriceFractionTo_one">
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-sm-1" style="width: 2.333333%;" custom-input>
+                                                  <label for="inputPassword" class="form-label">=</label>
+                                                </div>
+
+                                                <div class="col-lg-3 mr-0" custom-input>
+                                                  <div class="form-group row">
+                                                    <div class="col-sm-9">
+                                                      <input type="text" class="form-control" id="inputPassword" form formControlName="n_PriceFractionResult_one">
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                              </div>
+
+                                              <div class="row justify-content-center align-items-center mt-3">
+                                                <div class="col-lg-4" custom-input>
+                                                  <div class="form-group row">
+                                                    <label for="inputPassword" class="form-label col-sm-3 translate" data-en="From">من</label>
+                                                    <div class="col-sm-9">
+                                                      <input type="text" class="form-control" id="inputPassword" formControlName="n_PriceFractionFrom_two">
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-lg-4" custom-input>
+                                                  <div class="form-group row">
+                                                    <label for="inputPassword" class="form-label col-sm-3 translate" data-en="To">الي</label>
+                                                    <div class="col-sm-9">
+                                                      <input type="text" class="form-control" id="inputPassword" formControlName="n_PriceFractionTo_two">
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-sm-1" style="width: 2.333333%;" custom-input>
+                                                  <label for="inputPassword" class="form-label">=</label>
+                                                </div>
+
+                                                <div class="col-lg-3 mr-0" custom-input>
+                                                  <div class="form-group row">
+                                                    <div class="col-sm-9">
+                                                      <input type="text" class="form-control" id="inputPassword" form formControlName="n_PriceFractionResult_two">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </fieldset>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </fieldset>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <label>المطاعم</label>
+                            <div class="col-lg-7">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <fieldset >
+                                    <legend class="translate" data-en="Restaurant reports">تقارير المطاعم</legend>
+                                    <div class="container mt-3 mb-3">
+                                      <div class="row">
+                                        <div class="col-lg-8">
+                                          <fieldset class="border-primary" style="border:1px solid;">
+                                            <div class="row mt-3">
+
+                                              <div class="col-lg-11 col-custom">
+                                                <div class="form-group row">
+                                                  <label class="col-sm-2 col-form-label translate" data-en="Report 1">تقرير 1</label>
+                                                  <div class="col-sm-10">
+                                                    <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="s_rest_rep1" >
+                                                      <option value="0">.............</option>
+                                                      <option *ngFor="let item of ReportsList" [value]="item.repId">{{ item.repName }}</option>
+                                                    </select>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                              <div class="col-lg-11 col-custom">
+                                                <div class="form-group row">
+                                                  <label class="col-sm-2 col-form-label translate" data-en="Report 2">تقرير 2</label>
+                                                  <div class="col-sm-10">
+                                                    <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="s_rest_rep2" >
+                                                      <option value="0">.............</option>
+                                                      <option *ngFor="let item of ReportsList" [value]="item.repId">{{ item.repName }}</option>
+                                                    </select>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                              <div class="col-lg-11 col-custom">
+                                                <div class="form-group row">
+                                                  <label class="col-sm-2 col-form-label translate" data-en="Report 3">تقرير 3</label>
+                                                  <div class="col-sm-10">
+                                                    <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="s_rest_rep3" >
+                                                      <option value="0">.............</option>
+                                                      <option *ngFor="let item of ReportsList" [value]="item.repId">{{ item.repName }}</option>
+                                                    </select>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                              <div class="col-lg-11 col-custom">
+                                                <div class="form-group row">
+                                                  <label class="col-sm-2 col-form-label translate" data-en="Report 4">تقرير 4</label>
+                                                  <div class="col-sm-10">
+                                                    <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="s_rest_rep4" >
+                                                      <option value="0">.............</option>
+                                                      <option *ngFor="let item of ReportsList" [value]="item.repId">{{ item.repName }}</option>
+                                                    </select>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                            </div>
+                                          </fieldset>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                          <div class="col-lg-12 mr-0" custom-input>
+                                            <div class="form-group">
+                                              <label class="translate" data-en="The standard turnover time for table occupancy">الوقت القياسي لاشغال الطاولة:</label>
+                                              <input type="number" class="form-control" id="n_rest_table_time" formControlName="n_rest_table_time">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </fieldset>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <fieldset >
+                                    <legend class="translate" data-en="Charitable associations">جمعيات خيرية</legend>
+                                    <div class="container mt-3 mb-3">
+                                      <div class="row">
+                                        <div class="col-lg-12">
+                                          <fieldset class="border-primary" style="border:1px solid;">
+                                            <div class="row mt-3">
+                                              <div class="col-lg-12">
+                                                <div class="form-check">
+                                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_auto_add_charity_category_acc">
+                                                  <label class="form-check-label translate" data-en="Adding the category account" for="flexCheckDefault1">
+                                                    إضافة حساب التصنيف اليآ
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div class="col-lg-12">
+                                                <div class="form-check">
+                                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="b_link_Account">
+                                                  <label class="form-check-label translate" data-en="Linking to accounts" for="flexCheckDefault1">
+                                                    ربط بالحسابات
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </fieldset>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </fieldset>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                   </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title translate" id="exampleModalLongTitle" data-en="Close">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body translate" data-en="Are you sure about Apply all?">
+                هل انت متاكد من تطبيق الكل؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #closebutton
+                    data-en="Close">اغلاق</button>
+                <button type="button" class="btn btn-primary translate" (click)="ApplyAll();"
+                    data-en="Yes">نعم</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.btnStyle
+{
+    padding: 6px 2px !important;
+    font-weight: bold;
+    font-size: 11px !important;
+    border-radius: 3px;
+    background-color: #1657a9;
+}
+.bi-check::before {
+  content: "\f26e";
+  font-size: 48px;
+  color: green;
+
+}
+
+.bi-x-lg::before {
+  content: "\f659";
+  font-size: 30px;
+  color: #c11b1b;
+}
+
+.divStyle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bi-eraser::before {
+  content: "\f331";
+  font-size: 25px;
+}

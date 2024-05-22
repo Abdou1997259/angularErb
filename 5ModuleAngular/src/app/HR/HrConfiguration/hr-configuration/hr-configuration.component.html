@@ -1,0 +1,1691 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate" >تهيئة شئون الموظفين</h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/hr/hrconfig" class="translate"  data-en="Exit"value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!py_HR_configuration.valid" value="حفظ" class="translate" data-en="Save"  (click)="save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <!-- Content Header (Page header) -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+              <form [formGroup]="py_HR_configuration" (keydown.enter)="$event.preventDefault()">
+                <div class="card-body" >
+                  <nav class="mt-lg-n5">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">تهيئة الشئون الادارية</button>
+                      <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">تهيئة المؤثرات</button>
+                      <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">تهيئة المرتبات</button>
+                      <button class="nav-link" id="nav-contact2-tab" data-bs-toggle="tab" data-bs-target="#nav-contact2" type="button" role="tab" aria-controls="nav-contact2" aria-selected="false">تهيئة التأمينات</button>
+                    </div>
+                  </nav>
+
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                      <div class="row mt-3">
+
+                        <section class="col-lg-6">
+                          <div class="card p-3">
+                            <div class="row">
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_Alert_For_Doc_Expire_Date" formControlName="b_Display_Alert_For_Doc_Expire_Date" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_Alert_For_Doc_Expire_Date">
+                                      ظهور تحذير بالمستندات التي قاربت علي الانتهاء
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_Alert_For_Contract_Expire_Date" formControlName="b_Display_Alert_For_Contract_Expire_Date" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_Alert_For_Contract_Expire_Date">
+                                      ظهور تحذير بالعقود التي قاربت علي الانتهاء
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_Alert_For_Visa_Expire_Date" formControlName="b_Display_Alert_For_Visa_Expire_Date" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_Alert_For_Visa_Expire_Date">
+                                      ظهور تحذير بالتاشيرات التي قاربت علي الانتهاء
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_Alert_For_Medical_Ins_Expire_Date" formControlName="b_Display_Alert_For_Medical_Ins_Expire_Date" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_Alert_For_Medical_Ins_Expire_Date">
+                                      ظهور تحذير بانتهاء التامين الصحي اللذي قارب علي الانتهاء
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_Alert_For_Profision_Ceritifacte_Expire_Date" formControlName="b_Display_Alert_For_Profision_Ceritifacte_Expire_Date" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_Alert_For_Profision_Ceritifacte_Expire_Date">
+                                      ظهور تحذير بانتهاء شهادات التصنيف المهني التي قاربت علي الانتهاء
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_Alert_For_Annual_Reward" formControlName="b_Display_Alert_For_Annual_Reward" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_Alert_For_Annual_Reward">
+                                      ظهور تنبيه بالعاملين المستحقين علاوة
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_alert_For_Due_Employee_Vacations" formControlName="b_Display_alert_For_Due_Employee_Vacations" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_alert_For_Due_Employee_Vacations">
+                                      ظهور تنبيه بالعاملين المستحقين اجازة
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Display_Alert_For_Vacation_Visa" formControlName="b_Display_Alert_For_Vacation_Visa" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Display_Alert_For_Vacation_Visa">
+                                      ظهور تنبيه بالاجازات التي قاربت علي الانتهاء "العودة"
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+
+                          <div class="card p-3">
+                            <div class="row">
+                              <fieldset>
+                                <legend>السلف:</legend>
+                                <section class="col col-12" >
+                                  <div class="form-group row">
+                                    <label class="form-label col-sm-4 translate" data-en="Number of days to calculate the end of service">الحد الاقصي لقسط السلفة:</label>
+                                    <div class="col-sm-5">
+                                      <input type="number" class="form-control text-center" formControlName="n_max_installment_percent_value" placeholder="0">
+                                    </div>
+                                  </div>
+                                </section>
+
+                                <section class="col col-12" >
+                                  <div class="form-group row">
+                                    <label class="form-label col-sm-4 translate" data-en="Number of days to calculate the end of service">الحد الاقصي لعدد الاقساط:</label>
+                                    <div class="col-sm-5">
+                                      <input type="number" class="form-control text-center" formControlName="n_max_installment_cont" placeholder="0">
+                                    </div>
+                                  </div>
+                                </section>
+
+                                <section class="col col-12" >
+                                  <div class="form-group">
+                                    <div class="form-check">
+                                      <input class="form-check-input p-2" type="checkbox" value="" id="b_create_more_loan_one_time" formControlName="b_create_more_loan_one_time" />
+                                      <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_create_more_loan_one_time">
+                                        إصدار سلفتين لموظف في نفس الوقت
+                                      </label>
+                                    </div>
+                                  </div>
+                                </section>
+                              </fieldset>
+                            </div>
+                          </div>
+
+                          <div class="card p-3">
+                            <section class="col col-12">
+                              <div class="form-group row">
+                                <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">إفتراضي نظام الاجازات في العقد:</span></label>
+                                <div class="col-sm-6">
+                                  <select-server-side
+                                  [selectForm]="py_HR_configuration"
+                                  [controlName]="'n_vacation_rule_no'"
+                                  [TextField]="'s_rule_desc'"
+                                  [ValueField]="'n_rule_no'"
+                                  [searching]="searchingVacations"
+                                  [filteredServerSide]="filteredVacationsServerSide"
+                                  (OnSearch)="searchVacations($event)">
+                                  </select-server-side>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-12">
+                              <div class="form-group row">
+                                  <label class="form-label col-sm-6 translate" data-en="Number of days to calculate the end of service">رمز البنك لملف حماية الاجور:</label>
+                                  <div class="col-sm-6">
+                                    <input type="text" class="form-control text-center" formControlName="s_bank_symbol_salary_issue">
+                                  </div>
+                              </div>
+                            </section>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-6">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-12" >
+                                <div class="form-group row">
+                                  <label class="label col-sm-4"><span class="translate" data-en="Country">الدولة:</span></label>
+                                  <div class="col-sm-8">
+                                    <select class="form-select" formControlName="n_country">
+                                      <option *ngFor="let c of countriesDL" [ngValue]="c.code">{{ c.name_arabic }}</option>
+                                   </select>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <!--
+                                <section class="col col-12" >
+                                  <div class="form-group row">
+                                    <label class="form-label col-sm-4"><span class="translate" data-en="Country">خيارات بحث الموظف:</span></label>
+                                    <div class="col-sm-8">
+                                      <ng-multiselect-dropdown
+                                        [data]="employeesStatusDL"
+                                        [(ngModel)]="selectedItems"
+                                        [settings]="dropdownSettings"
+                                        (onSelect)="onItemSelect($event)"
+                                        (onSelectAll)="onSelectAll($event)">
+                                      </ng-multiselect-dropdown>
+                                    </div>
+                                  </div>
+                                </section>
+                              -->
+
+                              <section class="col col-12">
+                                <div class="form-group row">
+                                  <label class="form-label col-sm-4"><span class="translate" data-en="Country">خيارات بحث الموظف:</span></label>
+                                  <div class="col-sm-8">
+                                    <mat-form-field>
+                                      <mat-select formControlName="s_emp_status" multiple>
+                                        <mat-option *ngFor="let choice of employeesStatusDL" [value]="choice.code">
+                                          {{ choice.name_arabic }}
+                                        </mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12">
+                                <div class="form-group row">
+                                    <label class="form-label col-sm-4 translate" data-en="Number of days to calculate the end of service">ايام العام لاحتساب نهاية الخدمة:</label>
+                                    <div class="col-sm-5">
+                                      <input type="number" class="form-control text-center" formControlName="n_year_days_for_endServices">
+                                    </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12">
+                                <div class="form-group row">
+                                    <label class="form-label col-sm-4 translate" data-en="Number of days to calculate the end of service">ايام العام لاحتساب بدل الاجازة:</label>
+                                    <div class="col-sm-5">
+                                      <input type="number" class="form-control text-center" formControlName="n_year_days_for_vacation" placeholder="0">
+                                    </div>
+                                </div>
+                              </section>
+
+                              <hr/>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_calc_vacation_reward_per_contract" formControlName="b_calc_vacation_reward_per_contract" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_calc_vacation_reward_per_contract">
+                                      احتساب بدل الاجازة حسب راتب كل عقد
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_vacation_days_per_contract" formControlName="b_vacation_days_per_contract" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_vacation_days_per_contract">
+                                      احتساب نظام الاجازة حسب كل عقد
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_insurance_salary_last_contract" formControlName="b_insurance_salary_last_contract" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_insurance_salary_last_contract">
+                                      احتساب راتب التأمين علي اخر عقد
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12">
+                                <div class="form-group row">
+                                    <label class="form-label col-sm-4 translate" data-en="Number of days to calculate the end of service">الحد الاقصي للتابعين:</label>
+                                    <div class="col-sm-5">
+                                      <input type="number" class="form-control text-center" formControlName="n_max_Escorts_no" placeholder="0">
+                                    </div>
+                                </div>
+                              </section>
+
+                            </div>
+                          </div>
+
+                          <div class="card p-3">
+                            <section class="col col-12" >
+                              <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input p-2" type="checkbox" value="" id="b_stop_create_indirect_payment" formControlName="b_stop_create_indirect_payment" />
+                                  <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_stop_create_indirect_payment">
+                                    ايقاف انشاء سندات الدفع
+                                  </label>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-12" >
+                              <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input p-2" type="checkbox" value="" id="b_show_costcenter2_only_in_loan" formControlName="b_show_costcenter2_only_in_loan" />
+                                  <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_show_costcenter2_only_in_loan">
+                                    ظهور مركز تكلفة 2 فقط في السلف
+                                  </label>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-12" >
+                              <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input p-2" type="checkbox" value="" id="b_stop_costcenter2_in_loan" formControlName="b_stop_costcenter2_in_loan" />
+                                  <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_stop_costcenter2_in_loan">
+                                    ايقاف مركز تكلفة 2 في شاشة السلف والاستقطاعات
+                                  </label>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-12" >
+                              <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input p-2" type="checkbox" value="" id="b_stop_costcenter1_in_loan" formControlName="b_stop_costcenter1_in_loan" />
+                                  <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_stop_costcenter1_in_loan">
+                                    ايقاف مركز تكلفة 1 في شاشة السلف
+                                  </label>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-12" >
+                              <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input p-2" type="checkbox" value="" id="b_show_costcenter_in_salaryissue" formControlName="b_show_costcenter_in_salaryissue" />
+                                  <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_show_costcenter_in_salaryissue">
+                                    ظهور مركز تكلفة 1 في صرف الرواتب
+                                  </label>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-12" >
+                              <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input p-2" type="checkbox" value="" id="b_show_indebtedness_account_endservice_Payment" formControlName="b_show_indebtedness_account_endservice_Payment" />
+                                  <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_show_indebtedness_account_endservice_Payment">
+                                    اظهار حساب مديونية الموظف في صرف المخصصات
+                                  </label>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col col-12" >
+                              <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input p-2" type="checkbox" value="" id="b_stop_cost_center_in_overtime_salary_due_journal" formControlName="b_stop_cost_center_in_overtime_salary_due_journal" />
+                                  <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_stop_cost_center_in_overtime_salary_due_journal">
+                                    ايقاف مركز التكلفة في قيد إضافي الرواتب المستحقة
+                                  </label>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                      <div class="row mt-3">
+                        <section class="col-lg-10">
+                          <div class="card p-3">
+                            <div class="row">
+                              <fieldset style="border:1px solid;">
+                                <legend>تهيئة تاخيرات الموظفين</legend>
+                                <section class="col col-6">
+                                  <div class="form-group row">
+                                      <label class="form-label col-sm-6 translate" data-en="Number of days to calculate the end of service">مدة السماح بالساعات للتاخير الشهر:</label>
+                                      <div class="col-sm-6">
+                                        <input type="number" class="form-control text-center" formControlName="n_Latancy_Allowed_Hours" placeholder="0">
+                                      </div>
+                                  </div>
+                                </section>
+
+                                <section class="col col-md-6" >
+                                  <div class="form-group row">
+                                    <label class="label col-sm-6"><span class="translate" data-en="Country">طريقة احتساب التاخيرات للعاملين:</span></label>
+                                    <div class="col-sm-6">
+                                      <select class="form-select" formControlName="n_Latancy_Calc_Type">
+                                        <option *ngFor="let c of latancyCalcTypeDL" [ngValue]="c.code">{{ c.name_arabic }}</option>
+                                     </select>
+                                    </div>
+                                  </div>
+                                </section>
+
+                                <section class="col col-md-12">
+                                  <div class="row d-flex justify-content-center align-items-center" style="border:1px solid;">
+                                    <section class="col col-md-12 text-center mt-4">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-3"> شريحة اولي </label>
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_One_From" class="col-sm-4">من</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_One_From" placeholder="0" />
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_One_To" class="col-sm-4">الي</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_One_To" placeholder="0" />
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_One_Rate" class="col-sm-4">المعامل</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_One_Rate" placeholder="0,00" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-md-12 text-center mt-4">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-3"> شريحة ثانية </label>
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_Two_From" class="col-sm-4">من</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_Two_From" placeholder="0" />
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_Two_To" class="col-sm-4">الي</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_Two_To" placeholder="0" />
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_Two_Rate" class="col-sm-4">المعامل</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_Two_Rate" placeholder="0,00" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-md-12 text-center mt-4">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-3"> شريحة ثالثة </label>
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_Three_From" class="col-sm-4">من</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_Three_From" placeholder="0" />
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_Three_To" class="col-sm-4">الي</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_Three_To" placeholder="0" />
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                          <div class="form-group row">
+                                            <label for="n_Phase_Three_Rate" class="col-sm-4">المعامل</label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="n_Phase_Three_Rate" placeholder="0,00" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+
+                                <section class="col col-lg-12 mt-4">
+                                  <div class="row">
+                                    <section class="col col-lg-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">كود استقطاع الخروج المبكر:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'n_Early_departure_Deduction_code'"
+                                          [TextField]="'s_deduction_name'"
+                                          [ValueField]="'n_deduction_id'"
+                                          [searching]="searchingDeductions"
+                                          [filteredServerSide]="filteredDeductionsServerSide"
+                                          (OnSearch)="searchDeductions($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-lg-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">كود استقطاع التأخير:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'n_Delay_Deduction_Code'"
+                                          [TextField]="'s_deduction_name'"
+                                          [ValueField]="'n_deduction_id'"
+                                          [searching]="searchingDeductions"
+                                          [filteredServerSide]="filteredDeductionsServerSide"
+                                          (OnSearch)="searchDeductions($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-lg-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">كود استقطاع لم يسجل:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'n_not_registered_deduction_id'"
+                                          [TextField]="'s_deduction_name'"
+                                          [ValueField]="'n_deduction_id'"
+                                          [searching]="searchingDeductions"
+                                          [filteredServerSide]="filteredDeductionsServerSide"
+                                          (OnSearch)="searchDeductions($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-10">
+                          <div class="card p-3">
+                            <div class="row">
+                              <fieldset style="border:1px solid;">
+                                <legend>تهيئة غياب الموظفين</legend>
+                                <section class="col col-12">
+                                  <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6 translate" data-en="Number of days to calculate the end of service">معامل الغياب بدون اذن:</label>
+                                        <div class="col-sm-6">
+                                          <input type="number" class="form-control text-center" formControlName="n_Absence_Without_Permision_Rate" placeholder="0,00">
+                                        </div>
+                                    </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">كود استقطاع الغياب:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'n_Absent_Deduction_Code'"
+                                          [TextField]="'s_deduction_name'"
+                                          [ValueField]="'n_deduction_id'"
+                                          [searching]="searchingDeductions"
+                                          [filteredServerSide]="filteredDeductionsServerSide"
+                                          (OnSearch)="searchDeductions($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-10">
+                          <div class="card p-3">
+                            <div class="row">
+                              <fieldset style="border:1px solid;">
+                                <legend>تهيئة اضافي الموظفين</legend>
+                                <section class="col col-12">
+                                  <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6 translate" data-en="Number of days to calculate the end of service">معامل الإضافي من الراتب الشامل:</label>
+                                        <div class="col-sm-6">
+                                          <input type="number" class="form-control text-center" formControlName="n_AddtionalParameter" placeholder="0,00">
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">كود استحقاق الاضافي:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'n_Additional_Deduction_Code'"
+                                          [TextField]="'s_Deservedly_name'"
+                                          [ValueField]="'n_doc_no'"
+                                          [searching]="searchingDeservedly"
+                                          [filteredServerSide]="filteredDeservedlyServerSide"
+                                          (OnSearch)="searchDeservedly($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+
+                                <section class="col col-12">
+                                  <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6 translate" data-en="Number of days to calculate the end of service">معامل الإضافي من الراتب الاساسي:</label>
+                                        <div class="col-sm-6">
+                                          <input type="number" class="form-control text-center" formControlName="n_AddtionalParameter_basic" placeholder="0,00">
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">كود استحقاق بونص الفنيين:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'n_technical_deserved_code'"
+                                          [TextField]="'s_Deservedly_name'"
+                                          [ValueField]="'n_doc_no'"
+                                          [searching]="searchingDeservedly"
+                                          [filteredServerSide]="filteredDeservedlyServerSide"
+                                          (OnSearch)="searchDeservedly($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+
+                                <section class="col col-12">
+                                  <div class="row">
+                                    <section class="col col-md-6" >
+                                      <div class="form-group row">
+                                        <label class="label col-sm-6"><span class="translate" data-en="Country">طريقة حساب قيمة يوم الاضافي:</span></label>
+                                        <div class="col-sm-6">
+                                          <select class="form-select" formControlName="n_addtional_calc_days">
+                                            <option *ngFor="let c of additionalDaysCalcDL" [ngValue]="c.code">{{ c.name_arabic }}</option>
+                                         </select>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-md-6" >
+                                      <div class="form-group row">
+                                        <label class="label col-sm-6"><span class="translate" data-en="Country">الصرفية:</span></label>
+                                        <div class="col-sm-6">
+                                          <select class="form-select" formControlName="n_addtional_calc_days">
+                                            <!-- <option *ngFor="let c of additionalDaysCalcDL" [ngValue]="c.code">{{ c.name_arabic }}</option> -->
+                                         </select>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-10">
+                          <div class="card p-3">
+                            <div class="row">
+                              <fieldset style="border:1px solid;">
+                                <legend>طريقة احتساب خصم الايام</legend>
+                                <section class="col col-6">
+                                  <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="gender" formControlName="b_deduc_absent_first" [value]="true" />
+                                          الغياب أولآ
+                                        </label>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="gender" formControlName="b_deduc_attendance_first" [value]="true" />
+                                          الحضور أولآ
+                                        </label>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                      <div class="row mt-3">
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="form-label col-sm-4">عدد ايام العمل في الشهر</label>
+                                  <div class="col-sm-4">
+                                    <input type="number" class="form-control text-center" formControlName="n_WorkDays_per_month" />
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <span>ضع (0) لحساب عدد الايام لكل شهر</span>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="row">
+                                  <fieldset style="border:1px solid;">
+                                    <legend>سياسة حساب الاجازات</legend>
+                                    <section class="col col-12">
+                                      <div class="row d-flex justify-content-between">
+                                        <section class="col col-4">
+                                          <div class="form-group">
+                                            <label>
+                                              <input type="radio" name="years" [value]="true" formControlName="b_year_days" />
+                                              عدد أيام السنة الفعلية
+                                            </label>
+                                          </div>
+                                        </section>
+
+                                        <section class="col col-6">
+                                          <div class="form-group">
+                                            <label>
+                                              <input type="radio" name="years" [value]="true" formControlName="b_year_days_subtract_due_vacations" />
+                                              السنة مطروح منها الايام مدفوعة الاجر
+                                            </label>
+                                          </div>
+                                        </section>
+                                      </div>
+                                    </section>
+                                  </fieldset>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group row">
+                                  <label class="form-label col-sm-4">عدد ساعات العمل الافتراضية</label>
+                                  <div class="col-sm-4">
+                                    <input type="number" class="form-control text-center" formControlName="n_Hours" placeholder="0" />
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-3" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_using_round" formControlName="b_using_round" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_using_round">
+                                      استخدام التقريب
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-3" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_deduct_EndServiceLoan_From_EndService" formControlName="b_deduct_EndServiceLoan_From_EndService" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_deduct_EndServiceLoan_From_EndService">
+                                      خصم سلف نهاية الخدمة من المخصصات
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-3" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_edit_endService_ticket" formControlName="b_edit_endService_ticket" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_edit_endService_ticket">
+                                      التحكم في تعديل قيمة تذكرة المخصص
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-3" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_calc_salaries_payable_by_each_allowance" formControlName="b_calc_salaries_payable_by_each_allowance" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_calc_salaries_payable_by_each_allowance">
+                                      حساب الرواتب المستحقة حسب كل بدل
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+                              <fieldset style="border:1px solid;">
+                                <legend>تهيئة التصفية</legend>
+                                <section class="col col-12">
+                                  <div class="row">
+                                    <section class="col col-4" >
+                                      <div class="form-group">
+                                        <div class="form-check">
+                                          <input class="form-check-input p-2" type="checkbox" value="" id="b_AbsentDaysFromDeserved" formControlName="b_AbsentDaysFromDeserved" />
+                                          <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_AbsentDaysFromDeserved">
+                                            خصم ايام الغياب من الاجازة المستحقة بالتصفية
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-sm-4" >
+                                      <div class="form-group">
+                                        <div class="form-check">
+                                          <input class="form-check-input p-2" type="checkbox" value="" id="" formControlName="" />
+                                          <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="">
+                                            عمل قيد استحقاق للموظف من مخصص نهاية الخدمة
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+
+                                  <div class="row">
+                                    <section class="col col-4" >
+                                      <div class="form-group">
+                                        <div class="form-check">
+                                          <input class="form-check-input p-2" type="checkbox" value="" id="b_employee_cost_center_auto_coding" formControlName="b_employee_cost_center_auto_coding" (change)="b_employee_cost_center_auto_coding_CHANGED();" />
+                                          <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_employee_cost_center_auto_coding">
+                                            اضافة مركز تكلفة لكل موظف اليآ
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-4">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-5"><span class="translate" data-en="Source Name">مركز التكلفة الرئيسي:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_main_cost_center'"
+                                          [TextField]="'s_cost_center_name'"
+                                          [ValueField]="'s_cost_center_id'"
+                                          [searching]="searchingCostCenterMax"
+                                          [filteredServerSide]="filteredCostCenterMaxServerSide"
+                                          (OnSearch)="searchCostCenterMax($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+
+                                  <div class="row">
+                                    <section class="col col-4" >
+                                      <div class="form-group">
+                                        <div class="form-check">
+                                          <input class="form-check-input p-2" type="checkbox" value="" id="b_employee_cost_center_2_auto_coding" formControlName="b_employee_cost_center_2_auto_coding" (change)="b_employee_cost_center_2_auto_coding_CHANGED();" />
+                                          <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_employee_cost_center_2_auto_coding">
+                                            اضافة مركز تكلفة 2 لكل موظف اليآ
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-4">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-5"><span class="translate" data-en="Source Name">مركز التكلفة الرئيسي 2:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_main_cost_center_2'"
+                                          [TextField]="'s_cost_center_name'"
+                                          [ValueField]="'s_cost_center_id'"
+                                          [searching]="searchingCostCenterMax"
+                                          [filteredServerSide]="filteredCostCenterMaxServerSide"
+                                          (OnSearch)="searchCostCenterMax($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+                              <fieldset style="border:1px solid;">
+                                <legend>الربط بالحسابات</legend>
+                                <section class="col col-12">
+                                  <div class="row">
+                                    <section class="col col-3" >
+                                      <div class="form-group">
+                                        <div class="form-check">
+                                          <input class="form-check-input p-2" type="checkbox" value="" id="b_Link_With_GL_config" formControlName="b_Link_With_GL_config" (change)="b_Link_With_GL_config_CHANGED();" />
+                                          <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Link_With_GL_config">
+                                            الربط مع نظام الحسابات العامة
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-5">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح الاستقطاع الاضافي في صرف المخصص:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_additional_deduction_endservicePayment'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-4">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-5"><span class="translate" data-en="Source Name">ح الاستحقاق الاضافي:</span></label>
+                                        <div class="col-sm-7">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_additional_deserve_endservicePayment'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </section>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_linkAccWithEachEmp" formControlName="b_linkAccWithEachEmp" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_linkAccWithEachEmp">
+                                      ربط كل عامل برقم حساب بالدليل
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_show_journal_within_trans" formControlName="b_show_journal_within_trans" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_show_journal_within_trans">
+                                      عرض القيد اثناء الحركة
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_activate_bank_comision" formControlName="b_activate_bank_comision" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_activate_bank_comision">
+                                      تفعيل عمولة البنك لتحويل الراتب
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_LoanAcc_auto_coding" formControlName="b_LoanAcc_auto_coding" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_LoanAcc_auto_coding">
+                                      اضافة حساب الذمم اليآ للموظف
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_show_emp_code_in_journals" formControlName="b_show_emp_code_in_journals" />
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_show_emp_code_in_journals">
+                                      اظهار رقم الموظف في قيود الرواتب
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group row">
+                                  <label class="form-label col-sm-4"><span class="translate" data-en="Source Name">ح السلف الرئيسي:</span></label>
+                                  <div class="col-sm-8">
+                                    <select-server-side
+                                    [selectForm]="py_HR_configuration"
+                                    [controlName]="'s_main_loan_acc'"
+                                    [TextField]="'s_account_name'"
+                                    [ValueField]="'s_account_no'"
+                                    [searching]="searchingglAccountsTree"
+                                    [filteredServerSide]="filteredglAccountsTreeServerSide"
+                                    (OnSearch)="searchglAccountsTree($event)">
+                                    </select-server-side>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row d-flex justify-content-between">
+                              <section class="col col-5" style="border: 1px solid;">
+                                <div class="row mt-4">
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">حساب الرواتب المستحقة:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_meleted_salary_account'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">حساب مصروف الرواتب:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_general_emp_salary_acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">حساب سلف الموظفين:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_Receivables_Acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">حساب إقفال سلف العاملين:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_close_loan_acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">حساب التسويات المدينة:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_settelment_loan_Acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">حساب الاضافي:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_overtime_acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group">
+                                      <div class="form-check">
+                                        <input class="form-check-input p-2" type="checkbox" value="" id="b_use_multi_allowance_accounts" formControlName="b_use_multi_allowance_accounts" />
+                                        <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_use_multi_allowance_accounts">
+                                          رقم حساب لكل بدل
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح البدلات:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_allowances_account_no'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group">
+                                      <div class="form-check">
+                                        <input class="form-check-input p-2" type="checkbox" value="" id="b_use_deduction_meleted_acc" formControlName="b_use_deduction_meleted_acc" />
+                                        <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_use_deduction_meleted_acc">
+                                          رقم حساب لكل استقطاع
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح الاستقطاعات:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_meleted_deduction_account_no'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group">
+                                      <div class="form-check">
+                                        <input class="form-check-input p-2" type="checkbox" value="" id="b_use_multi_deservedly_accounts" formControlName="b_use_multi_deservedly_accounts" />
+                                        <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_use_multi_deservedly_accounts">
+                                          رقم حساب لكل استحقاق
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح الاستحقاقات:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_meleted_deservedly_account_no'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group">
+                                      <div class="form-check">
+                                        <input class="form-check-input p-2" type="checkbox" value="" id="b_Salary_withCostCenters" formControlName="b_Salary_withCostCenters" (change)="b_Salary_withCostCenters_CHECKEDFun();" />
+                                        <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_Salary_withCostCenters">
+                                          احتساب الرواتب حسب مراكز التكلفة
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12" [hidden]="!b_Salary_withCostCenters_CHECKED">
+                                    <div class="row d-flex justify-content-center align-items-center">
+                                      <section class="col col-6" style="border: 1px solid;">
+                                        <div class="row">
+                                          <section class="col col-6 mt-3">
+                                            <div class="form-group">
+                                              <label>
+                                                <input type="radio" name="daysHours" [value]="true" formControlName="b_DaysWithCostCenter" />
+                                                الايام
+                                              </label>
+                                            </div>
+                                          </section>
+
+                                          <section class="col col-6 mt-3">
+                                            <div class="form-group">
+                                              <label>
+                                                <input type="radio" name="daysHours" [value]="true" formControlName="b_HoursWithCostCenter" />
+                                                الساعات
+                                              </label>
+                                            </div>
+                                          </section>
+                                        </div>
+                                      </section>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12 mt-3">
+                                    <div class="form-group row">
+                                      <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح تسوية رواتب:</span></label>
+                                      <div class="col-sm-6">
+                                        <select-server-side
+                                        [selectForm]="py_HR_configuration"
+                                        [controlName]="'s_settelment_salaries_Acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrder"
+                                        [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                        (OnSearch)="searchaccountTreeOrder($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </section>
+
+                              <section class="col col-5">
+                                <div class="row mt-4">
+                                  <section class="col col-12">
+                                    <div class="form-group">
+                                      <div class="form-check">
+                                        <input class="form-check-input p-2" type="checkbox" value="" id="b_use_multi_provisions_accounts" formControlName="b_use_multi_provisions_accounts" (change)="b_use_multi_provisions_accounts_CHANGED();" />
+                                        <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_use_multi_provisions_accounts">
+                                          استخدام حساب مخصصات كل عامل علي حدة
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div style="border: 1px solid;">
+                                  <div class="row mt-4 m-auto">
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مخصص نهاية الخدمة:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_termination_account'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مخصص التذاكر:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_ticket_acc'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مخصص بدل اجازة:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_vacation_acc'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مصروف نهاية الخدمة:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_termination_account_x'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مصروف تذاكر السفر:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_ticket_acc_x'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مصروف بدل اجازة:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_vacation_acc_x'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مخصص التأشيرة:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_visa_acc'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مصروف التأشيرة:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_visa_expenses_acc'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مصروف الاستقطاع في المخصصات:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_additional_deduction_endservicePayment_expenses'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-12">
+                                      <div class="form-group row">
+                                        <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">ح مصروف الاضافي في المخصصات:</span></label>
+                                        <div class="col-sm-6">
+                                          <select-server-side
+                                          [selectForm]="py_HR_configuration"
+                                          [controlName]="'s_additional_deserve_endservicePayment_expenses'"
+                                          [TextField]="'s_account_name'"
+                                          [ValueField]="'s_account_no'"
+                                          [searching]="searchingaccountTreeOrder"
+                                          [filteredServerSide]="filteredaccountTreeOrderServerSide"
+                                          (OnSearch)="searchaccountTreeOrder($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-contact2" role="tabpanel" aria-labelledby="nav-contact2-tab">
+                      <div class="row mt-3">
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+
+                              <section class="col col-12" >
+                                <div class="form-group">
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_gosi_calc" formControlName="b_gosi_calc" (change)="b_gosi_calcChanged();">
+                                    <label class="form-check-label mr-3 translate" data-en="Show a warning message to monitor the items" for="b_gosi_calc">
+                                      تفعيل احتساب التامينات الاجتماعية
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section classs="col col-6">
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <fieldset>
+                                      <section class="col col-6" >
+                                        <div class="form-group row">
+                                          <label class="label col-sm-6"><span class="translate" data-en="Country">طريقة خصم التامين:</span></label>
+                                          <div class="col-sm-6">
+                                            <select class="form-select" formControlName="n_Insurance_Calc_Type">
+                                              <option *ngFor="let c of insuranceCalcTypesDL" [ngValue]="c.code">{{ c.name_arabic }}</option>
+                                           </select>
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6" >
+                                        <div class="form-group row">
+                                          <label class="label col-sm-6"><span class="translate" data-en="Country">نسبة الموظف الاجنبي ضد الاخطار المهنية:</span></label>
+                                          <div class="col-sm-4">
+                                            <input type="number" class="form-control text-center" formControlName="n_Forign_Emp_Profision_Risk_Rate" placeholder="0" />
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6" >
+                                        <div class="form-group row">
+                                          <label class="label col-sm-6"><span class="translate" data-en="Country">نسبة الموظف الاجنبي للتامين الصحي:</span></label>
+                                          <div class="col-sm-4">
+                                            <input type="number" class="form-control text-center" formControlName="n_Forign_Emp_Medical_insurance_Rate" placeholder="0" />
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6" >
+                                        <div class="form-group row">
+                                          <label class="label col-sm-6"><span class="translate" data-en="Country">نسبة الموظف المواطن ضد الاخطار المهنية:</span></label>
+                                          <div class="col-sm-4">
+                                            <input type="number" class="form-control text-center" formControlName="n_Citizen_Emp_Profision_Risk_Rate" placeholder="0" />
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6" >
+                                        <div class="form-group row">
+                                          <label class="label col-sm-6"><span class="translate" data-en="Country">نسبة الموظف المواطن للتامين الصحي:</span></label>
+                                          <div class="col-sm-4">
+                                            <input type="number" class="form-control text-center" formControlName="n_Citizen_Emp_Medical_insurance_Rate" placeholder="0" />
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6" >
+                                        <div class="form-group row">
+                                          <label class="label col-sm-6"><span class="translate" data-en="Country">نسبة الموظف المواطن للتامين الاجتماعي:</span></label>
+                                          <div class="col-sm-4">
+                                            <input type="number" class="form-control text-center" formControlName="n_Citizen_Emp_Gosi_Rate" placeholder="0" />
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6" >
+                                        <div class="form-group row">
+                                          <label class="label col-sm-6"><span class="translate" data-en="Country">نسبة تامين المنشأة:</span></label>
+                                          <div class="col-sm-4">
+                                            <input type="number" class="form-control text-center" formControlName="n_Company_Rate_For_Gosi" placeholder="0" />
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6" >
+                                        <div class="row" style="border: 1px solid;">
+                                            <section class="col col-6 mt-3">
+                                              <div class="form-group">
+                                                <label>
+                                                  <input type="radio" name="accounts" [value]="true" formControlName="b_one_Insurance_Acc" />
+                                                  حسابات موحدة
+                                                </label>
+                                              </div>
+                                            </section>
+
+                                            <section class="col col-6 mt-3">
+                                              <div class="form-group">
+                                                <label>
+                                                  <input type="radio" name="accounts" [value]="true" formControlName="b_multi_Insurance_Acc" />
+                                                  حسابات متعددة
+                                                </label>
+                                              </div>
+                                            </section>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6 mt-4">
+                                        <div class="form-group row">
+                                          <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">مصروفات التامينات الاجتماعية:</span></label>
+                                          <div class="col-sm-6">
+                                            <select-server-side
+                                            [selectForm]="py_HR_configuration"
+                                            [controlName]="'n_Gosi_Expense_Acc'"
+                                            [TextField]="'s_account_name'"
+                                            [ValueField]="'s_account_no'"
+                                            [searching]="searchingGosiAccountsTree"
+                                            [filteredServerSide]="filteredGosiAccountsTreeServerSide"
+                                            (OnSearch)="searchGosiAccounts($event)">
+                                            </select-server-side>
+                                          </div>
+                                        </div>
+                                      </section>
+
+                                      <section class="col col-6">
+                                        <div class="form-group row">
+                                          <label class="form-label col-sm-6"><span class="translate" data-en="Source Name">تامينات اجتماعية مستحقة:</span></label>
+                                          <div class="col-sm-6">
+                                            <select-server-side
+                                            [selectForm]="py_HR_configuration"
+                                            [controlName]="'n_Gosi_Accrued_Acc'"
+                                            [TextField]="'s_account_name'"
+                                            [ValueField]="'s_account_no'"
+                                            [searching]="searchingGosiAccountsTree"
+                                            [filteredServerSide]="filteredGosiAccountsTreeServerSide"
+                                            (OnSearch)="searchGosiAccounts($event)">
+                                            </select-server-side>
+                                          </div>
+                                        </div>
+                                      </section>
+                                    </fieldset>
+                                  </section>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+            <!-- /.invoice -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>

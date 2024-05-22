@@ -1,0 +1,121 @@
+
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        
+            
+             
+                 <h2 class="translate" data-en="Add Deduction">أضافة  أكواد الجزاءات </h2>
+                 <div class="buttons">
+                   
+                    
+                   
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/hr/empclass" class="translate" data-en="Close">خروج</a>
+                     
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <button (click)="save()" class="translate" data-en="Save">حفظ
+  
+  
+                          
+                        </button>
+                    </div>
+                  </div>
+  
+                 
+                
+           
+               
+              
+     
+  
+  
+        
+          
+    
+                </div>
+    
+              </section>
+  </div>
+  </header>
+  <div class="content-wrapper" style="margin-top: 120px; ">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      <div class="container-fluid">
+        <form [formGroup]="PenalityFrom" (keydown.enter)="$event.preventDefault()">
+         <div class="row">
+            
+               <div class=" mt-5 p-3 col-12">
+                <div class="form-group row" *ngIf="nclassId">
+                  <div class="label col-md-1">المسلسل</div>
+                    
+                    <div class="col-lg-2 col-md-12 col-sm-12">
+                        <input type="text" class="form-control "  formControlName="n_doc_no" style="width:130px;" readonly >  
+                      </div>
+                  </div>
+                <div class="form-group  row mt-2">
+                    <div class="label col-md-1">اسم الجزاء  <span class="text-danger">*</span></div>
+                    <div class="col-lg-4 col-md-12 col-sm-12" >
+                        
+                        <input type="text" class="form-control" formControlName="s_pental_name" >
+                    </div>
+                   
+                </div>
+                <div class="form-group row">
+                    <div class="label col-md-1">اسم الجزاء الانجليزي</div>
+                    <div class="col-lg-4 col-md-12 col-sm-12" >
+                        
+                        <input type="text" class="form-control" formControlName="s_pental_name_eng" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="label col-lg-1">ملاحظات  </div>
+                    <div class="col-lg-4 col-sm-12">
+                       <textarea class="form-control" style="height: 130px;" formControlName="s_notes"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <div class="label col-lg-1">عنصر الاستقطاع <span class="text-danger">*</span></div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                                     
+                    <select-server-side
+                    [selectForm]="PenalityFrom"
+                    [controlName]="'n_deduction_id'"
+                    [TextField]="'s_deduction_name'"
+                    [ValueField]="'n_deduction_id'"
+                    [searching]="searchingDeduction"
+                    [filteredServerSide]="filteredDedutionServerSide"
+                    (OnSearch)="serchDedutions($event)">
+                    </select-server-side>
+                 </div>
+                </div>
+                <div class="form-group row">
+                  <div class="label col-lg-1">خصم عدد الايام <span class="text-danger">*</span></div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    
+                        
+                        <input type="text" class="form-control" formControlName="n_pen_days" >
+                           
+               
+                 </div>
+                </div>
+            
+               </div>
+                
+    
+         </div>
+     
+        </form>
+     </div>
+    </section>
+</div>
+
+
+
+

@@ -1,0 +1,227 @@
+
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        <h2 class="translate" data-en="Direction" >توجيهات العملاء</h2>
+            <div class="buttons">
+              <div class="button">
+                  <i class="bi bi-bookmark-x "></i>
+                  <a routerLink="/ar/salesDirection" class="translate" data-en="Exit">خروج</a>
+
+              </div>
+              <div class="button">
+                  <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                  <button (click)="save()"class="translate" data-en="Save">حفظ</button>
+              </div>
+            </div>
+          </div>
+
+        </section>
+  </div>
+</header>
+
+<div class="content-wrapper rtl"  style="margin-top:140px" [ngClass]="{'disabled':showspinner}">
+      <!-- Content Header (Page header) -->
+
+      <section class="content">
+        <div class="container-fluid">
+
+
+
+         <div class="row">
+          <div class="col-12">
+            <form [formGroup]="supplierDirection" (keydown.enter)="$event.preventDefault()">
+
+              <input type="number" style="display: none;" class="form-control" formControlName="n_acc_dir_no">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+
+
+              <div class="card">
+
+                <div class="row">
+
+                    <section class="col-4">
+
+                      <div class="form-group">
+                        <label class="label translate" data-en="Ar Name">الاسم</label>
+
+                        <div class="input-group">
+                          <input class="form-control" formControlName="s_acc_dir_name" >
+                        </div>
+                      </div>
+
+
+                    </section>
+
+                </div>
+                <div class="row">
+
+                  <section class="col-4">
+
+                    <div class="form-group">
+
+                      <label class="label translate" data-en="English">الاسم الانجليزي</label>
+                      <div class="input-group">
+                        <input        class="form-control" formControlName="s_acc_dir_name_eng" >
+                      </div>
+                    </div>
+
+
+                  </section>
+                </div>
+              </div>
+              <div class="card">
+                 <div class="row">
+                  <div class="col-3">
+                    <p class="translate" data-en="Invoice Type">نوع الفاتورة</p>
+                  </div>
+                  <div class="col-3">
+                    <p class="translate" data-en="Type">النوع</p>
+                  </div>
+
+
+                  <div class="col-3">
+                    <p class="translate" data-en="Account No">رقم الحساب</p>
+                  </div>
+                  <div class="col-3">
+                    <p class="translate" data-en="Account Name">اسم الحساب</p>
+                  </div>
+                 </div>
+
+                <div formArrayName="detailsDirections">
+                  <div [formGroupName]="i" *ngFor="let items of detailsDirections.controls ;let i=index">
+                    <div class="row">
+                      <section class="col-3">
+                        <div class="form-group">
+
+                          <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width: 100%"    formControlName="n_voice_type_id"  >
+
+                            <option value="1" disabled>فاتورة</option>
+                            <option value="2" disabled>فاتورة مرتد</option>
+
+                          </select>
+                        </div>
+                    </section>
+                        <section class="col-3">
+                          <div class="form-group">
+
+                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="width: 100%"    formControlName="n_type_id"  >
+
+                              <option value="1" class="translate" data-en="Cash bill" disabled> فاتورة نقدي</option>'
+                              <option value="1" class="translate" data-en="" disabled></option>
+                              <option value="2" disabled>فاتورة أجل</option>
+                              <option value="3" disabled>خصم مسموح به</option>
+                              <option value="4" disabled>مصروفات فاتورة</option>
+                              <option value="5" disabled>ضريبة المضافة</option>
+                              <option value="6" disabled>ضريبة الخصم </option>
+                              <option value="7" disabled>مرتد نقدي مبيعات</option>
+                              <option value="8" disabled>مرتد أجل مبيعات</option>
+                              <option value="9" disabled>خصم المسموح به مرتد </option>
+                              <option value="10" disabled> مصروفات مرتد</option>
+                              <option value="11" disabled>ضريبه مضافة مرتد</option>
+                              <option value="12" disabled>ضريبة خصم مرتد</option>
+                              <option value="13" disabled>ضريبة أضافة </option>
+                              <option value="14" disabled>ضريبة أضافة مرتد</option>
+                              <option value="15" disabled>خصم مسموح به </option>
+                              <option value="16" disabled>مصروفات مرتد</option>
+                              <option value="17" disabled>ضريبة المبيعات مرتد</option>
+                              <option value="18" disabled>مبيعات شبكة</option>
+                              <option value="19" disabled>ضريبة الاضافة المرتد</option>
+                            </select>
+                          </div>
+                      </section>
+
+
+                        <section class="col-3 ">
+
+
+                            <div class="form-group justify-content-start">
+
+                              <div class="position-relative">
+                                <i class="fa fa-search position-absolute"  data-toggle="modal" id="acc5" (click)="openAccounts(i)"  ></i>
+                                <input class="form-control has-search" type="text" formControlName="s_account_no" (input)="getItemsNow($event,i)" >
+
+                              </div>
+
+                            </div>
+
+
+
+                        </section>
+                        <section class="col-3">
+
+                          <div class="form-group">
+
+
+                            <div class="input-group">
+                              <input   class="form-control"  readonly formControlName="s_account_name" >
+                            </div>
+                          </div>
+
+
+                        </section>
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+              </div>
+
+
+
+
+
+            </form>
+          </div>
+
+
+         </div>
+
+
+
+
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+
+
+
+
+

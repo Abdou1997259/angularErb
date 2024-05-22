@@ -1,0 +1,124 @@
+
+<header style="margin-top:-2px">
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+      <!-- Content Header (Page header) -->
+
+
+
+               <h2 class="translate" data-en="Store">{{ isEnglish ? repNameEng : repName }}</h2>
+               <div class="buttons">
+
+
+
+                  <div class="button">
+                      <i class="bi bi-bookmark-x "></i>
+                      <a routerLink="#" class="translate" data-en="Exit">خروج</a>
+
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!myForm.valid" data-en="Show Report" class="translate"  (click)="onSubmit()" value="عرض التقرير">
+                    
+
+                  </div>
+                </div>
+            </div>
+          </section>
+  </div>
+</header>
+
+
+<div class="content-wrapper rtl">
+  <section class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card card-primary">
+           
+            <div class="card-body">
+              <div class="" style="background-color: transparent">
+                <div dir="rtl">
+                  <form [formGroup]="myForm">
+                    <div class="row">
+                      <div class="col-md-4 text-center" *ngIf="noFilters !== ''">
+                        <h1 class="text-danger">{{ noFilters }}</h1>
+                      </div>
+                      <div class="form-group col-md-4" *ngFor="let filter of filtersLST; let i = index">
+                        <div *ngIf="filter.stype === 'DT'">
+                          <div >
+                            <label class="form-label">{{ isEnglish? filter.lblnameEng: filter.lblname }}</label>
+                            <br />
+                            <mat-form-field style="width: 100% !important;">
+                              <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="{{filter.fieldId}}">
+                              <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                              <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                            <!-- <input type="date" class="form-control" formControlName="{{filter.fieldId}}" /> -->
+                          </div>
+                        </div>
+
+                        <div *ngIf="filter.stype === 'TXT' || filter.stype==='TXT Dec' || filter.stype==='TXT Str'">
+                          <label class="form-label">{{ isEnglish? filter.lblnameEng: filter.lblname }}</label>
+                          <br />
+                          <input type="text" class="form-control" formControlName="{{ filter.fieldId }}" />
+                        </div>
+
+                        <div *ngIf="filter.stype === 'LKP' || filter.stype === 'CMB'">
+                          <label >{{ isEnglish? filter.lblnameEng: filter.lblname }}<a class="btn" (click)="search($event, filter.searchTable, filter.fieldId)"></a></label>
+                          <br />
+                          <select-server-side
+                            [selectForm]="myForm"
+                            [controlName]="filter.fieldId"
+                            [TextField]="'value'"
+                            [ValueField]="'id'"
+                            [searching]="searching"
+                            [filteredServerSide]="filteredServerSide[filter.fieldId]"
+                            (OnSearch)="search($event, filter.searchTable, filter.fieldId)">
+                          </select-server-side>
+                        </div>
+
+
+
+                        <div *ngIf="filter.stype === 'CHK'">
+                          <label class="label text-align-left" style="font-size:large;">{{ isEnglish? filter.lblnameEng: filter.lblname }}</label>
+                          <br />
+                          <label class="checkbox">
+                              <input type="checkbox" formControlName="{{ filter.fieldId }}">
+                              <i></i>
+                          </label>
+                        </div>
+
+                        <!-- <div *ngIf="filter.stype === 'TXT Dec'">
+                            <label class="form-label">{{ isEnglish? filter.lblnameEng: filter.lblname }}</label>
+                            <br />
+                            <br />
+                            <input type="text" class="form-control" formControlName="{{ filter.fieldId }}" />
+                          </div>
+                          <div *ngIf="filter.stype === 'CMB'">
+                          <label class="label form-label text-align-left" style="font-size:large;">{{ isEnglish? filter.lblnameEng: filter.lblname }}</label>
+                          <select-server-side
+                            [selectForm]="myForm"
+                            [controlName]="filter.fieldId"
+                            [TextField]="'value'"
+                            [ValueField]="'id'"
+                            [searching]="searching"
+                            [filteredServerSide]="filteredServerSide[filter.fieldId]"
+                            (OnSearch)="search($event, filter.searchTable, filter.fieldId)">
+                          </select-server-side>
+                        </div> -->
+
+                      </div>
+                    </div>
+                  
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

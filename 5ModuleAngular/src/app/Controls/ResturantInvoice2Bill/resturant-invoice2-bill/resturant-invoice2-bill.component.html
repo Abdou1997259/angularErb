@@ -1,0 +1,107 @@
+<div class="card-body mt-0">
+  <div class="row">
+    <section class="col col-lg-12">
+      <div class="row d-flex justify-content-center align-items-center">
+        <section class="col col-lg-6">
+          <div class="card p-3">
+            <div class="row d-flex justify-content-center align-items-center">
+              <section class="col col-6">
+                <div class="form-group">
+                  <label class="display-1">فاتورة المطاعم - 2</label>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="row">
+        <section class="col col-lg-12">
+          <div class="card p-3">
+            <div class="row d-flex justify-content-center align-items-center">
+              <section class="col col-6 text-center">
+                <div class="form-group">
+                  <label class="display-1"> {{ modelData.data.d_document_date }} </label>
+                </div>
+              </section>
+            </div>
+
+            <div class="row">
+              <section class="col col-12">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">العميل: </label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control border-0" value="{{ modelData.data.s_customer_name ?? modelData.data.s_direct_customer_name }}" readonly />
+                  </div>
+                </div>
+              </section>
+
+              <section class="col col-12">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">رقم التليفون: </label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control border-0" value="{{ modelData.data.s_customer_tel }}" readonly />
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="row">
+        <section class="col col-lg-12">
+          <div class="card p-3">
+            <table class="table table-striped table-bordered dt-responsive" style="width:100%;text-align: center;">
+              <thead>
+                <tr>
+                  <th style="text-align: center;" class="translate" data-en="Qty">الكمية</th>
+                  <th style="text-align: center;" class="translate" data-en="Item Name">الطلب</th>
+                  <th style="text-align: center;" class="translate" data-en="Price">السعر</th>
+                  <th style="text-align: center;" class="translate" data-en="Net Price">الاجمالي</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of modelList, let i = index;">
+                  <td style="text-align: center;"> {{ item.n_qty }} </td>
+                  <td style="text-align: center;"> {{ item.s_item_name }} </td>
+                  <td style="text-align: center;"> {{ item.n_item_value }} </td>
+                  <td style="text-align: center;"> {{ item.n_item_net_value }} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div class="row">
+        <section class="col col-lg-12">
+          <div class="card p-3">
+            <div class="row d-flex justify-content-center align-items-center">
+              <section class="col col-6 text-center">
+                <div class="form-group row">
+                  <label class="col-sm-4 col-form-label display-1"> الاجمالي </label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="0" [value]="modelData.data.n_net_value"  readonly />
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="row">
+        <section class="col col-lg-12">
+          <div class="row d-flex justify-content-center align-items-center">
+            <section class="col col-6 text-center">
+              <img [src]="src" alt="QR" width-100 height-100 >
+            </section>
+          </div>
+
+          <button type="button" class="btn btn-outline-primary p-4" (click)="printBill()" *ngIf="isBtnClicked"> طباعة الفاتورة </button>
+        </section>
+      </div>
+    </section>
+  </div>
+</div>

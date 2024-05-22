@@ -1,0 +1,44 @@
+<mat-form-field class="example-full-width">
+  <mat-label><span style="font-size: 20px">عدد المستويات</span></mat-label>
+  <input [readonly]="b_data" matInput type="number" (input)="OnInput($event)" value="{{ rowCount }}" />
+</mat-form-field>
+
+<div class="mb-3">
+  <span *ngIf="b_data" class="text-danger">لا يمكن اضافة مستويات علي المستويات الموجودة</span>
+</div>
+
+<form class="example-form" [formGroup]="levelsForm" [ngClass]="{'disabled':showspinner}">
+  <table class="table col-md-6" id="tblAccountsLevels" formArrayName="levelsdetails">
+    <thead>
+      <tr>
+        <th scope="col"><mat-icon>settings</mat-icon></th>
+        <th scope="col">المستوى</th>
+        <th scope="col">عدد الأرقام</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        [formGroupName]="i"
+        *ngFor="let item of levelsdetails.controls; let i = index"
+      >
+        <th scope="row"><mat-icon>keyboard_arrow_left</mat-icon></th>
+        <td>
+          <input type="number" class="form-control" value="{{ item.get('n_level_id')?.value }}" readonly formControlName="n_level_id" />
+        </td>
+
+        <td>
+          <input type="number" class="form-control" value="{{ item.get('n_level_width')?.value }}" min="0" formControlName="n_level_width" [readonly]="b_data" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card-footer mb-5">
+    <div class="row">
+      <div class="col-md-12">
+        <input type="button" class="btn btn-primary mr-2" value="حفظ" (click)="Save()" [disabled]="b_data" />
+      </div>
+    </div>
+  </div>
+</form>
+<!-- *ngFor="let item of arr; let i = index" -->

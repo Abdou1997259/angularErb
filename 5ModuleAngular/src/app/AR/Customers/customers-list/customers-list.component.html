@@ -1,0 +1,162 @@
+  <!-- Content Wrapper. Contains page content -->
+  <header>
+    <div class="content-wrapper" >
+      <section class="content" >
+        <div class="container-fluid">
+          <h2 class="translate" data-en="Customer" >العملاء</h2>
+            <div class="buttons">
+              <div class="button" *ngIf="cannew">
+                <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                <a routerLink="/ar/customerAdd" class="translatedata" data-en="New">جديد</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+  
+  
+  <div class="content-wrapper" >
+      <section class="content" >
+        <div class="container-fluid">
+          <div class="row" *ngIf="showspinner" >
+            <hr/>
+            <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+          </div>
+  
+          <div class="row">
+            <div class="col-12">
+              <div class="invoice p-3 mb-3">
+                  <div class="card-body">
+                    <div class="row">
+                      <section class="col-lg-12">
+                        <div class="card p-3">
+
+                          <div class="row">
+                            <div class="custom-table-responsive">
+                              <table  class="custom-table-add" >
+                            
+                                <thead >
+                                  <tr>
+                                  <td colspan="12" width="100%" >
+                                   
+                                     <div>
+                                      <div class="s-icons">
+                                        <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                                        <i class="bi bi-file-earmark-excel"></i>
+                                        <i class="bi bi-info"></i>
+                                      </div> 
+                                      <h2 class="translate" data-en="Customer">العملاء</h2>
+                                      
+                                      <div class="f-icons">
+                                        <i class="bi bi-layout-text-window-reverse"></i>
+                                        <i class="bi bi-microsoft"></i>
+                                      </div> 
+                                                    
+                                    </div> 
+                                  
+                                  </td>
+                        
+                               </tr>
+                               <tr>
+                                 <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="customerId" /></th>
+                                 <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="customerName" /></th>
+                                 <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="customerType" /></th>
+                                 <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="supplierName" /></th>
+                                 <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="area" /></th>
+                                 <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="taxNumber" /></th>
+                                 <th> <input type="text" class="form-control" (ngModelChange)="DoSearch();" *ngIf="!isEnglish" [(ngModel)]="address" /></th>
+                                 <th colspan="12"></th>
+                               </tr>
+                             
+                               <tr  >
+                                <th style="text-align: center;"class="translatedata" data-en="Customer No">رقم العميل</th>
+                                <th style="text-align: center;"class="translatedata" data-en="Customer Name">اسم العميل</th>
+                                <th style="text-align: center;"class="translatedata" data-en="Customer Type">نوع العميل</th>
+                                <th style="text-align: center;"class="translatedata" data-en="Rep Man">المندوب</th>
+                                <th style="text-align: center;"class="translatedata" data-en="Region">المنطقة</th>
+                                <th style="text-align: center;"class="translatedata" data-en="Tax registration number">رقم السجل الضريبي</th>
+                                <th style="text-align: center;"class="translatedata" data-en="Address">العنوان</th>
+                                <th style="text-align: center;" *ngIf="canedit"></th> 
+                                <th style="text-align: center;" *ngIf="candelete"> 
+                                <th></th> 
+                
+                              </tr>
+                      
+                      
+                              
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let quotation of customersList">
+                                    <td  style="text-align: center;"> {{quotation.n_customer_id}}         </td>
+                                    <td  style="text-align: center;" > {{quotation.s_customer_name}}       </td>
+                                    <td  style="text-align: center;" > {{quotation.s_customer_type_name}}  </td>
+                                    <!-- <td  style="text-align: center;"> {{quotation.s_AttachmentPerson}}     </td> -->
+                                    <td  style="text-align: center;"> {{quotation.s_salesman_name}}     </td>
+                                    <td  style="text-align: center;"> {{quotation.s_area_name}}     </td>
+                                    <td  style="text-align: center;"> {{quotation.s_tax_doc_no}}     </td>
+                                    <td  style="text-align: center;"> {{quotation.s_customer_address}}     </td>
+                                    <!-- <td  style="text-align: center;"> {{quotation.name_arabic}}     </td> -->
+                                    <td  style="text-align: center;"> <a routerLink="/ar/customerEdit/{{quotation.n_customer_id}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات العميل" class="translatedata" data-en="Edit" >تعديل</a></td>
+                                    <td  style="text-align: center;"> <a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowId(quotation.n_customer_id)" class="translatedata" data-en="Remove">حذف</a></td>
+                                    <td > <a href="{{ReportUrl}}PrintReport?docNo={{quotation.n_customer_id}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+
+                                 </tr>
+                                 <tr >
+                                  <td colspan="11">
+                                    <div class="page">
+                                      <pagination [boundaryLinks]="true" [totalItems]="PagingCount"  [maxSize]="5"
+                                      [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
+                                          previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                                    </pagination>
+                                   
+                                    </div>
+                          
+                                  </td>
+                          
+                                </tr>
+                                </tbody>
+                              
+                       </table>
+                  
+                            </div>   
+            
+                         
+                            
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
+  </div>
+  
+    <!-- /.content-wrapper -->
+  
+  
+    <!-- Button trigger modal -->
+    <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title translate" data-en="Close" id="exampleModalLongTitle" >الغاء</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body translate" data-en="Are you Sure ?">
+                  هل انت متاكد من حذف هذا العميل؟
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #closebutton   data-en="Close">اغلاق</button>
+                  <button type="button" class="btn btn-primary translate" (click)="DeleteRow()" data-dismiss="modal" #closebutton data-en="Remove">حذف</button>
+              </div>
+          </div>
+      </div>
+  </div>
+   <p></p>
+  <!-- Modal -->

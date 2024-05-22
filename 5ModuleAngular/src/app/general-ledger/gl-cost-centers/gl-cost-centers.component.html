@@ -1,0 +1,155 @@
+<!-- <link  type="text/css" rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCSSUrleng)'> -->
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+  <!-- Content Header (Page header) -->
+  <div class="card card-success">
+    <div class="card-header" style="height: 50px;">
+      <h3  class="d-flex justify-content-center translate" data-en="Cost Center">مراكز التكلفة</h3>
+    </div>
+  </div>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- <div class="row"> -->
+        <form [formGroup]="GlCostCenterForm">
+
+          <div class="card-body" >
+
+            <div class=" form-group row mt-2">
+              <section class="col 6">
+                <input type="button" class="btn btn-primary mr-2 translate" value="إضافة مركز تكلفة" (click)="AddAccount()"  data-en="أضافة">
+                <input type="button" formControlName="btn_delete"  class="btn btn-danger mr-2" value="حذف مركز تكلفة" (click)="DeleteCostCenter()"  >
+              </section>
+            </div>
+
+
+
+            <!-- <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+            <input type="text" style="display: none;" class="form-control" formControlName="d_UserAddDate"> -->
+
+              <div class="row">
+                  <div class="col col-4">
+
+                    <div class="card card-danger">
+
+                      <div class="card-body">
+                          <!-- <p-tree selectionMode="single" [value]="treeItems" (onNodeExpand)="nodeExpand($event)"  [loading]="loading"></p-tree> -->
+                          <input id="search-input" class="search-input form-control"/>
+                          <br>
+                          <div id="jstree">
+                          </div>
+
+
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+
+                  </div>
+
+                  <div class="card card-body col col-7">
+                      <div class="row mt-2">
+                        <section class="col col-6">
+                            <div class="form-group">
+                                <label class="form-label">رقم مركز التكلفة</label>
+                                <input type="text" formControlName="s_cost_center_id" class="form-control" required="required" placeholder="رقم مركز التكلفة"  />
+                            </div>
+                        </section>
+                        <section class="col col-4">
+                          <div class="form-group">
+                              <label class="form-label">المستوى</label>
+                              <input type="number" formControlName="n_cost_center_level" class="form-control" required="required" placeholder="المستوى"  />
+                          </div>
+                      </section>
+                      <section class="col col-2">
+                          <div class="form-group">
+                            <input type="checkbox" class="b_stop" name="b_stop" formControlName="b_stop" />
+                            <label class="form-label">إيقاف</label>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row mt-2">
+                        <section class="col col-6">
+                            <div class="form-group">
+                                <label class="form-label">إسم مركز التكلفة</label>
+                                <input type="text" formControlName="s_cost_center_name" class="form-control" required="required" placeholder="إسم مركز التكلفة" />
+                            </div>
+                        </section>
+                        <section class="col col-6">
+                          <div class="form-group">
+                              <label class="form-label">إسم مركز التكلفة EN</label>
+                              <input type="text" formControlName="s_cost_center_name_eng" class="form-control" required="required" placeholder="إسم مركز التكلفة EN" />
+                          </div>
+                      </section>
+                      </div>
+                      <div class="row mt-2">
+                          <label class="form-label">المركز الأعلي</label>
+                          <section class="col col-12">
+                              <div class="form-group">
+                                  <input type="text" formControlName="s_upper_cost_center" class="form-control" required="required" placeholder="المركز الأعلي" readonly />
+                              </div>
+                          </section>
+                          <!-- <section class="col col-6">
+                              <div class="form-group">
+                                  <input type="text" formControlName="s_upper_cost_center_name" class="form-control" required="required" placeholder="المركز الأعلي" readonly />
+                              </div>
+                          </section> -->
+                      </div>
+
+                      <div class="row mt-2">
+                        <section class="col col-6">
+                          <div class="form-group">
+                              <label class="form-label">نوع المركز</label>
+
+                                <select name="Code" class="form-control" formControlName="n_cost_center_type">
+                                    <option value="0">-إختر نوع المركز -</option>
+                                    <option *ngFor="let item of accountsTypesList" value="{{ item.code }}">{{item.name_arabic}}</option>
+                                </select>
+                          </div>
+                        </section>
+                        <section class="col col-6">
+                          <div class="form-group">
+                              <label class="form-label">تصنيف المركز</label>
+                              <select name="Code" class="form-control" formControlName="n_cost_center_class">
+                                  <option value="0">-إختر تصنيف المركز-</option>
+                                  <option *ngFor="let item of glCostCentersClassList" value="{{ item.code }}">{{item.name_arabic}}</option>
+                              </select>
+                          </div>
+                        </section>
+                      </div>
+
+                      <hr>
+
+
+                      <div class="row mt-2">
+                        <section class="col col-3">
+                          <input type="button" class="btn btn-primary mr-2" value="حفظ" formControlName="btn_operation" (click)="Save()"  >
+                        </section>
+                      </div>
+
+                      <br>
+                  </div>
+
+
+
+                </div>
+
+
+          </div>
+          <!-- /.card-body -->
+
+
+        </form>
+        <!-- </div> -->
+
+
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+

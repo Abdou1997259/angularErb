@@ -1,0 +1,39 @@
+<div class="login-box">
+  <div class="login-logo">
+    <a ><b style="color:darkorange;">{{ 'Title'  | translate}} </b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg" style="color: red;font-size: 20px;font-family: 'Droid Arabic Kufi', serif ;">تسجيل الدخول لبدء الجلسة الخاصة بك</p>
+
+      <form >
+        <div class="input-group mb-3">
+          <input type="text" name="username" [(ngModel)]="user.username" class="form-control"
+           placeholder="username">
+          
+        </div>
+        <div class="input-group mb-3">
+          <input type="password"   name="password" [(ngModel)]="user.password"  class="form-control" placeholder="Password">
+           
+        </div>
+        <div class="row"> 
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="button" (click)="DoLogin()" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          </div>
+          <!-- /.col -->
+        </div>
+        <hr/>
+        <div class="row"> 
+         
+       <mat-progress-bar *ngIf="showspinner" mode="indeterminate"></mat-progress-bar> 
+         
+         
+        </div>
+
+      </form> 
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>

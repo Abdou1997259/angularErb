@@ -1,0 +1,283 @@
+
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+      <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        <h2 class="translate" data-en="Supplier Balance List"> أضافة رصيد أول المدة</h2>
+        <div class="buttons">
+          <div class="button">
+            <i class="bi bi-bookmark-x "></i>
+            <a routerLink="/ap/suppliersbalancelist" class="translate" data-en="Exit">خروج</a>
+          </div>
+          <div class="button">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+            <input type="button" [disabled]="!suppliersBalanceMasterForm.valid" class="translate"data-en="Save" value="حفظ"  (click)="Save()" value="حفظ">
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+  <!-- Content Header (Page header) -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <!-- Main content -->
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="suppliersBalanceMasterForm" (keydown.enter)="$event.preventDefault()">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+              <div class="card-body" >
+                <div class="row">
+                    <section class="col-lg-7">
+                      <div class="card p-3">
+                        <div class="row" [hidden]="docuNumber <= 0">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label"> <span class="translate" data-en="Doc No">رقم المستند</span><span style="color:red;">*</span> </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control w-75" formControlName="n_doc_no" readonly />
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label"> <span class="translate" data-en="Financial Year">العام المالي</span><span style="color: red;">*</span> </label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control w-75" formControlName="d_Financial_year" readonly />
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+
+                        <div class="row">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label"><span class="transalte" data-en="Doc Date">تاريخ المستند</span><span style="color:red">&nbsp;*</span></label>
+                                <div class="col-sm-8">
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_doc_date" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+
+                        <div class="row">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label"> <span class="translate" data-en="Currency ">العملة</span><span style="color: red;">*</span> </label>
+                              <div class="col-sm-8">
+                                <select-server-side
+                                [selectForm]="suppliersBalanceMasterForm"
+                                [controlName]="'n_currency_id'"
+                                [TextField]="'s_currency_name'"
+                                [ValueField]="'n_currency_id'"
+                                [searching]="currencySearching"
+                                [filteredServerSide]="currencyFilteredServerSide"
+                                (OnSearch)="currencySearch($event)"
+                                (onSelectionChange)="currencyChanged()">
+                                </select-server-side>
+                              </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-6"  [hidden]="n_currency_id == localCurrency || n_currency_id == 0">
+                              <div class="form-group row">
+                                <label class="col-sm-4 col-form-label translate" data-en="Factor"> معامل التحويل </label>
+                                <div class="col-sm-8">
+                                  <input type="number" class="form-control w-50" formControlName="n_currency_coff" />
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+
+                        <div class="row">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label translate" data-en="Supplier Type"> نوع المورد </label>
+                              <div class="col-sm-8">
+                                <select-server-side
+                                [selectForm]="suppliersBalanceMasterForm"
+                                [controlName]="'n_supplier_type_id'"
+                                [TextField]="'s_supplier_type_name'"
+                                [ValueField]="'n_supplier_type_id'"
+                                [searching]="supplierSearching"
+                                [filteredServerSide]="supplierFilteredServerSide"
+                                (OnSearch)="supplierSearch($event)">
+                                </select-server-side>
+                              </div>
+                            </div>
+                          </section>
+
+                        </div>
+
+                        <div class="row">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label translate" data-en="Ar Description">الوصف عربى</label>
+                                <div class="col-sm-8">
+                                  <textarea class="form-control" formControlName="s_arabic_description" rows="2"></textarea>
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label translate" data-en="Description">الوصف انجليزى</label>
+                              <div class="col-sm-8">
+                                <textarea class="form-control" formControlName="s_english_description" rows="2" style="text-align: left;"></textarea>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section class="col-lg-5">
+                      <div class="card p-3">
+                        <div class="row">
+                          <section class="col col-12">
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <button type="button" class="btn btn-outline-primary w-100 translate" data-en="Load Supplier" (click)="GetCurrentSuppliers();">تحميل الموردين</button>
+                                </div>
+                              </section>
+                            </div>
+                            <hr />
+                          </section>
+                        </div>
+
+
+                        <div class="row">
+                          <section class="col col-6">
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label translate" data-en="Total Debit">إجمالي المدين</label>
+                                <div class="col-sm-7">
+                                  <input type="number" class="form-control" formControlName="n_total_debit" placeholder="0" readonly />
+                                </div>
+                            </div>
+                          </section>
+
+                          <section class="col col-6">
+                            <div class="form-group row">
+                                <label class="col-sm-5 col-form-label translate" data-en="Total Credit">إجمالي الدائن</label>
+                                <div class="col-sm-7">
+                                  <input type="number" class="form-control" formControlName="n_total_credit" placeholder="0" readonly />
+                                </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </section>
+                </div>
+
+                <div class="row">
+                  <section class="col-lg-12">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-12">
+                          <div class="col-12 table-responsive">
+                            <table id="tblsuppliersdetails" class="custom-table" formArrayName="app_suppliers_details">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="text-center" style="min-width: 25px;" class="translate" data-en="Code">م</th>
+                                  <th scope="col" class="text-center" style="min-width: 150px;"class="translate" data-en="Supplier No">رقم المورد</th>
+                                  <th scope="col" class="text-center" style="min-width: 200px;"class="translate" data-en="Supplier Namwe">إسم المورد</th>
+                                  <th scope="col" class="text-center" style="min-width: 150px;"class="translate" data-en="Currency"> العملة </th>
+                                  <th scope="col" class="text-center" style="min-width: 150px;"class="translate" data-en="Factor">معامل التحويل</th>
+                                  <th scope="col" class="text-center" style="min-width: 150px;"class="translate" data-en="Debit">مدين</th>
+                                  <th scope="col" class="text-center" style="min-width: 150px;"class="translate" data-en="Credit">دائن</th>
+                                  <th scope="col" class="text-center" style="min-width: 250px;"class="translate" data-en="Ar Description">الوصف عربي</th>
+                                  <th scope="col" class="text-center" style="min-width: 250px;"class="translate" data-en="Description">الوصف انجليزي</th>
+                                  <th scope="col" class="text-center" style="min-width: 45px;" class="translate" data-en="Remove">حذف</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr  [formGroupName]="i" *ngFor="let det of app_suppliers_details.controls; let i=index">
+                                  <td scope="row" class="text-center" style="min-width: 25px;"> <input type="hidden" class="form-control text-center" formControlName="nLineNo" readonly />{{ i + 1}} </td>
+
+                                  <td style="min-width: 150px;">
+                                    <div class="position-relative">
+                                      <i class="fa fa-search position-absolute" (click)="LoadSuppliers(i)" data-toggle="modal"></i>
+                                      <input class="form-control has-search" type="text" formControlName="n_supplier_id" (change)="onKeySupplierSearch($event, i)">
+                                    </div>
+                                  </td>
+                                  <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_supplier_name" readonly /> </td>
+
+                                  <td style="min-width: 150px;">
+                                    <select class="form-select" formControlName="n_currency_id" (change)="detailsCurrencyChanged(i)">
+                                      <option *ngFor="let o of currenciesList" [ngValue]="o.n_currency_id">{{ o.s_currency_name }}</option>
+                                    </select>
+                                  </td>
+
+                                  <td style="min-width: 150px;"> <input type="number" class="form-control" formControlName="n_currency_coff" /> </td>
+                                  <td style="min-width: 150px;"> <input type="text" class="form-control" formControlName="n_debit" (keypress)="isNumberKey($event)" (change)="calcTotalDebit(); resetCredit(i);"  placeholder="0" /> </td>
+                                  <td style="min-width: 150px;"> <input type="text" class="form-control" formControlName="n_credit" (keypress)="isNumberKey($event)" (change)="calcTotalCredit(); resetDebit(i);" placeholder="0" /> </td>
+                                  <td style="min-width: 250px;"> <input type="text" class="form-control" formControlName="s_arabic_description" /> </td>
+                                  <td style="min-width: 250px;"> <input type="text" class="form-control" formControlName="s_english_description" /> </td>
+                                  <td style="min-width: 45px;">
+                                    <a   (click)="removeDetailsRow(i)" class="button-minus"> <i class="bi bi-x-square"></i> </a>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 text-center">
+
+
+                              <div class="button-plus">
+                                <i class="bi bi-plus"></i>
+                                <a (click)="addNewDetailsRow()" class="translate" data-en="Add">أضافة</a>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <div class="card-footer mb-lg-5" >
+                <div class="row">
+
+                     <div class="col-md-2">
+                      <app-attachments [ID]="this.docuNumber" [DataArea]="this.suppliersBalanceMasterForm.value.n_DataAreaID" [Folder]="'Suppliers'" [SubFolder]="'Attachments'" *ngIf="this.docuNumber !=null && this.docuNumber > 0"></app-attachments>
+                     </div>
+                  </div>
+
+                  <div class="row" *ngIf="showspinner">
+                    <hr/>
+                    <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                  </div>
+              </div>
+            </form>
+          </div>
+          <!-- /.invoice -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>

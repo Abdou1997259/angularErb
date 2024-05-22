@@ -1,0 +1,15 @@
+
+<form [formGroup]="selectForm">
+    <mat-form-field [ngStyle]="{'width':Fieldwidth}">
+        <mat-select  [formControlName]="controlName"    [formControl]="selectCtrl" placeholder="" [disabled]="disabled" >
+          <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
+          <mat-option>
+            <ngx-mat-select-search [formControl]="FilteringCtrl"  [searching]="searching"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let obj of filteredServerSide | async" [value]="obj[ValueField]">
+            {{obj[TextField]}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    

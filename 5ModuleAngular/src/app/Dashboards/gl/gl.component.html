@@ -1,0 +1,92 @@
+<header>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+                <h2 class="translate" data-en="Accounts Dashboard">إحصائيات الحسابات</h2>
+            </div>
+        </section>
+    </div>
+</header>
+<br/><br/><br/><br/><br/><br/>
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 col-xl-4">
+                    <div class="card bg-c-pink order-card">
+                        <div class="card-block">
+                            <h1 class="m-b-20" class="translate" data-en="Main Accounts Total" style="text-align: center !important;"><b>إجمالى الحسابات الرئيسية</b></h1>
+                            <p><i class="fa fa-credit-card" [ngClass]="isEnglish ? 'f-right' : 'f-left'"></i><span><b>1545452</b></span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-xl-4">
+                    <div class="card bg-c-green order-card">
+                        <div class="card-block">
+                            <h1 class="m-b-20" class="translate" data-en="Sub Accounts Total" style="text-align: center !important;"><b>إجمالى الحسابات الفرعية</b></h1>
+                            <p><i class="fa fa-credit-card" [ngClass]="isEnglish ? 'f-right' : 'f-left'"></i><span><b>123</b></span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-xl-4">
+                    <div class="card bg-c-yellow order-card">
+                        <div class="card-block">
+                            <h1 class="m-b-20" class="translate" data-en="New Accounts Count" style="text-align: center !important;"><b>عدد الحسابات الجديدة</b></h1>
+                            <p><i class="fa fa-plus" [ngClass]="isEnglish ? 'f-right' : 'f-left'"></i><span><b>55</b></span></p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-3 mb-3">
+                        <div class="card-body" style="margin-top: 10px !important;">
+                            <div class="row">
+                                <section class="col-lg-6">
+                                    <div class="card p-3">
+                                        <div class="row">
+                                            <section class="col col-12">
+                                                <div class="form-group">
+                                                    <ngx-charts-bar-vertical 
+                                                        [view]="[600,500]" 
+                                                        [results]="gdpData"
+                                                        [xAxisLabel]="'الشهور'"
+                                                        [yAxisLabel]="'الإجمالى'" 
+                                                        [showXAxisLabel]="true" 
+                                                        [showYAxisLabel]="true" 
+                                                        [xAxis]="true"
+                                                        [yAxis]="true"
+                                                        [gradient]="true" >
+                                                        <!-- [legend]="true" [legendTitle]="'GSP Units Chart'" -->
+                                                    </ngx-charts-bar-vertical>
+                                                </div>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+
+                                        </div>
+                                    </div>
+                                </section>
+                                <section class="col-lg-6 ">
+                                    <div class="card p-3">
+                                        <div class="row">
+                                            <section class="col-lg-6">
+                                                <ngx-charts-pie-chart [view]="[600,500]"
+                                                 [results]="pieData"
+                                                 [animations]="true"                            
+                                                 [labels]="true" >
+                                              </ngx-charts-pie-chart>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

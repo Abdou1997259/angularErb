@@ -1,0 +1,132 @@
+ <header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+              <h2 class="translate" data-en="Cash Types">انواع الخزائن</h2>
+              <div class="buttons">
+                <div class="button" *ngIf="cannew">
+                    <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                    <a routerLink="/fin/CashTypeListAdd" class="translate" data-en="Add New">جديد   
+                    </a>
+                </div>
+              </div>
+          </div>
+      </section>
+  </div>       
+  </header>
+  
+  
+<div class="content-wrapper" >
+    <section class="content" >
+          <div class="container-fluid">
+            <div class="row" *ngIf="showspinner" style="margin-top: 89px;">
+              <hr/>
+              <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+            </div>
+
+                  <div class="custom-table-responsive">
+                    <table  class="custom-table-add" >
+                  
+                      <thead >
+                        <tr>
+                          <td colspan="6" width="100%" > 
+                            <div>
+                              <div class="s-icons">
+                                <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                                <i class="bi bi-file-earmark-excel"></i>
+                                <i class="bi bi-info"></i>
+                              </div> 
+                              <h2 class="translate" data-en="Cash Types">انواع الخزائن</h2>
+                              <div class="f-icons">
+                                <i class="bi bi-layout-text-window-reverse"></i>
+                                <i class="bi bi-microsoft"></i>
+                              </div>                                       
+                              </div>   
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th><input type="text" class="form-control" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString" placeholder="بحث">
+                          </th>
+                          <th colspan="5"></th>
+                        </tr>
+                        
+                   
+                    <tr  >
+                      <th class="translate" data-en="Cash Type No">رقم النوع</th>
+                      <th class="translate" data-en="Cash Type Name">اسم النوع</th>
+                      <th *ngIf="canedit"></th> 
+                      <th *ngIf="candelete"> 
+                      <th></th> 
+      
+                    </tr>
+            
+            
+                    
+                      </thead>
+                      <tbody>
+                        <tr    *ngFor="let sType of supplierTypeData"  >
+                          <td  >{{sType.n_cash_type_id}}  </td>
+                          <td  >{{sType.s_cash_type_name}}  </td>
+                          <td  *ngIf="canedit"><a routerLink="/fin/CashTypeListeEdit/{{sType.n_cash_type_id}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات النوع" class="translatedata" data-en="Edit">تعديل</a></td>
+                          <td  *ngIf="candelete"> <a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowId(sType.n_cash_type_id)" class="translatedata" data-en="Delete">حذف</a></td>
+                          <td > <a href="{{ReportUrl}}PrintReport?docNo={{sType.n_cash_type_id}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print" >طباعة</a></td>
+
+                       </tr>
+                       <tr >
+                        <td colspan="5">
+                          <div class="page">
+                            <pagination [boundaryLinks]="true" [totalItems]="totalItems"  [maxSize]="5"
+                            [(ngModel)]="currentPage"
+                            (pageChanged)="pageChanged($event)"
+                            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                          </pagination>
+                         
+                          </div>
+                
+                        </td>
+                
+                      </tr>
+                      </tbody>
+                    
+             </table>
+        
+                  </div>   
+  
+  
+            
+              </div>
+               
+  
+  
+  
+              </section>
+            </div>
+    <!-- Button trigger modal -->
+    <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title translate" id="exampleModalLongTitle" data-en="">الغاء</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body translate" data-en="Are You Sure to delete this?">
+                  هل انت متاكد من حذف هذا النوع
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #closebutton data-en="">اغلاق</button>
+                  <button type="button" class="btn btn-primary translate" (click)="DeleteRow()" data-en="">حذف</button>
+              </div>
+          </div>
+      </div>
+  </div>
+   <p></p>
+  <!-- Modal -->
+  
+  
+  
+  
+  
+  

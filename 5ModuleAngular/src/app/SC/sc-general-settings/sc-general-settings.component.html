@@ -1,0 +1,833 @@
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+      <!-- Content Header (Page header) -->
+
+
+
+               <h2 class="translate" data-en="Inventory Configuration">تهيئه نظام المخزون</h2>
+               <div class="buttons">
+
+
+
+                  <div class="button">
+                      <i class="bi bi-bookmark-x "></i>
+                      <a routerLink="/" class="translate" data-en="Exit">خروج</a>
+
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <button [disabled]="!scSettingsForm.valid || showspinner" class="translate" data-en="Save" (click)="Save()" >حفظ
+
+
+
+                      </button>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </div>
+
+            </section>
+</div>
+
+</header>
+<div class="content-wrapper rtl mb-5">
+  <section class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card card-dark">
+
+            <div class="card-body">
+              <div class="" style="background-color: transparent">
+                <div dir="rtl">
+
+                  <nav class="mb-3">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link translate active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" data-en="Monitoring">المراقبة</button>
+                      <button class="nav-link translate" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" data-en="Settings">اعدادات</button>
+                      <button class="nav-link translate" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" data-en="Inventory Policy">سياسة المخزون</button>
+                    </div>
+                  </nav>
+                  <form class="form" [formGroup]="scSettingsForm" (keydown.enter)="$event.preventDefault()">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                    <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                    <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                    <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                          <div class="row">
+                            <label class="translate" data-en="Search">المراقبة</label>
+                            <div class="col-lg-7">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-6">
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_store_limit_watch" formControlName="b_store_limit_watch" />
+                                          <label class="form-check-label mr-3 mt-2 translate" data-en="Control Store Limit" for="b_store_limit_watch">
+                                            مراقبة الحدود المخزنية
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                      <div class="col-lg-12">
+                                        <div class="row d-flex justify-content-center align-items-center">
+                                          <div class="col-md-5">
+                                            <div class="form-group">
+                                              <label class="translate" data-en="Order Limit">حد الطلب:</label>
+                                              <select-server-side 
+                                                [selectForm]="scSettingsForm"
+                                                [controlName]="'n_reorder_limit_trans_allow'" 
+                                                [TextField]="'name_arabic'"
+                                                [ValueField]="'code'" 
+                                                [searching]="searching" 
+                                                [filteredServerSide]="filteredServerSideOrder" 
+                                                (OnSearch)="orderOptions($event)">
+                                              </select-server-side>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-md-5">
+                                            <div class="form-group">
+                                              <label class="translate" data-en="Order Limit" >حد الامان:</label>
+                                                <select-server-side 
+                                                  [selectForm]="scSettingsForm" 
+                                                  [controlName]="'n_safe_allow'" 
+                                                  [TextField]="'name_arabic'"
+                                                  [ValueField]="'code'" 
+                                                  [searching]="searching" 
+                                                  [filteredServerSide]="filteredServerSideOrder" 
+                                                  (OnSearch)="orderOptions($event)">
+                                                </select-server-side>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                      <div class="col-lg-12">
+                                        <div class="row d-flex justify-content-center align-items-center">
+                                          <div class="col-md-5">
+                                            <div class="form-group">
+                                              <label class="translate" data-en="Maxmum" >الحد الاقصي:</label>
+                                                <select-server-side 
+                                                  [selectForm]="scSettingsForm" 
+                                                  [controlName]="'n_maximum_limit_trans_allow'" 
+                                                  [TextField]="'name_arabic'"
+                                                  [ValueField]="'code'" 
+                                                  [searching]="searching" 
+                                                  [filteredServerSide]="filteredServerSideOrder" 
+                                                  (OnSearch)="orderOptions($event)">
+                                                </select-server-side>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-md-5">
+                                            <div class="form-group">
+                                              <label  class="translate" data-en="Minimum">الحد الادني:</label>
+                                                <select-server-side 
+                                                  [selectForm]="scSettingsForm" 
+                                                  [controlName]="'n_lower_limit_trans_allow'" 
+                                                  [TextField]="'name_arabic'"
+                                                  [ValueField]="'code'" 
+                                                  [searching]="searching" 
+                                                  [filteredServerSide]="filteredServerSideOrder" 
+                                                  (OnSearch)="orderOptions($event)">
+                                                </select-server-side>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                              <div class="card mt-0 p-3">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_items_control_msg" formControlName="b_items_control_msg" />
+                                          <label class="form-check-label mr-3 mt-2 translate" data-en="Show a warning message to monitor the items" for="b_items_control_msg">
+                                            اظهار رساله تحذيرية لمراقبة الاصناف
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-12">
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_store_on_eye" formControlName="b_store_on_eye" />
+                                          <label class="form-check-label mr-3 mt-2 translate" data-en="Applying overdraft at the store level" for="b_store_on_eye">
+                                            تطبيق السحب على المكشوف على مستوي المخزن
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-lg-8">
+                                        <div class="form-check">
+                                          <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_on_eye" formControlName="b_on_eye" />
+                                          <label class="form-check-label mr-3 mt-2 translate" data-en="Applying overdraft on all items" for="b_on_eye">
+                                            تطبيق السحب على المكشوف على جميع الاصناف
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-4">
+                                        <select-server-side
+                                          [selectForm]="scSettingsForm"
+                                          [controlName]="'n_on_eye_re'"
+                                          [TextField]="'name_arabic'"
+                                          [ValueField]="'code'"
+                                          [searching]="searchingOnEye"
+                                          [filteredServerSide]="filteredServerSideOnEye"
+                                          (OnSearch)="OnEyeOptions($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+
+                                    <div class="row d-flex justify-content-center align-items-center">
+                                      <div class="col-md-6 text-center">
+                                        <button type="button" class="btn btn-outline-primary translate" data-toggle="modal" data-target="#CancelModal" data-en="Apply All"> تطبيق الكل </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="row">
+                          <div class="col-lg-7">
+                            <div class="card mt-0 p-3">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <div class="row">
+                                    <div class="col-lg-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_use_character_in_items" formControlName="b_use_character_in_items" />
+                                        <label class="form-check-label mr-3 mt-2 translate"  data-en="Textual Numbering of Items" for="b_use_character_in_items">
+                                          الترقيم النصي للاصناف
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                      <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label translate" data-en="Store Incoming Price:">سعر وارد المخزن:</label>
+                                        <div class="col-sm-8">
+                                          <select-server-side 
+                                            [selectForm]="scSettingsForm" 
+                                            [controlName]="'n_InTransPriceType'" 
+                                            [TextField]="'name_arabic'"
+                                            [ValueField]="'code'" 
+                                            [searching]="searching" 
+                                            [filteredServerSide]="filteredServerSidePrice" 
+                                            (OnSearch)="priceOptions($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_use_cost_by_currentDate" formControlName="b_use_cost_by_currentDate" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Calculate the Cost on the Entry Date" for="b_use_cost_by_currentDate">
+                                          احتساب التكلفة بتاريخ الادخال
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_allow_repeat_itemName" formControlName="b_allow_repeat_itemName" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Allow Repetition of Item Name" for="b_allow_repeat_itemName">
+                                          السماح بتكرار اسم الصنف
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_activate_TransSource" formControlName="b_activate_TransSource" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Activate the Movement Source in Inventory Movement" for="b_activate_TransSource">
+                                          تفعيل مصدر الحركة فى حركة المخزون
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_disable_manual_cost" formControlName="b_disable_manual_cost" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Stop Manual Cost Price" for="b_disable_manual_cost">
+                                          إيقاف سعر التكلفة اليدوى
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_not_control_item_collections" formControlName="b_not_control_item_collections" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Prevent modification to components of the assembled class" for="b_not_control_item_collections">
+                                          منع التعديل على مكونات الصنف المجمع
+                                        </label>
+                                      </div>
+                                    </div>
+    
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_itemCode_by_group" formControlName="b_itemCode_by_group" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Coding the item according to the group" for="b_itemCode_by_group">
+                                          تكويد الصنف حسب المجموعة
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_use_sizes" formControlName="b_use_sizes" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Using the Sizing System in Items" for="b_use_sizes">
+                                          استخدام نظام المقاسات فى الاصناف
+                                        </label>
+                                      </div>
+                                    </div>
+    
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_show_import_order_no" formControlName="b_show_import_order_no" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Activate the Appearance of the Work Order in Inventory Transactions" for="b_show_import_order_no">
+                                          تفعيل ظهور أمر الشغل فى حركات المخزون
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_activate_itemBarcode_as_itemCode" formControlName="b_activate_itemBarcode_as_itemCode" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Activate the Barcode with the Same Item Code" for="b_activate_itemBarcode_as_itemCode">
+                                          تفعيل الباركود بنفس كود الصنف
+                                        </label>
+                                      </div>
+                                    </div>
+    
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_activate_stock_trans_sellprice" formControlName="b_activate_stock_trans_sellprice" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Activating the export movement and transfers at the selling price" for="b_activate_stock_trans_sellprice">
+                                          تفعيل حركة الصادر والتحويلات بسعر البيع
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_use_item_serial" formControlName="b_use_item_serial" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Activate Item Serial" for="b_use_item_serial">
+                                          تفعيل سيريال الاصناف
+                                        </label>
+                                      </div>
+                                    </div>
+    
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_use_barcode_stock_transfere_out" formControlName="b_use_barcode_stock_transfere_out" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Activating the barcode system in outgoing transfers" for="b_use_barcode_stock_transfere_out">
+                                          تفعيل نظام الباركود فى التحويلات الصادرة
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-check">
+                                        <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_prevent_Stocktransfere_without_TransSource" formControlName="b_prevent_Stocktransfere_without_TransSource" />
+                                        <label class="form-check-label mr-3 mt-2 translate" data-en="Preventing the issuance of a transfer without a traffic source" for="b_prevent_Stocktransfere_without_TransSource">
+                                          منع اصدار تحويل بدون مصدر حركة
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-5">
+                            <label class="translate" data-en="Printing">الطباعة</label>
+                            <div class="card p-3">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label translate" data-en="Printing bonds after saving:" >طباعة السندات بعد الحفظ:</label>
+                                        <div class="col-sm-6">
+                                          <select-server-side 
+                                            [selectForm]="scSettingsForm" 
+                                            [controlName]="'n_print_re'" 
+                                            [TextField]="'name_arabic'"
+                                            [ValueField]="'code'" 
+                                            [searching]="searching" 
+                                            [filteredServerSide]="filteredServerSidePrint" 
+                                            (OnSearch)="printOptions($event)">
+                                          </select-server-side>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="row">
+                          <label class="translate" data-en="Accounts">حسابات</label>
+                          <div class="col-lg-6">
+                            <div class="card mt-0 p-3">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" style="border-radius: 50%; width: 17px; height: 14px;" name="period" id="b_Periodic" formControlName="b_Periodic" [value]="true" >
+                                    <label class="form-check-label mr-3 translate" data-en="Periodic"  for="b_Periodic">
+                                      دوري
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" style="border-radius: 50%; width: 17px; height: 14px;" name="period" id="b_Perpetual" formControlName="b_Perpetual" [value]="true">
+                                    <label class="form-check-label mr-3 translate" data-en="Continual" for="b_Perpetual">
+                                      مستمر
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row mt-4">
+                                <div class="col-md-6 ">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_link_with_gl" formControlName="b_link_with_gl" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Link With GL" for="b_link_with_gl">
+                                      ربط بالحسابات
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6 ">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_show_journal_in_trans" formControlName="b_show_journal_in_trans" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="View daily restrictions while on the move"  for="b_show_journal_in_trans">
+                                      عرض القيود اليومية اثناء الحركة
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6 ">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_CreateStockJournal" formControlName="b_CreateStockJournal" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Create storage restrictions" for="b_CreateStockJournal">
+                                      انشاء قيود مخزنية
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6 ">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_Group_journal" formControlName="b_Group_journal" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Use bulk restrictions during migration" for="b_Group_journal">
+                                      استخدام قيود مجمعة اثناء الترحيل
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-10">
+                            <div class="card mt-0 p-3">
+                              <div class="row"> 
+                                <div class="col-md-6 ">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_print_journals_after_save" formControlName="b_print_journals_after_save" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Printing the entry with saving" for="b_print_journals_after_save">
+                                      طباعة القيد مع الحفظ
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" style="border-radius: 50%; width: 17px; height: 14px;" name="account" id="b_MultiGoodsCostOnStore" formControlName="b_MultiGoodsCostOnStore" [value]="true">
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Use the cost of goods sold calculation for each store separately" for="b_MultiGoodsCostOnStore">
+                                      استخدام حساب تكلفة بضاعة مباعة لكل مخزن علي حدة
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6" *ngIf="isGoodCostShow">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Cost of goods sold account number:">رقم حساب تكلفة البضاعة المباعة:</label>
+                                    <div class="col-sm-6">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_GoodsCost_Account'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" style="border-radius: 50%; width: 17px; height: 14px;" name="account" id="b_GoodsCostOnStore" formControlName="b_GoodsCostOnStore" [value]="true">
+                                    <label class="form-check-label mr-3 mt-2 translate"data-en="Use the cost of goods sold calculation for all stores" for="b_GoodsCostOnStore">
+                                      استخدام حساب تكلفة بضاعة مباعة لكل المخازن
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Cost calculation number for goods on the way:" >رقم حساب البضاعة في الطريق:</label>
+                                    <div class="col-sm-6">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_GoodsInRoad_Account'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_useGoodsInRoad" formControlName="b_useGoodsInRoad" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Use of goods on the way account" for="b_useGoodsInRoad">
+                                      استخدام حساب بضاعة في الطريق
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="The corresponding account in the outgoing movement:">الحساب المقابل في حركة الصادر:</label>
+                                    <div class="col-sm-6">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_trans_out_related_acc'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_activate_cost_center_stock_diff_cost" formControlName="b_activate_cost_center_stock_diff_cost" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Show the cost center on the cost variance account in the outbound store"for="b_activate_cost_center_stock_diff_cost">
+                                      إظهار مركز التكلفة علي حساب فروق التكلفة في صادر مخزن
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Recalculation in incoming traffic:" >الحساب المقابل في حركة الوارد:</label>
+                                    <div class="col-sm-6">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_trans_in_related_acc'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <label class="translate" data-en="Properties">الاعدادات</label>
+                          <div class="col-lg-8">
+                            <div class="card mt-0 p-3">
+                              <div class="row"> 
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" style="border-radius: 50%; width: 17px; height: 14px;" name="accountUse" id="b_multi_stores_in_gl" formControlName="b_multi_stores_in_gl" [value]="true" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Recalculation in incoming traffic:"  for="b_multi_stores_in_gl">
+                                      استخدام حساب منفصل لكل مخزن
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" style="border-radius: 50%; width: 17px; height: 14px;" name="accountUse" id="b_one_stores_in_gl" formControlName="b_one_stores_in_gl" [value]="true" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="A Unified Account for All Stores" for="b_one_stores_in_gl">
+                                      حساب موحد لكل المخازن
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_control_gift_account" formControlName="b_control_gift_account" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Open the account number in the transaction" for="b_control_gift_account">
+                                      فتح رقم الحساب في الحركة
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <input class="form-check-input" style="height:19px;width:20px;" type="checkbox" value="" id="b_control_scrape_account" formControlName="b_control_scrape_account" />
+                                    <label class="form-check-label mr-3 mt-2 translate" data-en="Open the account number in the transaction" for="b_control_scrape_account">
+                                      فتح رقم الحساب في الحركة
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row mt-4">
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Samples and gifts account number:" >رقم حساب عينات وهدايا:</label>
+                                    <div class="col-sm-7">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_gifts_account'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Damaged transaction account number:">رقم حساب حركة تالف:</label>
+                                    <div class="col-sm-7">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_scrape_account'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                     </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Inventory adjustments account number">رقم حساب تسويات جردية:</label>
+                                    <div class="col-sm-7">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_settlement_account'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Account number for dismantling and assembling items:" >رقم حساب فك وتجميع الاصناف:</label>
+                                    <div class="col-sm-7">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_Items_Collect_Separate_Acc'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Inventory Revaluation Account:" >حساب إعادة تقييم المخزون:</label>
+                                    <div class="col-sm-7">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_stock_clearance_acc'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4" *ngIf="isOneStoreInGl">
+                            <div class="card mt-0 p-3">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Related Account No">رقم حساب المخازن بالدليل:</label>
+                                    <div class="col-sm-7">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_related_account_no'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                  <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label translate" data-en="Cost variance account number:">رقم حساب فروق التكلفة:</label>
+                                    <div class="col-sm-7">
+                                      <select-server-side 
+                                        [selectForm]="scSettingsForm" 
+                                        [controlName]="'s_cost_diff_acc'" 
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'" 
+                                        [searching]="searching" 
+                                        [filteredServerSide]="filteredServerSideRelatedAcc" 
+                                        (OnSearch)="search($event)">
+                                      </select-server-side>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title translate" id="exampleModalLongTitle" data-en="Close">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body translate" data-en="Are you sure about Apply all?">
+                هل انت متاكد من تطبيق الكل؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #closebutton
+                    data-en="Close">اغلاق</button>
+                <button type="button" class="btn btn-primary translate" (click)="ApplyAll();"
+                    data-en="Yes">نعم</button>
+            </div>
+        </div>
+    </div>
+</div>

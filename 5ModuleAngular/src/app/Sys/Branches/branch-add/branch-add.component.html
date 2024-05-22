@@ -1,0 +1,450 @@
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">  
+          <h2>أضافة  فروع</h2>
+          <div class="buttons">               
+            <div class="button">
+                <i class="bi bi-bookmark-x "></i>
+                <a routerLink="/sys/branchList">خروج</a>                 
+            </div>
+            <div class="button">
+                <i class="bi bi-file-earmark-medical  fa-lg"></i>
+
+                <input type="button" [disabled]="!branchForm.valid" value="حفظ" class="translate" data-en="Save"  (click)="save()" value="حفظ">
+            </div>
+          </div>
+        </div>
+      </section>
+  </div>
+  </header>
+    
+<div class="content-wrapper" style="margin-top: 120px;" [ngClass]="{'disabled':showspinner}">
+      <!-- Content Header (Page header) -->
+      <section class="content" >
+        <div class="container-fluid">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist" style="background: white;padding: 4px 4px">
+          <button class="nav-link  translate active" id="nav-home-tab" data-en="Supplier Info" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" style="padding: 7px;margin-left: 13px">بيانات الاساسية</button>
+          <button class="nav-link translate" id="nav-profile-tab"      data-en="Accountts and Banks" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" style="padding: 7px;margin-left: 13px"> الربط مع الفودكس</button>
+
+
+        </div>
+      </nav>
+</div>
+
+    </section>
+      <section class="content">
+        <div class="container-fluid">
+
+         <div class="row">
+          <div class="col-12">
+            <form [formGroup]="branchForm" (keydown.enter)="$event.preventDefault()">
+            
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+             
+                
+        <!-- <div class="form-group col-md-12 col-lg-4">
+                     <label class="translate" data-en="Branch Id">اسم الفرع</label>
+                     <input class="form-control" formControlName="n_branch_id">
+                   </div> -->
+            <div class="tab-content mt-3" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                   <div class="card p-5">
+                     <div class="row">
+                       <div class="form-group col-md-12 col-lg-4">
+                        <label ><span  class="translate" data-en="Branch Name ar">اسم الفرع</span> <span class="text-danger">*</span></label>
+                        <input class="form-control" formControlName="s_branch_name">
+                      </div>
+                      <div class="form-group col-md-12 col-lg-4">
+                        <label class="translate" data-en="Branch Name">اسم الفرع الانجليزي</label>
+                        <input class="form-control" formControlName="s_branch_name_eng">
+                      </div>
+                      <div class="form-group col-md-12 col-lg-4">
+                        <label class="translate" data-en="Branch Name Commercial">اسم الفرع التجاري</label>
+                        <input class="form-control" formControlName="s_branch_commerical_name">
+                      </div>
+                      
+                      
+                     </div>
+                     <div class="row">
+                    
+                     <div class="form-group col-md-12 col-lg-4">
+                       <label class="translate" data-en="Branch ِAddress">عنوان الفرع </label>
+                       <input class="form-control" formControlName="s_branch_address">
+                     </div>
+                     <div class="form-group col-md-12 col-lg-4">
+                       <label class="translate" data-en="Phone Number"> رقم التليفون</label>
+                       <input class="form-control" formControlName="s_branch_phone_no" type="number">
+                     </div>
+                     <div class="form-group col-md-12 col-lg-4">
+                      <label class="translate" data-en="Password"> رقم السري</label>
+                      <input class="form-control" formControlName="s_db_pass">
+                    </div>
+                     
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-12 col-lg-4">
+                       <label class="translate" data-en="Tax Number">الرقم الضريبي</label>
+                       <input class="form-control" formControlName="s_branch_tax_no" type="number">
+                     </div>
+                     <div class="form-group col-md-12 col-lg-4">
+                       <label class="translate" data-en="Fax Number">رقم الفكس </label>
+                       <input class="form-control" formControlName="s_branch_fax_no" type="number">
+                     </div>
+                     <div class="form-group col-md-12 col-lg-4">
+                      <label class="translate" data-en="Discount Ratio">نسبه الخصم</label>
+                       <input class="form-control"  formControlName="n_discount_ratio" type="number">
+                     </div>
+                     
+                     
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-12 col-lg-4">
+                       <label class="translate" data-en="Email ">البريد الالكتروني</label>
+                       <input class="form-control" formControlName="s_branch_e_mail">
+                     </div>
+                     <div class="form-group col-md-12 col-lg-4">
+                       <label class="translate" data-en="LOG">Log</label>
+                       <input class="form-control" formControlName="s_latitude">
+                     </div>
+                     <!-- <div class="form-group col-md-12 col-lg-4">
+                      <label class="translate" data-en="LAT" formControlName >Lat</label>
+                       <input class="form-control">
+                     </div> -->
+                     <div class="form-group col-md-12 col-lg-4">
+                      <label class="translate" data-en="Profit Ratio">نسبه الربح الداخليه</label>
+                      <input class="form-control" formControlName="n_profit_ratio" type="number">
+                    </div>
+                     
+                    </div>
+                    <div class="row">
+                    
+                     <div class="form-group col-md-12 col-lg-4">
+                       <label class="translate" data-en="Branch Ip"> سيرفر قاعده البيانات</label>
+                       <input class="form-control" formControlName="s_branch_ip">
+                     </div>
+                     <div class="form-group col-md-12 col-lg-4">
+                      <label class="translate" data-en="User Name">اسم المستخدم</label>
+                      <input class="form-control" formControlName="s_db_user_name">
+                    </div>
+                   
+                    
+                     
+                     
+                    </div>
+                      <div class="row">
+                        <div class="form-check col-md-12 col-lg-4">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" formControlName="b_stop">
+                          <label class="form-check-label translate" data-en="Stop" for="flexCheckDefault3">
+                            أيقاف
+                          </label>
+                      </div>
+                        <div class="form-check col-md-12 col-lg-4">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" formControlName="b_selective_tax_in_purchaseInvoice">
+                          <label class="form-check-label translate" data-en="Enable Selective Tax in Purchasing Invoice"  for="flexCheckDefault3">
+                              تفعيل الضريبه الانتقائه للمشتريات
+                          </label>
+                      </div>
+                      <div class="form-check col-md-12 col-lg-4">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" formControlName="b_selective_tax_in_sellInvoice">
+                        <label class="form-check-label translate" data-en="Enable Selective Tax in Selling Invoice" for="flexCheckDefault3">
+                            تفعيل الضريبه الانتقائه للمبيعات
+                        </label>
+                    </div>
+                      </div>
+                   </div>
+                  </div>
+                  
+                  <div class="col-md-12 col-lg-6">
+                    <div class="card p-5 mr-3">
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Cashes">الخزينه الافتراضيه</span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_cash_id'"
+                                [TextField]="'s_cash_name'"
+                                [ValueField]="'n_cash_id'"
+                                [searching]="searchingCaches"
+                                [filteredServerSide]="filteredCashesServerSide"
+                                (OnSearch)="SearchCashes($event)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Card">البطاقة الافتراضيه</span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_CardType_id'"
+                                [TextField]="'s_credit_card_name'"
+                                [ValueField]="'n_credit_card_no'"
+                                [searching]="searchingCard"
+                                [filteredServerSide]="filteredCardServerSide"
+                                (OnSearch)="SearchCard($event)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Store">المخزن الافتراضي</span> <span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_store_id'"
+                                [TextField]="'s_store_name'"
+                                [ValueField]="'n_store_id'"
+                                [searching]="searchingStore"
+                                [filteredServerSide]="filteredStoreServerSide2"
+                                (OnSearch)="SearchStore($event,1)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Customer">عميل افتراضي</span><span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_customer_id'"
+                                [TextField]="'s_customer_name'"
+                                [ValueField]="'n_customer_id'"
+                                [searching]="searchingCustomer"
+                                [filteredServerSide]="filteredCustomerServerSide1"
+                                (OnSearch)="SearchCustomer($event,1)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        
+                      </div>
+    
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Customers Direction">توجبه العملاء المحاسبي</span><span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_acc_dir_id'"
+                                [TextField]="'s_acc_dir_name'"
+                                [ValueField]="'n_acc_dir_no'"
+                                [searching]="searchingCustomerACC"
+                                [filteredServerSide]="filteredCustomerACCServerSide1"
+                                (OnSearch)="SearchCustomerACC($event,1)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Suppler Direciton">توجيه الموردين المحاسبي</span><span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_supplier_acc_dir_id'"
+                                [TextField]="'s_acc_dir_name'"
+                                [ValueField]="'n_acc_dir_no'"
+                                [searching]="searchingSupplierACC"
+                                [filteredServerSide]="filteredSupplierACCServerSide"
+                                (OnSearch)="SearchSupplierACC($event)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Customers Direction">التوجيه المحاسبي للطابوق</span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_blk_acc_dir_id'"
+                                [TextField]="'s_acc_dir_name'"
+                                [ValueField]="'n_acc_dir_no'"
+                                [searching]="searchingCustomerACC"
+                                [filteredServerSide]="filteredCustomerACCServerSide2"
+                                (OnSearch)="SearchCustomerACC($event,2)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Saller">البائع  الافتراضي</span><span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_saler_id'"
+                                [TextField]="'s_employee_name'"
+                                [ValueField]="'n_saler_id'"
+                                [searching]="searchingSeller"
+                                [filteredServerSide]="filteredSellerServerSide"
+                                (OnSearch)="SearchSeller($event)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Cost Center">مركز التكلفه الافتراضي</span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'s_cost_center_default'"
+                                [TextField]="'s_cost_center_name'"
+                                [ValueField]="'s_cost_center_id'"
+                                [searching]="searchingCostCenter"
+                                [filteredServerSide]="filteredCostCenterServerSide"
+                                (OnSearch)="SearchCostCenter($event)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Replacement Store">مخزن  الاستبدال</span> <span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_replacement_store_id'"
+                                [TextField]="'s_store_name'"
+                                [ValueField]="'n_store_id'"
+                                [searching]="searchingStore"
+                                [filteredServerSide]="filteredStoreServerSide1"
+                                (OnSearch)="SearchStore($event,2)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Customer for commerical sales">العميل الافتراضي للمبيعات التجاريه</span> <span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                            [selectForm]="branchForm"
+                            [controlName]="'n_def_cust_commerical_invoice'"
+                            [TextField]="'s_customer_name'"
+                            [ValueField]="'n_customer_id'"
+                            [searching]="searchingCustomer"
+                            [filteredServerSide]="filteredCustomerServerSide2"
+                            (OnSearch)="SearchCustomer($event,2)">
+                            </select-keep-last-change>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Default Customer">مورد افتراضي</span><span class="text-danger"> * </span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                                [selectForm]="branchForm"
+                                [controlName]="'n_default_supplier_id'"
+                                [TextField]="'s_supplier_name'"
+                                [ValueField]="'n_supplier_id'"
+                                [searching]="searchingAllSupplier"
+                                [filteredServerSide]="filteredAllSupplerServerSide"
+                                (OnSearch)="SearchAllSupplier($event)">
+                          </select-keep-last-change>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Card Custody Cash">خزينة عهده البطاقات</span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                            [selectForm]="branchForm"
+                            [controlName]="'n_cards_custody_cash'"
+                            [TextField]="'s_cash_name'"
+                            [ValueField]="'n_cash_id'"
+                            [searching]="searchingCaches"
+                            [filteredServerSide]="filteredCashesServerSide"
+                            (OnSearch)="SearchCashes($event)">
+                      </select-keep-last-change>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <label ><span class="translate" data-en="Card Custody Cash  Differnce">فرق عهده البطاقات</span></label>
+                          <div class="w-100">
+                            <select-keep-last-change
+                            [selectForm]="branchForm"
+                            [controlName]="'n_cards_custody_diff_cash'"
+                            [TextField]="'s_cash_name'"
+                            [ValueField]="'n_cash_id'"
+                            [searching]="searchingCaches"
+                            [filteredServerSide]="filteredCashesServerSide"
+                            (OnSearch)="SearchCashes($event)">
+                      </select-keep-last-change>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+            
+                  </div>
+    
+                 </div>
+              </div>
+              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                 <div class="card p-4">
+                  <div class="row">
+                    <div class="form-group col-md-12 col-lg-6">
+                      <label > <span  class="translate" data-en="Token">Token</span></label>
+                      <textarea class="form-control" formControlName="s_foodics_token" style="height: 315px;"></textarea>
+                    </div>
+                   
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-12 col-lg-6">
+                      <label > <span  class="translate" data-en="Token Code">رمز الفرع</span></label>
+                      <input class="form-control" formControlName="s_foodics_refernce" >
+                    </div>
+                   
+                  </div>
+                 </div>
+              </div>
+            </div>
+           
+           
+               
+    
+    
+     
+          
+               
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+               <div class="row">
+             
+                <div class="col-md-2">
+                  <app-attachments [ID]="this.IDNo" [DataArea]="this.DataAreaNo" [Folder]="'Stores'" [SubFolder]="'Attachments'" *ngIf="this.IDNo !=null && this.IDNo > 0"></app-attachments>
+                </div>
+               </div>
+        
+    
+    
+            </form>
+          </div>
+    
+    
+         </div>
+    
+    
+    
+    
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    
+    
+    
+    
+    

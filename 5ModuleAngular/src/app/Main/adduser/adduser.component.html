@@ -1,0 +1,131 @@
+<header>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+                <h2 class="translate" data-en="Request Order">أضافة مستخدم</h2>
+                <div class="buttons">
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <input type="button" routerLink="/sys/userslist" class="translate" data-en="Exit" value="خروج">
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <input type="button" [disabled]="!UserForm.valid" value="حفظ" class="translate" data-en="Save"
+                            (click)="save()" value="حفظ">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</header>
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row" *ngIf="showspinner">
+                <hr />
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="invoice p-3 mb-3">
+
+                        <br />
+                        <br />
+                        <form [formGroup]="UserForm" (keydown.enter)="$event.preventDefault()">
+
+                            <div class="tab-content container" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-main" role="tabpanel"
+                                    aria-labelledby="pills-main-tab">
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="card p-3">
+
+                                                <div class="row">
+                                                    <section class="col col-4">
+                                                        <div class="form-group">
+                                                            <label class="label translate" data-en="User Name">اسم المستخدم:<span style="color:red">&nbsp;*</span></label>
+                                                            <div class="input-group">
+                                                                <input type="email" class="form-control"
+                                                                    formControlName="s_user_name" [email]="true">
+                                                            </div>
+                                                        </div>
+                                                    </section>
+
+                                                    <section class="col col-4">
+                                                        <div class="form-group">
+                                                            <label class="label translate" data-en="Password">كلمةالسر:<span style="color:red">&nbsp;*</span></label>
+                                                            <div class="input-group">
+                                                                <input type="password" class="form-control" formControlName="s_user_password">
+                                                            </div>
+                                                        </div>
+                                                    </section>
+
+                                                    <section class="col col-4">
+                                                        <label class="label translate" data-en="User Group">المجموعة:<span style="color:red">&nbsp;*</span></label>
+                                                        <select-server-side [selectForm]="UserForm"
+                                                            [controlName]="'n_group_id'" [TextField]="'s_group_name'"
+                                                            [ValueField]="'n_Parent_Id'" [searching]="searchingGroup"
+                                                            [filteredServerSide]="filteredGroupServerSide"
+                                                            (OnSearch)="searchGroup($event)">
+                                                        </select-server-side>
+                                                    </section>
+                                                </div>
+
+
+                                                <!-- <div class="row">
+                                                    <section class="col col-4">
+                                                        <div class="form-group">
+                                                            <label class="label translate" data-en="Confirm Password">تأكيد كلمة السر:<span style="color:red">&nbsp;*</span></label>
+                                                            <div class="input-group">
+                                                                <input type="password" class="form-control" formControlName="s_confirm_password">
+                                                            </div>
+                                                            <div *ngIf="passwordMatchError" data-en="Password does not match" class="text-danger translate">
+                                                                الباسورد غير متطابق
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div> -->
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="card-footer mb-4">
+                            <div class="row">
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-2">
+                                    <app-attachments [ID]="this.DocNo" [DataArea]="this.UserForm.value.n_DataAreaID"
+                                        [Folder]="'SubscribeUsers'" [SubFolder]="'Attachments'"
+                                        *ngIf="this.DocNo !=null && this.DocNo > 0"></app-attachments>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="showspinner">
+                                <hr />
+                                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.invoice -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

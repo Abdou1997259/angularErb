@@ -1,0 +1,346 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate" data-en="Account Tree"> قائمة الحسابات </h2>
+              <div class="buttons">
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!AccountTypeForm.valid" (click)="Save()" [value]="btnSave">
+                  </div>
+              </div>
+          </div>
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="AccountTypeForm" (keydown.enter)="$event.preventDefault()">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+              <div class="card-body" >
+                <div class="row">
+                  <section class="col-lg-6">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6 text-center">
+                          <div class="form-group">
+                            <button type="button" class="btn btn-outline-primary p-2 w-50 translate" data-en="Add New Account" (click)="AddNewItem();" [disabled]="isAddMode">اضافة حساب جديد</button>
+                          </div>
+                        </section>
+
+                        <section class="col col-6 text-center">
+                          <div class="form-group">
+                            <input type="button" class="btn btn-outline-danger p-2 w-50 translate" data-en="Remove Account" [disabled]="!isAccountSelected || isAddMode" value="حذف حساب" data-toggle="modal" data-target="#exampleModal" />
+                          </div>
+                        </section>
+                      </div>
+
+                      <hr />
+
+                      <div class="row">
+                        <section class="col col-4">
+                          <div class="form-group">
+                            <input type="text" class="form-control search-input" *ngIf="!isEnglish"  id="search-input" placeholder="بحث..." />
+                            <input type="text" class="form-control search-input" *ngIf="isEnglish" id="search-input" placeholder="searching ...." />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row overflow-auto" style="max-height: 500px;">
+                        <section class="col col-12">
+                          <div class="form-group">
+                            <div id="jstree"></div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="col-lg-6">
+                    <div class="card p-3">
+                      <div class="row justify-content-between">
+                        <section class="col col-5">
+                          <div class="form-group">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input p-2" formControlName="b_protected" />
+                              <label class="form-check-label pr-2 translate" data-en="Protected">محمي</label>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-5">
+                          <div class="form-group">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input p-2" formControlName="b_stop_direct_Trans" />
+                              <label class="form-check-label pr-2 translate" data-en="Stop Using">منع الاستخدام</label>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row justify-content-between">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input p-2" formControlName="b_account_entry_block" />
+                              <label class="form-check-label pr-2 translate" data-en="Prevent direct restrictions from the daily restrictions screen">منع القيود المباشرة من شاشة القيود اليومية</label>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col col-5">
+                          <div class="form-group">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input p-2" formControlName="b_showin_Balancesheet" />
+                              <label class="form-check-label pr-2 translate" data-en="Appearance in the budget">الظهور في الميزانية</label>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label"> <span class="translate" data-en="Account">رقم الحساب </span><span style="color:red;">*</span> </label>
+                            <input type="number" class="form-control w-50" formControlName="s_account_no" (change)="onInputEvent();" />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label translate" data-en="Upper Account"> الحساب الآعلي </label>
+                            <input type="text" class="form-control" formControlName="s_upper_account" readonly />
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label translate" data-en="Level"> المستوي </label>
+                            <input type="number" class="form-control w-50" formControlName="n_account_level" readonly />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label"><span class="translate" data-en="Ar Account Name"> إسم الحساب </span><span style="color:red;">*</span> </label>
+                            <input type="text" class="form-control" formControlName="s_account_name" required />
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label translate" data-en="Account Name"> إسم الحساب Eng </label>
+                            <input type="text" class="form-control" formControlName="s_account_name_eng" />
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label"> <span class="translate" data-en="Account type">نوع الحساب</span><span style="color:red;">*</span> </label>
+                            <select name="Code" class="form-select" formControlName="n_account_type" [attr.disabled]="isHasChildrens ? '' : null">
+                              <option *ngFor="let item of accountsTypesList" value="{{ item.code }}">{{item.name_arabic}}</option>
+                            </select>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label translate" data-en="Account Group" > مجموعة الحساب </label>
+                            <select name="Code" class="form-select" formControlName="n_account_group" [attr.disabled]="!isAddBase ? '' : null">
+                              <option *ngFor="let item of accountsGroupsList" value="{{ item.code }}">{{item.name_arabic}}</option>
+                          </select>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label  translate" data-en="Nature of account"> طبيعة الحساب </label>
+                            <select name="Code" class="form-select" formControlName="n_account_nature" [attr.disabled]="!isAddBase ? '' : null">
+                              <option value="1" *ngIf="!isEnglish" >مدين</option>
+                              <option value="1" *ngIf="isEnglish" >Debit</option>
+                              <option value="2" *ngIf="!isEnglish">دائن</option>
+                              <option value="2" *ngIf="isEnglish">Credit</option>
+                            </select>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label translate " data-en="Link with Cost Center"> ربط بمراكز التكلفة </label>
+                            <select name="Code" class="form-select" formControlName="n_account_allocat" (change)="SetAccountAllocatValue()">
+                              <option *ngFor="let item of costCenterStatusList" value="{{ item.code }}">{{item.name_arabic}}</option>
+                            </select>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row" *ngIf="n_allocat_value==2">
+                        <section class="col col-6">
+                          <div class="form-group">
+                          <label class="label translate" data-en="Cost Center 1">مركز التكلفة 1:</label>
+                              <select-server-side
+                              [selectForm]="AccountTypeForm"
+                              [controlName]="'s_default_cost_center_id'"
+                              [TextField]="'s_cost_center_name'"
+                              [ValueField]="'s_cost_center_id'"
+                              [searching]="searchingCost"
+                              [filteredServerSide]="filteredCostCenterServerSide"
+                              (OnSearch)="searchCost($event)">
+                              </select-server-side>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row" *ngIf="n_allocat_value==4">
+                        <section class="col col-12">
+                          <div class="col-12 table-responsive">
+                            <table id="tblFinPaymentInvoices" class="custom-table table-striped" formArrayName="gl_CostCenterForAccount">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="text-center" style="min-width: 20px;"> # </th>
+                                  <th scope="col" class="text-center translate" data-en="Cost Center No" style="min-width: 25px;"> رقم مركز التكلفة </th>
+                                  <th scope="col" class="text-center translate" data-en="Cost Center Name" style="min-width: 40px;" > اسم مركز التكلفة </th>
+                                  <th scope="col" class="text-center" style="min-width: 15px;">  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr [formGroupName]="i" *ngFor="let row of gl_CostCenterForAccount.controls; let i = index;">
+                                  <td scope="row" class="text-center" style="min-width: 20px;"> {{ i + 1 }} </td>
+
+                                  <td style="min-width: 25px;">
+                                    <div class="position-relative">
+                                      <i class="fa fa-search position-absolute" (click)="LoadCostCenters(i)" data-toggle="modal"></i>
+                                      <input class="form-control has-search" type="text" formControlName="s_cost_center_id" (keypress)="onkeySearchCostCenter($event, i)" >
+                                    </div>
+                                  </td>
+
+                                  <td style="min-width: 40px;">
+                                    <input type="text" class="form-control" formControlName="s_cost_center_name" readonly />
+                                  </td>
+
+                                  <td style="min-width: 15px;">
+                                    <button type="button" class="btn btn-danger p-2 w-100" (click)="remove_CostCenterRow(i);"> حذف </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row p-3">
+                            <div class="col-md-12 text-center">
+                              <div class="button-plus">
+                                <i class="bi bi-plus"></i>
+                                <a (click)="add_CostCenterRow()" class="translate" data-en="Add Line">إضافة سطر</a>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row" *ngIf="n_allocat_value==5">
+                        <section class="col col-6">
+                          <div class="form-group">
+                          <label class="label translate" data-en="Cost Ceter 2">مركز التكلفة 2:</label>
+                              <select-server-side
+                              [selectForm]="AccountTypeForm"
+                              [controlName]="'s_default_cost_center_id2'"
+                              [TextField]="'s_cost_center_name'"
+                              [ValueField]="'s_cost_center_id'"
+                              [searching]="searchingCost"
+                              [filteredServerSide]="filteredCostCenterServerSide"
+                              (OnSearch)="searchCost($event)"
+                              ></select-server-side>
+
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row" *ngIf="n_allocat_value==6 || n_allocat_value==3">
+                        <section class="col col-6">
+                          <div class="form-group">
+                          <label class="label translate" data-en="Cost">مركز التكلفة 1:</label>
+                              <select-server-side
+                              [selectForm]="AccountTypeForm"
+                              [controlName]="'s_default_cost_center_id'"
+                              [TextField]="'s_cost_center_name'"
+                              [ValueField]="'s_cost_center_id'"
+                              [searching]="searchingCost"
+                              [filteredServerSide]="filteredCostCenterServerSide"
+                              (OnSearch)="searchCost($event)">
+                              </select-server-side>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                          <label class="label">مركز التكلفة 2:</label>
+                              <select-server-side
+                              [selectForm]="AccountTypeForm"
+                              [controlName]="'s_default_cost_center_id2'"
+                              [TextField]="'s_cost_center_name'"
+                              [ValueField]="'s_cost_center_id'"
+                              [searching]="searchingCost"
+                              [filteredServerSide]="filteredCostCenter2ServerSide"
+                              (OnSearch)="searchCost2($event)">
+                              </select-server-side>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تأكيد الحذف</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">تأكيد حذف حساب {{s_account_name}} ؟!</label>
+      </div>
+      <div class="modal-footer" dir="rtl">
+        <input type="button" class="btn btn-danger mr-2" value="حذف حساب" (click)="DeleteAccount()" data-toggle="modal" data-target="#exampleModal"  >
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+      </div>
+    </div>
+  </div>
+</div>

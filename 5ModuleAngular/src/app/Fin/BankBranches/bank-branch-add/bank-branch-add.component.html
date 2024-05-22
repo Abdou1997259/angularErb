@@ -1,0 +1,348 @@
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate" data-en="Add Bank Branch">أضافة  فروع البنوك</h2>
+          <div class="buttons">                                                 
+            <div class="button">
+                <i class="bi bi-bookmark-x "></i>
+                <a routerLink="/fin/CashTypeList" class="translate" data-en="Close">خروج</a>                  
+            </div>
+            <div class="button">
+                <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                <input type="button" [disabled]="!BankBranchForm.valid" value="حفظ" class="translate" data-en="Save"  (click)="save()" value="حفظ">
+            </div>
+          </div>
+        </div>
+      </section>
+  </div>
+</header>
+
+  <div class="content-wrapper" style="margin-top: 120px;"  [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      <div class="container-fluid">
+        <form [formGroup]="BankBranchForm" (keydown.enter)="$event.preventDefault()">
+         <div class="row">
+            <div class="col-12">
+                <div class="card" style="padding: 10px;">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="card">
+                               <div class="card-header translate" data-en="Bank Info">
+                                 بيانات البنك
+                               </div>
+                               <div class="card-body">
+                                <div class="row" *ngIf="nbankBranchId">
+                                  <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label"> <span class="translate" data-en="Bank Code">رفم البنك</span></label>
+                                    <input type="text" class="form-control input"  formControlName="n_bank_branch_id" style="width:30%;" readonly >  
+                                  </div>
+                                </div>
+                                <div class="row">
+                                
+                                  <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label " ><span class="translate" data-en="Ar Bank Branch">اسم فرع البنك العربي</span>  <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="s_bank_branch_name" >
+                                  </div>
+                                  <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label " ><span class="translate" data-en="Bank Branch">اسم فرع البنك الانجليزي</span> </label>
+                                    <input class="form-control" type="text" formControlName="s_bank_branch_name_eng" >
+                                  </div>   <div class="form-group col-lg-4 col-md-12 ">
+                                    <label class="label"><span class="translate" data-en="Main Bank">البنك الرئيسي</span> </label>
+                                   <select-server-side
+                                   [selectForm]="BankBranchForm"
+                                   [controlName]="'n_bank_id'"
+                                   [TextField]="'s_bank_name'"
+                                   [ValueField]="'n_bank_id'"
+                                   [searching]="searchingMainBank"
+                                   [filteredServerSide]="filteredMainBankServerSide"
+                              
+                                   (OnSearch)="searchMainBank($event)"
+                                   #Serverside >
+                                   </select-server-side>
+                                   
+       
+                                 </div>
+                                  <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label" ><span class="translate"  data-en="Bank Branch Id" ></span>رقم فرع البنك </label>
+                                    <input class="form-control" type="number" formControlName="n_bank_branch_id" >
+                                  </div>
+                               
+                               
+                                </div>
+                              
+                          
+
+                           
+                          
+                            
+                               </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                        <div class="card-header translate" data-en="Resposnible Peroson Info">بيانات الشخص المسؤول </div>
+                       
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="address" ></span>العنوان </label>
+                              <input class="form-control" type="text" formControlName="s_bank_branch_address" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Responsible Person" ></span>الشخص المسؤل </label>
+                              <input class="form-control" type="text" formControlName="s_res_person" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Phone Number" ></span> رقم التليفون </label>
+                              <input class="form-control" type="text" formControlName="s_bank_branch_phone" >
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Respnosible Person Phone" ></span>رقم الشخص المسؤل </label>
+                              <input class="form-control" type="text" formControlName="s_res_person_tel" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Fax Number" ></span>رقم الفاكس</label>
+                              <input class="form-control" type="text" formControlName="s_bank_branch_fax" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Emile" ></span> ألاميل </label>
+                              <input class="form-control" type="text" formControlName="s_res_person_email" >
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Bank Email" ></span> أميل البنك</label>
+                              <input class="form-control" type="text" formControlName="s_bank_branch_email" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Reponsible Fax Number" ></span>  رقم الفاكس للمسؤل</label>
+                              <input class="form-control" type="text" formControlName="s_res_person_fax" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Post Box" ></span>   صندوق البريد  </label>
+                              <input class="form-control" type="text" formControlName="s_PBox" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Post Box" ></span>   الرمز البريدي  </label>
+                              <input class="form-control" type="text" formControlName="s_zipcode" >
+                            </div>
+                           
+                          </div>
+                        </div>
+
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                        <div class="card-header translate" data-en="Financial Info">بيانات المالية   </div>
+                       
+                        <div class="card-body">
+                        
+                          <div class="row">
+                            <div class="form-group col-lg-4 col-md-12">
+                            <label class="label" ><span class="translate"  data-en="Currency" ></span>    العملة </label>
+                              <select-server-side
+                              [selectForm]="BankBranchForm"
+                              [controlName]="'n_bank_bracnh_currency_id'"
+                              [TextField]="'s_currency_name'"
+                              [ValueField]="'n_currency_id'"
+                              [searching]="currencySearching"
+                              [filteredServerSide]="currencyFilteredServerSide"
+                              (onSelectionChange)="onCurrencuSelection($event)"
+                              (OnSearch)="currencySearch($event)"
+                              #Serverside >
+                              </select-server-side>
+                              
+  
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Bank Symbol" ></span>   رمز البنك  </label>
+                              <input class="form-control" type="text" formControlName="s_bank_symbol" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Salary Comision" ></span>  فيمة عمولة التحويل للرواتب</label>
+                              <input class="form-control" type="text" formControlName="n_salary_bank_comision" >
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Bank Symbol" ></span>رقم الحساب لدي البنك</label>
+                              <input class="form-control" type="text" formControlName="s_bank_account_No" >
+                            </div>
+                            <div class="form-group col-lg-4 col-md-12">
+                              <label class="label" ><span class="translate"  data-en="Collection Rate" ></span> نسبة التحصيل</label>
+                              <input class="form-control" type="number" formControlName="n_Collection_rate" >
+                            </div>
+                           
+                          </div>
+                     
+                         
+                         </div>
+
+                      </div>
+                        
+                     </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                        <div class="card-header translate" data-en="Account Info">بيانات الحسابات   </div>
+                       
+                         <div class="card-body">
+                          
+                              <div class="row">
+                                
+                                  <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label" ><span class="translate"  data-en="Commision Tax Account" >حساب ضربية عمولة</span><span class="text-danger">*</span> </label>
+                                      <select-server-side
+                                      [selectForm]="BankBranchForm"
+                                      [controlName]="'s_commision_tax_account'"
+                                      [TextField]="'s_account_name'"
+                                      [ValueField]="'s_account_no'"
+                                      [searching]="searchingAccounts"
+                                      [filteredServerSide]="filteredAccountsServerSide"
+                                   
+                                      (OnSearch)="currencySearch($event)"
+                                      #Serverside >
+                                      </select-server-side>
+                                      
+          
+                                    </div>    
+                                 <div class="form-group col-lg-4 col-md-12">
+                                      <label class="label" ><span class="translate"  data-en="Free Bank Account" >حساب مصروفات بنكية</span><span class="text-danger">*</span> </label>
+                                        <select-server-side
+                                        [selectForm]="BankBranchForm"
+                                        [controlName]="'s_Fees_Bank_account'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingAccounts"
+                                        [filteredServerSide]="filteredAccountsServerSide"
+                                     
+                                        (OnSearch)="currencySearch($event)"
+                                        #Serverside >
+                                        </select-server-side>
+                                        
+            
+                                  </div>   
+                                  <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label" ><span class="translate"  data-en="Related Account" ></span>    الحساب المرتبط </label>
+                                      <select-server-side
+                                      [selectForm]="BankBranchForm"
+                                      [controlName]="'s_related_account_no'"
+                                      [TextField]="'s_account_name'"
+                                      [ValueField]="'s_account_no'"
+                                      [searching]="searchingAccounts"
+                                      [filteredServerSide]="filteredAccountsServerSide"
+                                   
+                                      (OnSearch)="currencySearch($event)"
+                                      #Serverside >
+                                      </select-server-side>
+                                      
+          
+                                    </div>   
+
+                              </div>
+                              <div class="row">
+                                
+                                <div class="form-group col-lg-4 col-md-12">
+                                  <label class="label" ><span class="translate"  data-en="CheckOut Account" >حساب اروراق الدفع</span><span class="text-danger">*</span> </label>
+                                    <select-server-side
+                                    [selectForm]="BankBranchForm"
+                                    [controlName]="'s_checkOut_account'"
+                                    [TextField]="'s_account_name'"
+                                    [ValueField]="'s_account_no'"
+                                    [searching]="searchingAccounts"
+                                    [filteredServerSide]="filteredAccountsServerSide"
+                                 
+                                    (OnSearch)="currencySearch($event)"
+                                    #Serverside >
+                                    </select-server-side>
+                                    
+        
+                                  </div>    
+                               <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label" ><span class="translate"  data-en="Under Outcome Account" >حساب شيكات التحصيل</span><span class="text-danger">*</span> </label>
+                                      <select-server-side
+                                      [selectForm]="BankBranchForm"
+                                      [controlName]="'s_under_outcome_account'"
+                                      [TextField]="'s_account_name'"
+                                      [ValueField]="'s_account_no'"
+                                      [searching]="searchingAccounts"
+                                      [filteredServerSide]="filteredAccountsServerSide"
+                                   
+                                      (OnSearch)="currencySearch($event)"
+                                      #Serverside >
+                                      </select-server-side>
+                                      
+          
+                                </div>   
+                                <div class="form-group col-lg-4 col-md-12">
+                                  <label class="label" ><span class="translate"  data-en="CheckIn account" >   حساب أوراق القبض </span><span class="text-danger">*</span> </label>
+                                
+                                    <select-server-side
+                                    [selectForm]="BankBranchForm"
+                                    [controlName]="'s_CheckIn_account'"
+                                    [TextField]="'s_account_name'"
+                                    [ValueField]="'s_account_no'"
+                                    [searching]="searchingAccounts"
+                                    [filteredServerSide]="filteredAccountsServerSide"
+                                 
+                                    (OnSearch)="currencySearch($event)"
+                                    #Serverside >
+                                    </select-server-side>
+                                    
+        
+                                  </div>   
+                                  <div class="form-group col-lg-4 col-md-12">
+                                    <label class="label" ><span class="translate"  data-en="Return Check Account" >   حساب شيكات مرتدة </span><span class="text-danger">*</span> </label>
+                                  
+                                      <select-server-side
+                                      [selectForm]="BankBranchForm"
+                                      [controlName]="'s_Return_Check_account'"
+                                      [TextField]="'s_account_name'"
+                                      [ValueField]="'s_account_no'"
+                                      [searching]="searchingAccounts"
+                                      [filteredServerSide]="filteredAccountsServerSide"
+                                   
+                                      (OnSearch)="currencySearch($event)"
+                                      #Serverside >
+                                      </select-server-side>
+                                      
+          
+                                    </div>   
+
+                            </div>
+                    
+                       
+
+                    
+                          </div>
+
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+                
+            </div>
+         </div>
+     
+        </form>
+     </div>
+    </section>
+</div>
+
+
+

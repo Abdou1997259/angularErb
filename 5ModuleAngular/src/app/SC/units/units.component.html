@@ -1,0 +1,123 @@
+<header >
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+            <h2 class="translate" data-en="Units">وحدات القياس</h2>
+            <div class="buttons">
+              <div class="button" *ngIf="cannew">
+                  <i class="bi bi-bookmark-x"></i>
+                  <a routerLink="/sc/unit" class="translatedata" data-en="Add">إضافة</a>
+              </div>
+            </div>
+        </div>
+    </section>
+  </div>      
+</header>
+
+
+<div class="content-wrapper" >
+  <section class="content" >
+      <div class="container-fluid">
+            <div class="row" *ngIf="showspinner" >
+              <hr/>
+              <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+            </div>
+
+            <div class="custom-table-responsive">
+              <table  class="custom-table-add" >
+            
+                <thead >
+                  <tr>
+                    <td colspan="5" width="100%" >
+                    
+                      <div>
+                        <div class="s-icons">
+                          <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                          <i class="bi bi-file-earmark-excel"></i>
+                          <i class="bi bi-info"></i>
+                        </div> 
+                        <h2 class="translate" data-en="Units">وحدات القياس</h2> 
+                        <div class="f-icons">
+                          <i class="bi bi-layout-text-window-reverse"></i>
+                          <i class="bi bi-microsoft"></i>
+                        </div>                            
+                      </div>              
+                    </td>
+                  </tr>
+     
+                  <tr>
+                    <th>
+                      <input *ngIf="!isEnglish" type="text" class="form-control" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString" placeholder="...بحث">
+                      <input *ngIf="isEnglish" type="text" class="form-control" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString" placeholder="searching...">
+                    </th>
+                    <th colspan="4"></th>
+                  </tr>
+                  
+             
+                  <tr>
+                    <th class="translate" data-en="Unit No">رقم الوحدة</th>
+                    <th class="translate" data-en="Unit Name">اسم الوحدة</th>
+                    <th *ngIf="canedit"></th>
+                    <th *ngIf="candelete"></th>
+                    <th></th>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  <tr *ngFor="let unit of unitsData"  >
+                    <td >{{unit.n_unit_id}}  </td>
+                    <td >{{unit.s_unit_name}}  </td>
+                    <td *ngIf="canedit"><a routerLink="/sc/editunit/{{unit.n_unit_id}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات الوحدات"  class="translatedata" data-en="Edit"  >تعديل</a></td>
+                    <td *ngIf="candelete"> <a href="#" data-toggle="modal" data-target="#CancelModal"  class="translatedata" data-en="Remove"  (click)="getRowID(unit.n_unit_id)" >حذف</a></td>
+                    <td><a href="{{ReportUrl}}PrintReport?docNo={{unit.n_unit_id}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+                 </tr>
+
+                 <tr >
+                  <td colspan="4">
+                    <div class="page">
+                      <pagination [boundaryLinks]="true" [totalItems]="totalItems"  [maxSize]="5"
+                      [(ngModel)]="currentPage"
+                      (pageChanged)="pageChanged($event)"
+                      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                    </pagination>
+                   
+                    </div>
+          
+                  </td>
+          
+                </tr>
+                </tbody>         
+       </table>
+      </div>
+    </div>
+  </section>
+</div>
+                
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title translate "data-en="Close" id="exampleModalLongTitle">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body translate" data-en="Are you sure ? ">
+                هل انت متاكد من حذف هذه الوحدة
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-en="Close" data-dismiss="modal" #closebutton >اغلاق</button>
+                <button type="button" class="btn btn-primary translate" data-en="Remove" (click)="deleteRow()" data-dismiss="modal" #closebutton>حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <p></p>
+<!-- Modal -->
+
+
+
+
+

@@ -1,0 +1,811 @@
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+            <h2 class="translate" data-en="Financial System Configuration">  تهيئه نظام المالية</h2>
+            <div class="buttons">
+                <div class="button">
+                    <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                    <button (click)="save()" class="translate" data-en="Save">حفظ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+        <div class="container-fluid" style=" margin-top: 104px;">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                   <form [formGroup]="finConfigurationForm" (keydown.enter)="$event.preventDefault()">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active translate" data-en="Setting" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">الاساسيات</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link translate" data-en="Accounts" id="GL-tab" data-bs-toggle="tab" data-bs-target="#GL" type="button" role="tab" aria-controls="GL" aria-selected="false">الحسابات</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link translate" data-en="Monitring" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">الشيكات</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link translate" data-en="Accounting" id="pre-tab" data-bs-toggle="tab" data-bs-target="#pre" type="button" role="tab" aria-controls="contact" aria-selected="false">أنشطة خاصة</button>
+                         </li>
+                         <!-- <li class="nav-item" role="presentation">
+                            <button class="nav-link translate" data-en="Sepcial Activity" id="act-tab" data-bs-toggle="tab" data-bs-target="#activities" type="button" role="tab" aria-controls="contact" aria-selected="false">أنشطة حاصة</button>
+                         </li> -->
+                     </ul>
+                     <div class="tab-content" id="myTabContent">
+                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="card">
+                                    <div class="row">
+
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+
+
+
+
+                                                 <label class="label" class="translate" data-en="Print options after saving">   خيارات الطباعة بعد الحفظ</label>
+                                                 <select class="form-select form-select-lg mb-3 notInclude" aria-label=".form-select-lg example" style="margin-top: 20px"   formControlName="n_print_re" >
+                                                    <option selected value="0">...................</option>
+                                                    <option *ngIf="!isEnglish" value="1">عدم الطباعة</option>
+                                                    <option *ngIf="isEnglish" value="1"> Dont Pritnt</option>
+                                                    <option value="2" *ngIf="!isEnglish">طباعة مباشرة</option>
+                                                    <option value="2" *ngIf="isEnglish"> Direct Print</option>
+                                                    <option value="3" *ngif="!isEnglish">العرض اولا</option>
+                                                    <option value="3" *ngif="isEnglish">First Display</option>
+                                                    <option value="4" *ngIf="!isEnglish">التاكيد قبل العرض</option>
+                                                    <option value="4" *ngIf="isEnglish">Cofirm Before Display</option>
+                                                    <option value="5" *ngIf="!isEnglish">التأكيد قبل الطباعه المباشرة</option>
+                                                    <option value="5" *ngIf="isEnglish">Cofirm Before Direct Display</option>
+                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3"  >
+
+                                            <div class="form-group">
+
+                                                <select class="form-select form-select-lg mb-3 notInclude" aria-label=".form-select-lg example" style="margin-top: 46px"   formControlName="n_payment_transsource_action" >
+
+                                                    <option value="0">.............</option>
+                                                    <option value="1" *ngIf="!isEnglish">اختياري</option>
+                                                    <option value="1" *ngIf="isEnglish">Optional</option>
+                                                    <option value="2" *ngIf="isEnglish">إلزامي </option>
+                                                    <option value="2" *ngIf="isEnglish">mandatory </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="card">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" formControlName="b_Edit_Trans_After_Print_Cheque">
+                                                    <label class="form-check-label translate" data-en="Modify payments after printing the check" for="flexCheckDefault2">
+                                                        تعديل المدفوعات بعد طباعة الشيك
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" formControlName="b_control_bank_balance">
+                                                    <label class="form-check-label translate" data-en="Monitoring the bank balance and issuing a payment voucher" for="flexCheckDefault2">
+                                                        مراقية رصيد البنك مع اصدار سند مدفوعات
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" formControlName="b_Control_CashBox_Balance">
+                                                    <label class="form-check-label translate" data-en="Preventing overdrafts in the treasury" for="flexCheckDefault3">
+                                                        منع السحب على المكشوف فى الخزينة
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4" formControlName="b_display_costcenter_credit_side">
+                                                    <label class="form-check-label translate" data-en="Show cost centers on the credit side" for="flexCheckDefault4">
+                                                        ظهار مراكز التكلفة فى الجانب الدائن
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault5" formControlName="b_show_bank_balance_over_comp">
+                                                    <label class="form-check-label translate" data-en="The bank balance appears at the company level" for="flexCheckDefault5">
+                                                        ظهور رصيد البنك علي مستوي الشركة
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault6" formControlName="b_use_trans_source_in_payment">
+                                                    <label class="form-check-label translate" data-en="Activate the traffic source in payments
+                                                    " for="flexCheckDefault6">
+                                                        تفعيل مصدر الحركة في المدفوعات
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7" formControlName="b_allow_repeat_book_no">
+                                                    <label class="form-check-label translate" data-en="Allowing payment of a value greater than the invoice value in the receipt and disbursement voucher" for="flexCheckDefault7">
+                                                        السماح بسداد قيمة أكبر من قيمة الفاتورة فى سند القبض والصرف
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault8" formControlName="b_distribute_revenueValue_to_invoices">
+                                                    <label class="form-check-label translate" data-en="Allowing the distribution of the receipt voucher amount to invoices" for="flexCheckDefault8">
+                                                        السماح بتوزيع مبلغ سند القبض علي الفواتير
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_paidinvoices_onbranch">
+                                                    <label class="form-check-label translate" data-en="Payment of bills at the branch level" for="flexCheckDefault9">
+                                                        سداد الفواتير على مستوى الفرع
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-custom ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault10" formControlName="b_stop_book_no_serial_auto">
+                                                    <label class="form-check-label translate" data-en="Stop the book number serial" for="flexCheckDefault10">
+                                                        ايقاف سيريال الرقم الدفتري
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+                                </div>
+                             </div>
+
+
+
+
+
+
+
+                         </div>
+                         <div class="tab-pane fade" id="GL" role="tabpanel" aria-labelledby="GL-tab">
+                             <div class="row">
+                                <div class="card" style="padding-top: 0 !important;">
+                                    <div class="card-header translate" data-en="Linking the treasuries with the accounting guide" style="padding: 20px; text-align: center; font-weight: bold; font-size: 2rem;">
+                                        ربط الخزائن مع الدليل المحاسبي
+                                    </div>
+                                    <div style="padding-top:15px;">
+                                        <div class="row">
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_auto_add_cash_acc">
+                                                    <label class="form-check-label translate" data-en="Automatically adding safes to the accounting guide" for="flexCheckDefault9">
+                                                      اضافة الخزائن اليا في الدليل المحاسبي
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_Multi_cash_acc_by_type">
+                                                    <label class="form-check-label translate" data-en="separate account for each treasury" for="flexCheckDefault9">
+                                                       حساب منفصل لكل خزينة
+                                                    </label>
+                                                </div>
+                                            </div>
+
+            <section class="col-lg-4  col-md-6 col-sm-12 " style="display: inline-flex;justify-content: space-around;">
+                <label class="label"  >
+                    <span class="translate" data-en="Main Account">الحساب الرئيسي</span><span style="color:red">&nbsp;*</span>
+                </label>
+                <div class="form-group">
+
+                        <div class="position-relative">
+                            <div class="custom-search">
+                                <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                <input class="form-control has-search" type="text" formControlName="s_main_auto_add_cash_acc_name"
+                                
+                                (focus)="serachOpen($event)"  id="input-search-1" (keyup)="searchBegin($event)" (blur)="searchHide(1)"  autocomplete="off"
+                                >
+                                <div class="search-list" id="serach-list-id-1">
+                                    <table class="search-table">
+                                        <thead>
+                                          <tr>
+                                            <th>رقم  </th>
+                                            <th>الاسم</th>
+
+                                          </tr>
+
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,1,'s_main_auto_add_cash_acc_name','s_main_auto_add_cash_acc')">
+                                              <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                              <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+
+                                            </tr>
+
+
+
+                                        </tbody>
+
+                                      </table>
+                              </div>
+
+                                <input type="hidden"  formControlName="s_main_auto_add_cash_acc">
+                            </div>
+
+                        </div>
+                </div>
+             </section>
+
+
+                </div>
+                                        <div class="row">
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_one_cash_acc_by_type">
+                                                    <label class="form-check-label translate" data-en="A unified account according to the type of treasury" for="flexCheckDefault9">
+                                                    حساب موحد حسب  نوع الخزينة
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_Multi_cash_acc_by_type">
+                                                    <label class="form-check-label translate" data-en="A separate account according to the type of grief" for="flexCheckDefault9">
+                                                    حساب منفصل حسب نوع الحزينة
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                                <section class="col-lg-4  col-md-6 col-sm-12 " style="display: inline-flex;justify-content: space-evenly;">
+                                                    <label class="label"  ><span class="translate" data-en="Sub-account number:">رقم الحساب الفرعي:</span><span style="color:red">&nbsp;*</span></label>
+                                                    <div class="form-group">
+
+                                                        <div class="position-relative">
+                                                          <div class="custom-search">
+                                                          <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                                          <input class="form-control has-search"
+                                                          type="text" formControlName="s_one_cash_account_name"
+                                                          (focus)="serachOpen($event)"  id="input-search-2" (keyup)="searchBegin($event)" (blur)="searchHide(2)"  autocomplete="off"
+                                                          >
+                                                          <div class="search-list" id="serach-list-id-2">
+                                                            <table class="search-table">
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th>رقم  </th>
+                                                                    <th>الاسم</th>
+
+                                                                  </tr>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                  <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,2,'s_one_cash_account_name','s_one_cash_account')">
+                                                                      <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                                      <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+
+                                                                    </tr>
+
+
+
+                                                                </tbody>
+
+                                                              </table>
+                                                      </div>
+                                                          <input type="hidden"  formControlName="s_one_cash_account">
+
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </section>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_Multi_cash_account">
+                                                    <label class="form-check-label translate" data-en="A separate account according to the type of grief" for="flexCheckDefault9">
+                                                        حساب منفصل لكل خزينه
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="card" style="padding-top: 0 !important;">
+                                    <div class="card-header translate" data-en="Linking banks with the accounting guide" style="padding: 20px; text-align: center; font-weight: bold; font-size: 2rem;">
+                                        ربط البنوك مع الدليل المحاسبي
+                                    </div>
+                                    <div style="padding-top:15px;">
+                                        <div class="row">
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_auto_add_Bank_acc">
+                                                    <label class="form-check-label translate" data-en="Automatically adding banks to the accounting guide" for="flexCheckDefault9">
+                                                      اضافة البنوك اليا في الدليل المحاسبي
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_Multi_Bank_account">
+                                                    <label class="form-check-label translate" data-en="A separate account for each bank branch" for="flexCheckDefault9">
+                                                       حساب منفصل لكل فرع بنك
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                                <section class="col-lg-4  col-md-6 col-sm-12 " style="display: inline-flex;justify-content: space-around;">
+                                <label class="label"  >
+                                          <span class="translate" data-en="Main Account">الحساب الرئيسي</span><span style="color:red">&nbsp;*</span></label>
+                                     <div class="form-group">
+
+                                <div class="position-relative">
+                                    <div class="custom-search">
+                                        <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                        <input class="form-control has-search"type="text" formControlName="s_main_auto_add_Bank_acc_name" 
+                                        
+                                        (focus)="serachOpen($event)"  id="input-search-3" (keyup)="searchBegin($event)" (blur)="searchHide(3)"  autocomplete="off"
+                                        >
+                                               <div class="search-list" id="serach-list-id-3">
+                                                            <table class="search-table">
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th>رقم  </th>
+                                                                    <th>الاسم</th>
+
+                                                                  </tr>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                  <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,3,'s_main_auto_add_Bank_acc_name','s_main_auto_add_Bank_acc')">
+                                                                      <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                                      <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+
+                                                                    </tr>
+
+
+
+                                                                </tbody>
+
+                                                              </table>
+                                                      </div>
+
+                                        <input type="hidden"  formControlName="s_main_auto_add_Bank_acc"> </div>
+                                  </div>
+                                </div>
+                                  </section>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_one_Bank_acc_by_type">
+                                                    <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                    حساب موحد لكل  بنك رئيسي
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_Multi_Bank_acc_by_type">
+                                                    <label class="form-check-label translate" data-en="A unified account for each bank branch" for="flexCheckDefault9">
+                                                        حساب منفصل حسب البنك الرئيسى
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                                <section class="col-lg-4  col-md-6 col-sm-12 " style="display: inline-flex;justify-content: space-evenly;">
+                                                    <label class="label"  ><span class="translate" data-en="Sub-account number:">رقم الحساب الفرعي:</span><span style="color:red">&nbsp;*</span></label>
+                                                    <div class="form-group">
+
+                                                        <div class="position-relative">
+                                                          <div class="custom-search">
+                                                          <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                                          <input class="form-control has-search"
+                                                          type="text" formControlName="s_one_Bank_account_name"
+                                                          (focus)="serachOpen($event)"  id="input-search-4" (keyup)="searchBegin($event)" (blur)="searchHide(4)"  autocomplete="off"
+                                                          >
+                                                          <div class="search-list" id="serach-list-id-4">
+                                                            <table class="search-table">
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th>رقم  </th>
+                                                                    <th>الاسم</th>
+
+                                                                  </tr>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                  <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,4,'s_one_Bank_account_name','s_one_Bank_account')">
+                                                                      <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                                      <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+
+                                                                    </tr>
+
+
+
+                                                                </tbody>
+
+                                                              </table>
+                                                      </div>
+                                                          <input type="hidden"  formControlName="s_one_Bank_account">
+
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </section>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4  col-md-6 col-sm-12 ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_one_Bank_in_gl">
+                                                    <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                        حساب موحد لكل فرع بنك
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <section class="col-lg-4  col-md-6 col-sm-12 "></section>
+                                            <section class="col-lg-4  col-md-6 col-sm-12  " style="display: inline-flex;justify-content: space-evenly;">
+                                                <label class="label"  ><span class="translate" data-en="Bank expense account:">حساب المصروفات البنكية:</span><span style="color:red">&nbsp;*</span></label>
+                                                <div class="form-group">
+
+                                                    <div class="position-relative">
+                                                      <div class="custom-search">
+                                                      <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                                      <input class="form-control has-search"
+                                                      type="text" formControlName="s_bank_fee_account_name"
+                                                      (focus)="serachOpen($event)"  id="input-search-5" (keyup)="searchBegin($event)" (blur)="searchHide(5)"  autocomplete="off"
+                                                      >
+                                                      <div class="search-list" id="serach-list-id-5">
+                                                        <table class="search-table">
+                                                            <thead>
+                                                              <tr>
+                                                                <th>رقم  </th>
+                                                                <th>الاسم</th>
+
+                                                              </tr>
+
+                                                            </thead>
+                                                            <tbody>
+                                                              <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,5,'s_bank_fee_account_name','s_bank_fee_account')">
+                                                                  <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                                  <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+
+                                                                </tr>
+
+
+
+                                                            </tbody>
+
+                                                          </table>
+                                                  </div>
+                                                      <input type="hidden"  formControlName="s_bank_fee_account">
+
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </section>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                                <div class="row" >
+                                    <div class="card" style="padding-top: 0 !important;">
+                                        <div class="card-header translate" data-en="Additional Info" style="padding: 20px; text-align: center; font-weight: bold; font-size: 2rem;">
+                                          المعلومات الاضافية
+                                        </div>
+                                        <div style="padding-top:15px;">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_create_group_Payment_journals">
+                                                        <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                            استخدام قيود مجمعة للمدفوعات
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_create_group_Revenue_journals">
+                                                        <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                            استخدام قيود مجمعة للمقبوضات
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                               <section class="col-lg-6  col-md-6 col-sm-12  " style="display: inline-flex;justify-content: space-evenly;">
+                                                <label class="label"  ><span class="translate" data-en="Bank expense account:">حساب الاصناف الخدمية لمصروفات العهدة:</span><span style="color:red">&nbsp;*</span></label>
+                                                <div class="form-group">
+
+                                                    <div class="position-relative">
+                                                      <div class="custom-search">
+                                                      <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                                      <input class="form-control has-search"
+                                                      type="text" formControlName="s_service_item_acc_for_custody_name"
+                                                      (focus)="serachOpen($event)"  id="input-search-8" (keyup)="searchBegin($event)" (blur)="searchHide(8)"  autocomplete="off"
+                                                      >
+                                                      <div class="search-list" id="serach-list-id-8">
+                                                        <table class="search-table">
+                                                            <thead>
+                                                              <tr>
+                                                                <th>رقم  </th>
+                                                                <th>الاسم</th>
+
+                                                              </tr>
+
+                                                            </thead>
+                                                            <tbody>
+                                                              <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,8,'s_service_item_acc_for_custody_name','s_service_item_acc_for_custody')">
+                                                                  <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                                  <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+
+                                                                </tr>
+
+
+
+                                                            </tbody>
+
+                                                          </table>
+                                                  </div>
+                                                      <input type="hidden"  formControlName="s_service_item_acc_for_custody">
+
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                </section>
+                                                  
+
+
+                                            </div>
+                                            <div class="row">
+
+                                              <div class="col-lg-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_print_journals_after_save">
+                                                        <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                            طباعة القيد مع الحفظ
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_preview_journals">
+                                                        <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                            عرض القيد فى شاشة الحركة
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <section class="col-lg-6  col-md-6 col-sm-12  " style="display: inline-flex;justify-content:   space-around;">
+                                                    <label class="label"  ><span class="translate" data-en="Bank expense account:">    حساب مصروفات رسوم الجوازات</span><span style="color:red">&nbsp;*</span></label>
+                                                    <div class="form-group">
+    
+                                                        <div class="position-relative">
+                                                          <div class="custom-search">
+                                                          <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                                          <input class="form-control has-search"
+                                                          type="text" formControlName="s_passports_expense_name"
+                                                          (focus)="serachOpen($event)"  id="input-search-7" (keyup)="searchBegin($event)" (blur)="searchHide(7)"  autocomplete="off"
+                                                          >
+                                                          <div class="search-list" id="serach-list-id-7">
+                                                            <table class="search-table">
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th>رقم  </th>
+                                                                    <th>الاسم</th>
+    
+                                                                  </tr>
+    
+                                                                </thead>
+                                                                <tbody>
+                                                                  <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,7,'s_passports_expense_name','s_passports_expense')">
+                                                                      <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                                      <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+    
+                                                                    </tr>
+    
+    
+    
+                                                                </tbody>
+    
+                                                              </table>
+                                                      </div>
+                                                          <input type="hidden"  formControlName="s_passports_expense">
+    
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    </section>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_cancel_sum_journals">
+                                                        <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                            عدم تجميع أطراف القيد
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_create_group_MultiDocument_journals">
+                                                        <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                            استخدام قيود مجمعه فى السندات المتعددة
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <section class="col-lg-6  col-md-6 col-sm-12  " style="display: inline-flex;justify-content:  space-around;">
+                                                    <label class="label"  ><span class="translate" data-en="Bank expense account:">حساب الخصم النقدي:</span><span style="color:red">&nbsp;*</span></label>
+                                                    <div class="form-group">
+    
+                                                        <div class="position-relative">
+                                                          <div class="custom-search">
+                                                          <i class="fa fa-search position-absolute" (click)="openDialogAcc($event)" data-toggle="modal"></i>
+                                                          <input class="form-control has-search"
+                                                          type="text" formControlName="s_cash_discount_account_name"
+                                                          (focus)="serachOpen($event)"  id="input-search-6" (keyup)="searchBegin($event)" (blur)="searchHide(6)"  autocomplete="off"
+                                                          >
+                                                          <div class="search-list" id="serach-list-id-6">
+                                                            <table class="search-table">
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th>رقم  </th>
+                                                                    <th>الاسم</th>
+    
+                                                                  </tr>
+    
+                                                                </thead>
+                                                                <tbody>
+                                                                  <tr *ngFor="let type of searchingAccounts ;let i=index" (click)="selectItem(i,6,'s_cash_discount_account_name','s_cash_discount_account')">
+                                                                      <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                                      <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+    
+                                                                    </tr>
+    
+    
+    
+                                                                </tbody>
+    
+                                                              </table>
+                                                      </div>
+                                                          <input type="hidden"  formControlName="s_cash_discount_account">
+    
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    </section>
+                                            </div>
+                                           
+                                         
+                                        </div>
+                                     </div>
+                                </div>
+                             </div>
+
+                         </div>
+
+
+                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="profile-tab">
+
+                           <div class="row">
+                            <div class="col-lg-12">
+                               <div class="card">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_follow_up_cheque_trans">
+                                                <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                    استخدام نظام متابعة الشيكات
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_abbreviated_cheque_followup">
+                                                <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                    تفعيل دورة الشيكات المختصرة
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_show_cheque_in_customer_module">
+                                                <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                    ظهور الشيك فى كشف حساب العميل مع سند القبض
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                             
+                           </div>
+                        </div>
+                        <div class="tab-pane fade" id="pre" role="tabpanel" aria-labelledby="pre-tab">
+
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_show_production_no_in_multi_trans">
+                                            <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                تفعيل ظهور أمر الانتاج فى شاشة السندات المتعددة
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_use_job_order_press">
+                                            <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                ربط امر العمل بسند القبض ( المطابع )
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9" formControlName="b_request_no_optional_in_custody_expenses">
+                                            <label class="form-check-label translate" data-en="A unified account for each major bank" for="flexCheckDefault9">
+                                                رقم الطلب في مصروفات العهدة اختياري
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="act-tab">
+                        </div>
+                    </div>
+                   </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</div>

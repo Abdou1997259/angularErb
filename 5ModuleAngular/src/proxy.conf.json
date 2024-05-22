@@ -1,0 +1,7 @@
+{
+    "/api/*": {
+        "target": "https://xceemobile.conveyor.cloud",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

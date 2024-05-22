@@ -1,0 +1,60 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>الاصناف</h1>
+      <button class="btn btn-danger" (click)="onCloseClick()">X</button>
+    </div>
+  </div>
+</div>
+
+  <div class="row">
+      <div class="col-12">
+          <div class="form-group">
+              <label>بحث عام</label>
+
+              <div class="input-group">
+                <input type="text" class="form-control" (ngModelChange)="DoSearch();"  [(ngModel)]="searchString">
+              </div>
+            </div>
+      </div>
+  </div>
+
+
+   <table
+      class="table table-striped table-bordered dt-responsive" style="width:100%;text-align: center;" >
+    <thead >
+    <tr class="table-primary">
+      <!-- <th  style="text-align: center;">رقم العميل</th> -->
+      <th style="text-align: center;">رقم الخزينة</th>
+      <th style="text-align: center;">اسم الخزينة</th>
+      <th style="text-align: center;">الجهاز المرتبط</th>
+      <th style="text-align: center;">أمين الصندوق</th>
+      <th style="text-align: center;">رقم الحساب المرتبط</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of cashesList" (click)="selectItem(item)" >
+      <td> {{item.n_cash_id}}  </td>
+      <td> {{item.s_cash_name}}  </td>
+      <td> {{item.s_related_device}}  </td>
+      <td> {{item.s_cashier_name}}  </td>
+      <td> {{item.s_related_account_no}}  </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+
+<div class="d-flex justify-content-center pt-1">
+
+  <pagination [boundaryLinks]="true" [totalItems]="currencyCount"  [maxSize]="5"
+  [(ngModel)]="currentPage"
+  (pageChanged)="pageChanged($event)"
+  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+</pagination>
+
+</div>
+
+

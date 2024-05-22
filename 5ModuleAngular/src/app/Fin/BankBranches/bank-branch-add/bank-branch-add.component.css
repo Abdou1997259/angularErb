@@ -1,0 +1,17 @@
+.card-body{
+    margin-top: 0 !important;
+}
+label:not(.form-check-label):not(.custom-file-label) {
+font-weight: normal;
+}
+.d-flex-custom{
+    
+    display: flex;
+    justify-content: center;
+}
+i {
+    font-size: 1.2rem;
+    color: rgb(0,104,215);
+    top: .75rem;
+    left: .75rem
+  }

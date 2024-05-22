@@ -1,0 +1,301 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate"> اضافة حركة استحقاق </h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/hr/deservdly-trans-list" class="translate"  data-en="Exit"value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!py_deservedly_transaction.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+
+              <form [formGroup]="py_deservedly_transaction" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="card-body" >
+                    <div class="row">
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6" *ngIf="this.docNo > 0">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Document Number:">رقم المستند:</label>
+                                  <input type="number" class="form-control w-50" formControlName="n_doc_no" readonly>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group ">
+                                  <label class="label"> <span class="translate" data-en="Transaction Date:"> تاريخ الحركة: </span><span style="color:red">&nbsp;*</span> </label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_doc_date" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Year:">السنة:</label>
+                                  <input type="number" class="form-control" formControlName="n_year_of_transaction" />
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Month:">الشهر:</label>
+                                  <input type="number" class="form-control" formControlName="n_month_of_transaction" />
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6" >
+                                <div class="form-group">
+                                  <label class="label translate">&nbsp;</label>
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_Retroactive_calc" formControlName="b_Retroactive_calc" (change)="RetroactiveCalcChanged();" />
+                                    <label class="form-check-label mr-3 translate" data-en="Set manual calculation" for="b_Retroactive_calc">
+                                      إحتساب باثر رجعي
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-6" *ngIf="is_RetroactiveCalc">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Month:">شهر الاحتساب:</label>
+                                  <input type="number" class="form-control" formControlName="n_calculated_month" min="0" max="34" placeholder="0"/>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-12">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Notes:">ملاحظات:</label>
+                                  <textarea class="form-control" formControlName="s_notes" rows="2"></textarea>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-5">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Organizational Structure:"> الهيكل الاداري: </label>
+                                  <select-server-side
+                                  [selectForm]="py_deservedly_transaction"
+                                  [controlName]="'_jobCode'"
+                                  [TextField]="'s_name'"
+                                  [ValueField]="'s_no'"
+                                  [searching]="searchingJobCode"
+                                  [filteredServerSide]="filteredJobCodeServerSide"
+                                  (OnSearch)="searchJobCodes($event)" >
+                                  </select-server-side>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Job:"> الوظيفة: </label>
+                                  <select-server-side
+                                  [selectForm]="py_deservedly_transaction"
+                                  [controlName]="'kUp1'"
+                                  [TextField]="'s_job_name'"
+                                  [ValueField]="'n_job_id'"
+                                  [searching]="searchingKUP"
+                                  [filteredServerSide]="filteredKUPServerSide"
+                                  (OnSearch)="searchKUPs($event)" >
+                                  </select-server-side>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row d-flex justify-content-center">
+                              <section class="col col-6">
+                                <button type="button" class="btn btn-outline-primary w-100">بحث</button>
+                              </section>
+                            </div>
+                          </div>
+
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Deservdly Code:"> كود الاستحقاق:<span style="color: red;">*</span> </label>
+                                  <select-server-side
+                                  [selectForm]="py_deservedly_transaction"
+                                  [controlName]="'n_source_id'"
+                                  [TextField]="'s_Deservedly_name'"
+                                  [ValueField]="'n_doc_no'"
+                                  [searching]="searchingSources"
+                                  [filteredServerSide]="filteredSourcesServerSide"
+                                  (OnSearch)="searchSources($event)" >
+                                  </select-server-side>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <label class="label translate">&nbsp;</label>
+                                <button type="button" class="btn btn-outline-primary w-100">حساب القيمة</button>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col-lg-12">
+                                <div class="row">
+                                  <div class="col-12 table-responsive">
+                                    <table  id="tblMultiTransDetails" class="custom-table table-striped" formArrayName="py_deservedly_transactions_details">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col" class="text-center translate" data-en="#" style="min-width: 25px" >#</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 150px">رقم الموظف</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 200px">اسم الموظف</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 100px">راتب الاحتساب</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 100px">قيمة اليوم</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 100px">القيمة</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 150px">ك مركز التكلفة</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 200px">مركز التكلفة</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 150px">ك مركز التكلفة2</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 200px">مركز التكلفة2</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 250px">البيان</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 250px">البيان انجليزي</th>
+                                          <th scope="col" class="text-center" style="min-width: 45px"></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr [formGroupName]="i" *ngFor="let item of py_deservedly_transactions_details.controls; let i = index;">
+
+                                          <td scope="row" class="text-center" style="min-width: 25px;">
+                                            {{ i + 1 }}
+                                          </td>
+
+                                          <td style="min-width: 150px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="LoadEmployee(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" type="text" formControlName="n_employee_id" (change)="ChangeEmploye(i);">
+                                            </div>
+                                          </td>
+
+                                          <td style="min-width: 200px;">
+                                            <input type="text" class="form-control" formControlName="s_employee_name" readonly />
+                                          </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="number" class="form-control" formControlName="n_salary" placeholder="0" />
+                                          </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="number" class="form-control" formControlName="n_DayValue" placeholder="0" />
+                                          </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="number" class="form-control" formControlName="n_value" placeholder="0" />
+                                          </td>
+
+                                          <td style="min-width: 150px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="LoadCostCenter1(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" type="text" formControlName="s_cost_center_id" (change)="ChangeDetailsCost1(i);">
+                                            </div>
+                                          </td>
+
+                                          <td style="min-width: 200px;">
+                                            <input type="text" class="form-control" formControlName="s_cost_center_name" readonly />
+                                          </td>
+
+                                          <td style="min-width: 150px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="LoadCostCenter2(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" type="text" formControlName="s_cost_center_id2" (change)="ChangeEmploye(i);">
+                                            </div>
+                                          </td>
+
+                                          <td style="min-width: 200px;">
+                                            <input type="text" class="form-control" formControlName="s_cost_center_name2" readonly />
+                                          </td>
+
+                                          <td style="min-width: 250px;">
+                                            <input type="text" class="form-control" formControlName="s_description" />
+                                          </td>
+
+                                          <td style="min-width: 250px;">
+                                            <input type="text" class="form-control" formControlName="s_description_eng" />
+                                          </td>
+
+                                          <td style="min-width: 45px;">
+                                            <i (click)="RemoveDeservdlyTransDetailsRow(i)" class="bi bi-x-square text-center" tabindex="-1"></i>
+                                          </td>
+
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12 text-center">
+                                      <div class="button-plus">
+                                        <i class="bi bi-plus"></i>
+                                        <a (click)="Add_py_deservedly_transactions_details_Row()" class="translate" data-en="Add">أضافة</a>
+                                     </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

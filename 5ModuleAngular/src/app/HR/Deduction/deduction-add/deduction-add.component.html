@@ -1,0 +1,241 @@
+
+
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+
+
+
+                 <h2 class="translate" data-en="Add Deduction">الاستقطاعات</h2>
+                 <div class="buttons">
+
+
+
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/hr/deduction" class="translate" data-en="Close">خروج</a>
+
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <button (click)="save()" class="translate" data-en="Save">حفظ
+
+
+
+                        </button>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+              </section>
+  </div>
+  </header>
+
+
+  <div class="content-wrapper" style="margin-top: 120px; ">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+        <form [formGroup]="DeductionFrom" (keydown.enter)="$event.preventDefault()">
+          <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+          <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+          <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+          <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+          <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+          <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+            <div class="row">
+
+                <div class=" mt-5 p-3 col-6">
+
+                  <div class="card">
+
+                    <div class="form-group row" *ngIf="nclassId">
+                        <div class="label col-md-4">كود الاستقطاع</div>
+
+                          <div class="col-lg-8 col-md-12 col-sm-12">
+                              <input type="text" class="form-control "  formControlName="n_deduction_id" style="width:130px;" readonly >
+                            </div>
+                        </div>
+                      <div class="form-group  row mt-2">
+                          <div class="label col-md-4">اسم الاستقطاع  <span class="text-danger">*</span></div>
+                          <div class="col-lg-8 col-md-12 col-sm-12" >
+
+                              <input type="text" class="form-control" formControlName="s_deduction_name" >
+                          </div>
+
+                      </div>
+                      <div class="form-group row">
+                          <div class="label col-md-4">اسم الاستقطاع لانجليزي</div>
+                          <div class="col-lg-8 col-md-12 col-sm-12" >
+
+                              <input type="text" class="form-control" formControlName="s_deduction_name_eng" >
+                          </div>
+                      </div>
+                      <div class="form-group row mt-5">
+                          <div class="label col-lg-2">راتب الاحتساب  </div>
+                          <div class="col-lg-4 col-sm-12">
+                            <select class="form-control" (change)="disableDetails($event)" formControlName="n_discountFrom">
+                                <option value="1" selected>راتب شامل</option>
+                                <option value="2">راتب أساسي</option>
+                            </select>
+                          </div>
+                          <div class="label col-lg-2"> طريقة الحساب</div>
+                          <div class="col-lg-4 col-sm-12">
+                            <select class="form-control"  formControlName="n_Calc_Type">
+                                <option value="1" selected>عدد الايام</option>
+                                <option value="2">عدد الساعات</option>
+                                <option value="3"> نسبة من الراتب</option>
+                                <option value="4">قيمة الراتب</option>
+                            </select>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="label col-lg-2"> اسم الصرفية<span class="text-danger">*</span></div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+
+                          <select-server-side
+                          [selectForm]="DeductionFrom"
+                          [controlName]="'n_payment_type'"
+                          [TextField]="'s_pay_name'"
+                          [ValueField]="'n_doc_no'"
+                          [searching]="searchingDeductionPay"
+                          [filteredServerSide]="filteredDedutionPayServerSide"
+                          (OnSearch)="serchPayDedutions($event)">
+                          </select-server-side>
+                       </div>
+                       <div class="label col-lg-2">التصنيف</div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+
+                          <select-server-side
+                          [selectForm]="DeductionFrom"
+                          [controlName]="'n_category'"
+                          [TextField]="'s_name'"
+                          [ValueField]="'n_id'"
+                          [searching]="serchingCatDedutions"
+                          [filteredServerSide]="filteredDedutionCatServerSide"
+                          (OnSearch)="serchCatDedutions($event)">
+                          </select-server-side>
+                       </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="form-check-label col-lg-4"> <label  for="flexCheckDefault">
+                            محمل علي مركز تكلفة
+                           </label></div>
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" style="width: 26px;
+                                height: 20px;
+                                border: 1px solid #CCC;"  id="flexCheckDefault" formControlName="b_use_cost_center">
+
+
+                            </div>
+                       </div>
+                      </div>
+                  </div>
+                </div>
+                 <div class="col-6">
+
+                <div class="row" style="margin-top: 50px;">
+                    <div class="col-12">
+                      <div class="card">
+                        <table  class="custom-table" id="tbljournaldetails"  *ngIf="py_deduction_allowance.controls.length > 0"  formArrayName="py_deduction_allowance">
+                          <thead>
+                          <tr>
+                            <th class="translatedata" data-en="Item Code">رقم البدل </th>
+                            <th class="translatedata" data-en="Item Name"> أسم البدل</th>
+
+
+
+                            <th></th>
+
+
+
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                          <tr  [formGroupName]="i" *ngFor="let det of py_deduction_allowance.controls; let i=index">
+
+
+                              <td>
+
+
+
+                                 <div class="position-relative">
+                                      <i class="fa fa-search position-absolute en-left-sm" (click)="loadItems(i)" data-toggle="modal" ></i>
+                                      <input class="form-control has-search" type="text" formControlName="n_allowance_id" id="Item_{{i}}" (input)="getItemsNow($event,i)" [readonly]="makeDetailsReadOnly" autocomplete="false" >
+                                </div>
+
+
+
+
+                              </td>
+                              <td> <input type="text" class="form-control" formControlName="s_allowance_name" readonly /> </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              <td>
+
+                                  <button    (click)="removeItems(i)" style="background: none;border: none;" [disabled]="makeDetailsReadOnly" class="button-minus"><i class="bi bi-x-square" ></i></button>
+                              </td>
+
+
+
+
+                          </tr>
+
+                          </tbody>
+                        </table>
+                        <div class="row">
+                          <div class="col-md-12">
+                           <div class="button-plus">
+                             <i class="bi bi-plus"></i>
+                             <button (click)="addItemsDetails()" style="border: none;"  [disabled]="makeDetailsReadOnly" class="translate" data-en="Add">أضافة</button>
+                           </div>
+                          </div>
+                       </div>
+
+
+
+                    </div>
+                      </div>
+
+
+                  </div>
+                 </div>
+
+          </div>
+        </form>
+     </div>
+    </section>
+</div>

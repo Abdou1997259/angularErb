@@ -1,0 +1,251 @@
+<p>pricelist-add works!</p>
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+              <h2  class="translate" data-en="Price List"> قوائم الاسعار </h2>
+              <div class="buttons">
+              <div class="button">
+                  <i class="bi bi-bookmark-x "></i>
+                  <a routerLink="/ar/priceList"  class="translate" data-en="Exit">خروج</a>
+              </div>
+              <div class="button">
+                  <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                  <input type="button" class="translate" data-en="Save" [disabled]="!ar_PriceList.valid" value="حفظ" (click)="Save()" />
+              </div>
+            </div>
+          </div>
+        </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="PriceList p-3 mb-3">
+            <form [formGroup]="ar_PriceList" (keydown.enter)="$event.preventDefault()">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+              <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+              <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+              <div class="card-body">
+                <div class="row">
+                  <section class="col-lg-7">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6" *ngIf="n_doc_no > 0">
+                          <div class="form-group">
+                            <label class="label translate" data-en="Transaction number:">رقم الحركة:</label>
+                            <input type="number" class="form-control w-50" formControlName="n_doc_no" readonly />
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <label class="form-label"> <span class="translate" data-en="Doc Date:">تاريخ المستند: </span> <span class="text-danger">*</span></label>
+                          <mat-form-field>
+                            <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (focus)="datepicker.open()"  formControlName="d_doc_date" required>
+                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                          </mat-form-field>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label"><span class="translate" data-en="From Date:">من تاريخ:</span><span class="text-danger">*</span></label>
+                            <mat-form-field>
+                              <input matInput [matDatepicker]="datepicker2" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (focus)="datepicker2.open()" formControlName="d_season_start_date" required>
+                              <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                              <mat-datepicker #datepicker2 disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label"><span class="translate" data-en="To Date:">الي تاريخ:</span><span class="text-danger">*</span></label>
+                            <mat-form-field>
+                              <input matInput [matDatepicker]="datepicker3" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (focus)="datepicker3.open()" formControlName="d_season_end_date" required>
+                              <mat-datepicker-toggle matSuffix [for]="datepicker3"></mat-datepicker-toggle>
+                              <mat-datepicker #datepicker3 disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="Menu name:">إسم القائمة: <span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" formControlName="s_list_name" />
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="ُEnglish Menu Name:">إسم القائمة إنجليزي:</label>
+                            <input type="text" class="form-control" formControlName="s_list_name_eng" />
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="col-lg-5">
+                    <div class="card p-3">
+                      <div class="row">
+                        <section class="col col-6">
+                          <div class="form-group">
+                            <label class="label"><span class="translate" data-en="Item Type:"> نوع الصنف: </span></label>
+                            <select-server-side
+                              [selectForm]="ar_PriceList"
+                              [controlName]="'item_type_id'"
+                              [TextField]="'s_item_type_name'"
+                              [ValueField]="'n_item_type'"
+                              [searching]="itemTypesSearching"
+                              [filteredServerSide]="filteredItemTypesServerSide"
+                              (OnSearch)="ItemTypesSearch($event)">
+                            </select-server-side>
+                          </div>
+                        </section>
+
+                        <section class="col col-6">
+                          <label class="form-label translate" data-en="Discount percentage:"> نسبة الخصم: </label>
+                          <input type="number" class="form-control"  formControlName="Discount" placeholder="0%" />
+                        </section>
+                      </div>
+
+                      <div class="row">
+                        <section class="col col-12">
+                          <div class="form-group">
+                            <label class="form-label translate" data-en="Items Groups:"> مجموعة الآصناف: </label>
+                            <look-up-ar [form]="ar_PriceList" [SearchID]="'ItemGroup'" [inputName]="'GroupItem_no'" [mylookupID]="'GroupItem_no'" [colSize]="'col-6'" [colSizeName]="'col-6'" [nameCol]="'GroupName'" [TitleAr]="'مجموعة الاصناف'" [TitleEn]="'ItemGroup'"></look-up-ar>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="row d-flex justify-content-center align-items-center mt-3">
+                        <section class="col col-12 text-center">
+                          <button type="button" class="btn btn-outline-primary translate" data-en="Items Load..." (click)="LoadItemsDetails();"> تحميل الآصناف... </button>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="row">
+                  <section class="col-lg-12">
+                    <div class="card p-3">
+                      <div class="row">
+                        <div class="col-12 table-responsive">
+                          <div class="row d-flex justify-content-center align-items-center" *ngIf="tablespinner">
+                            <div class="col-lg-12 text-center">
+                              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            </div>
+                          </div>
+
+                          <table  id="tblar_PriceList_details" class="custom-table" formArrayName="ar_PriceList_details">
+                            <thead>
+                              <tr>
+                                <th scope="col" class="text-center translatedata" data-en="#"> # </th>
+                                <th scope="col" class="text-center translatedata" data-en="Item Code"> ك الصنف</th>
+                                <th scope="col" class="text-center translatedata" data-en="Item Name"> أسم الصنف</th>
+                                <th scope="col" class="text-center translatedata" data-en="Unit Code"> ك الوحدة</th>
+                                <th scope="col" class="text-center translatedata" data-en="Unit Name"> أسم الوحدة</th>
+                                <th scope="col" class="text-center translatedata" data-en="Price Per Unit" >السعر البيع </th>
+                                <th scope="col" class="text-center translatedata" data-en="Discount">قيمة الخصم </th>
+                                <th scope="col" class="text-center translatedata" data-en="Seasob Price">سعر القائم </th>
+                                <th scope="col" class="text-center translatedata" data-en="Agent Price"> سعر الوكيل </th>
+                                <th scope="col" class="text-center translatedata" data-en="Lowest  Price">اقل سعر </th>
+                                <th scope="col" class="text-center translatedata" data-en="Storage Period">مدة التخزين </th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr [formGroupName]="i" *ngFor="let det of ar_PriceList_details.controls; let i=index;">
+                                <td scope="row" class="text-center"> {{ i + 1 }} </td>
+
+                                <td>
+                                  <div class="position-relative">
+                                    <i class="fa fa-search position-absolute en-left-sm" (click)="loadItems(i)" data-toggle="modal" ></i>
+                                    <input class="form-control has-search" type="text" formControlName="s_item_id" id="Item_{{i}}" (change)="OnItemChange($event, i)" autocomplete="false" >
+                                 </div>
+                                </td>
+                                <td> <input type="text" class="form-control" formControlName="s_item_name" readonly /> </td>
+
+                                <td>
+                                 <div class="position-relative">
+                                   <i class="fa fa-search position-absolute en-left-sm" (click)="loadUnits(i)" data-toggle="modal" ></i>
+                                   <input class="form-control has-search" type="number" formControlName="n_unit_id" id="Item_{{i}}"  (change)="OnUnitChange($event,i)" >
+                                 </div>
+                                </td>
+                                <td> <input type="text" class="form-control" formControlName="s_unit_name" readonly /> </td>
+
+                                <td> <input type="number" class="form-control" formControlName="n_unit_price" readonly /> </td>
+
+                                <td> <input type="number" class="form-control" formControlName="n_discount_value" readonly /> </td>
+
+                                <td> <input type="number" class="form-control" formControlName="n_season_price" (change)="SeasonPriceChanged(i);" /> </td>
+
+                                <td> <input type="number" class="form-control" formControlName="n_AgentPrice" /> </td>
+
+                                <td> <input type="number" class="form-control" formControlName="n_lowest_price"> </td>
+
+                                <td> <input type="number" class="form-control" formControlName="n_storage_period"> </td>
+
+                                <td>
+                                  <a (click)="removeItems(i)" class="button-minus">
+                                      <i class="bi bi-x-square"></i>
+                                  </a>
+                                </td>
+
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="row mt-2">
+                            <div class="col-md-12">
+                             <div class="button-plus">
+                               <i class="bi bi-plus"></i>
+                               <a (click)="addItemsDetails()" class="translate" data-en="Add">أضافة</a>
+                             </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="card-footer mb-4">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <app-attachments [ID]="this.n_doc_no" [DataArea]="this.DataAreaNo" [Folder]="'PriceListTransaction'" [SubFolder]="'Attachments'" *ngIf="this.n_doc_no !=null && this.n_doc_no > 0"></app-attachments>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="showspinner">
+                    <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,160 @@
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper rtl ">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="row" *ngIf="showspinner"> 
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>  
+      </div>
+
+
+      <div class="row">
+        <div class="col-12">
+          
+
+          <div class="card">
+ 
+            <div class="card card-success">
+              <div class="card-header" style="height: 50px;"> 
+                <h3  class="d-flex justify-content-center">العملاء</h3>
+              </div>
+              </div>
+
+            <!-- /.card-header -->
+
+         
+          
+
+
+            <div class="card-body">
+              <div class="card-header"  style="background-color: transparent;">
+                <div  *ngIf="cannew">   
+                  <a routerLink="/addcustomer" class="btn btn-primary">إضافة عميل جديد</a> 
+                 </div> 
+             </div>
+              <div *ngIf="customers.length == 0">
+                <div class="d-flex justify-content-center ">
+                  <h3>لا يوجد عملاء</h3>
+                </div>
+              </div>
+              <ngx-confirm-box [bgColor]="bgColor" [confirmHeading]="confirmHeading" 
+              [confirmCanceltext]="confirmCanceltext" [confirmContent]= "confirmContent"
+               [confirmOkaytext] = "confirmOkaytext" (confirmEvt)="confirmChange($event)"></ngx-confirm-box>
+               
+              <div style="padding-right: 50px;">
+            
+               <form [formGroup]="CustomerForm">
+
+                <div class="card-body" >
+                   <app-select
+                    [data]="testdata"
+                  [selectForm]="CustomerForm"
+                  [controlName]="'n_customer_id'"
+                  [TextField]="'s_customer_name'"  
+                  [ValueField]="'n_customer_id'"></app-select>  
+  
+                <select-server-side 
+                 
+                 [selectForm]="CustomerForm"
+                 [controlName]="'n_customer_id'"
+                 [TextField]="'s_customer_name'"
+                 [ValueField]="'n_customer_id'"
+                 [searching]="searching"
+                 [filteredServerSide]="filteredServerSide"
+                 (OnSearch)="search($event)"
+                 ></select-server-side>  
+
+                </div>
+
+                <input type="button" class="btn btn-primary mr-2" 
+               
+                value="حفظ"  (click)="Save()" > 
+               
+
+               </form>
+              
+              </div>
+
+           
+               <app-table
+               [columns]="columns"
+               [buttons]="buttons" 
+               [data]="custdata"
+               [filter]="true"
+               [filterPlaceholder]="'Filter any value'"
+               [footer]="footer" 
+               [pagination]="[5, 25, 100]"
+               [pageSize]="5"
+               [tableMinWidth]="400"
+               (filteredData)="applyFilter($event)"
+               (buttonClick)="buttonClick($event)"
+                ></app-table>
+                
+
+               <!-- <table  *ngIf="customers.length > 0" id="CustDataTable" datatable
+                 [dtOptions]="dtOptions"  class="table table-striped table-bordered dt-responsive " style="width:100%;text-align: center;" >
+                <thead >
+                <tr class="table-primary"> 
+                
+                  <th style="text-align: center;">إسم العميل</th>
+                  <th style="text-align: center;">رقم الهاتف</th>
+                  <th style="text-align: center;">العنوان</th>
+                  <th style="text-align: center;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr    *ngFor="let cust of customers">  
+                   
+                   <td  >{{cust.s_customer_name}}  </td>
+                   <td  >{{cust.s_customer_phone_no}}  </td>
+                   <td  >{{cust.s_customer_address}}  </td>
+                   <td > 
+                     
+                  
+                        <a   *ngIf="canedit" routerLink="/addcustomer/{{cust.n_customer_id}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات العميل للتعديل"  class="btn "><i class="bi bi-sd-card text-primary"></i></a>
+                        <a   *ngIf="candelete" (click)="DeleteCustomer(cust)" class="btn" data-toggle="tooltip" data-placement="bottom" title="حذف" ><i class="bi bi-trash text-danger "></i></a>
+             
+                        
+                        <a  (click)="openDialog(cust.n_customer_id)" data-toggle="tooltip" data-placement="bottom" title="إضافة إجراء جديد" class="btn "> <i class="bi bi-building-fill-add text-success"></i></a>
+                         
+                        <a  *ngIf="canconfirm" (click)="ConfirmCustomer(cust.n_customer_id)" data-toggle="tooltip" data-placement="bottom" title="تعميد العميل" class="btn "> <i class="bi bi-check-lg"></i></a>
+ 
+                        <a  (click)="OpenSalesOrder(cust)" class="btn "> <i class="bi bi-cart-check"></i></a>
+
+                        
+
+                        <a  routerLink="/customerProcedures/{{cust.n_customer_id}}"  class="btn btn-success ">عرض الاجراءات</a> 
+                         
+                  </td>
+                </tr>
+                </tbody>
+                 
+              </table>  -->
+
+            </div>
+       
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+
+ <p></p>
+<!-- Modal -->
+
+
+
+ 
+
+ 

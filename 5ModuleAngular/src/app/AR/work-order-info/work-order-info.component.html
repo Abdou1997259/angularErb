@@ -1,0 +1,178 @@
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper rtl ">
+    <!-- Content Header (Page header) -->
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row" *ngIf="showspinner"> 
+            <hr/>
+            <mat-progress-bar  mode="indeterminate">  
+            </mat-progress-bar>  
+          </div>
+
+          
+      <div class="row">
+        <div class="col-12">
+          
+
+          <div class="card">
+         
+            <div class="card card-success">
+                <div class="card-header" style="height: 50px;"> 
+                  <h3  class="d-flex justify-content-center">اوامر العمل</h3>
+                </div>
+                </div>
+
+            <!-- /.card-header -->
+
+         
+          
+             
+
+            <div class="card-body">
+            
+              <div *ngIf="WorkOrders.length == 0">
+                <div class="d-flex justify-content-center ">
+                  <h3>لا يوجد أوامر عمل</h3>
+                </div>
+              </div>
+
+
+
+        
+                <div> 
+                    <div class="row">
+                        <div class="col-4">  
+                            <div class="form-group">
+                                <label>من تاريخ:</label>
+              
+                                <div class="input-group"> 
+                                  <input type="date" class="form-control" 
+                                       [(ngModel)]="filter.FromDate">
+                                </div>   
+                              </div> 
+                        </div>
+
+                        <div class="col-4">  
+                            <div class="form-group">
+                                <label>إلي تاريخ:</label>
+              
+                                <div class="input-group"> 
+                                  <input type="date" class="form-control" 
+                                       [(ngModel)]="filter.ToDate">
+                                </div>   
+                              </div> 
+                        </div>
+
+
+                        <div class="col-4"> 
+                            <div class="form-group">
+                           <label>الحالة:</label> 
+                           <select  class="form-control"    [(ngModel)]="filter.n_status">
+                               <option *ngFor="let c of OrderStatus" [ngValue]="c.id">{{c.name}}</option>
+                             </select>
+                             
+                         
+                         </div> 
+                         </div>
+                        
+                   
+                    </div>
+ 
+                    <div class="row">
+                        <div class="col-8"> 
+                              <div class="form-group"  >
+                                <label>رقم العميل:</label> 
+                                <div class="input-group"> 
+                                  <input type="text" class="form-control"
+                                   [(ngModel)]="filter.s_customer_name" readonly  
+                                   (click)="LoadCustomers()" >
+                                </div>
+                                
+                              </div> 
+                        
+                        </div>
+
+
+
+
+                        <div class="col-4"> 
+                            <input type="button" class="btn btn-primary mr-2"
+                               value="بحث"  (click)="search()" > 
+                            <a (click)="ClearSearch();" class="btn btn-warning mr-2"  >  مسح البحث </a>
+                         </div>
+
+ 
+                    </div>
+
+
+                    
+         
+                     
+                     
+
+                    </div>
+
+                
+          
+
+             
+
+               <table  *ngIf="WorkOrders.length > 0" 
+                id="CustDataTable" datatable
+                 [dtOptions]="dtOptions" 
+                  class="table table-striped table-bordered dt-responsive"
+                  style="width:100%;text-align: center;" >
+                <thead >
+                <tr class="table-primary"> 
+               
+                  <th style="text-align: center;">رقم الامر</th>
+                  <th style="text-align: center;">تاريخ الامر</th>
+                  <th style="text-align: center;">التاريخ والوقت</th> 
+                  <th style="text-align: center;">العميل</th> 
+                  <th style="text-align: center;">إسم المستخدم</th> 
+                  <th style="text-align: center;">الحالة</th> 
+ 
+                </tr>
+                </thead>
+                <tbody>
+                <tr    *ngFor="let order of WorkOrders">
+                   
+               
+                   <td  >{{order.n_order_no}}  </td>
+                   <td  >{{order.d_doc_date}}  </td> 
+                   <td  >{{order.d_UserUpdateDate}}  </td> 
+                   <td  >{{order.s_customer_name}}  </td> 
+                   <td  >{{order.s_user_name}}  </td> 
+                   <td  >{{order.s_status}}  </td> 
+                    
+                </tr>
+                </tbody>
+                 
+              </table> 
+
+            </div>
+       
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+
+ <p></p>
+<!-- Modal -->
+
+
+
+ 
+
+ 

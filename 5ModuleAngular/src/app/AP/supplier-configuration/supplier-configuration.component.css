@@ -1,0 +1,90 @@
+.special-card
+{
+   
+  display: block;
+  background-color: rgb(233,236,239);
+  padding: 0px 0px;
+  border: 12px solid white;
+  /* height: 74px; */
+  padding-top: 35px;
+  font-weight: bold;
+  width: 379px;
+  max-height: 97px;
+  border-radius: 17px;
+}
+input 
+{
+  padding-left: 27px;
+}
+select:not(.notInclude)
+{
+  width:80%;
+  height: 40px;
+  font-size: 16px;
+}
+input[type="checkbox"]
+{
+    height: 19px;
+    width: 20px;
+}
+input[type="checkbox"] + label
+{
+    margin: 5px 16px;
+}
+
+.card.card-custom
+{
+    margin-top: 20px;
+    padding-top: 38px !important;
+    padding-bottom: 60px;
+ 
+    padding-right: 11px;
+    padding-left: 2px;
+    width: 100%;
+}
+
+
+ 
+
+
+
+
+input .ng_invalid
+{
+  border: 1px solid red
+}
+
+
+input
+{
+    margin-bottom: 15px;
+}
+
+.card
+{
+  margin-top: 20px;
+    padding-top:10px;
+    padding-bottom: 60px;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100%;
+}
+
+i {
+    font-size: 1.2rem;
+    color: rgb(0,104,215);
+    top: .75rem;
+    left: .75rem
+  }
+
+
+input.ng-invalid.ng-touched
+{
+    border:1px solid red;
+    outline: none;
+}
+
+.col-custom 
+{
+    padding: 40px;
+}

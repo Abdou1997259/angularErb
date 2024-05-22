@@ -1,0 +1,150 @@
+
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        
+            
+             
+                 <h2 class="translate" data-en="Add Deduction">أضافة  أكواد الجزاءات </h2>
+                 <div class="buttons">
+                   
+                    
+                   
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/hr/empclass" class="translate" data-en="Close">خروج</a>
+                     
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <button (click)="save()" class="translate" data-en="Save">حفظ
+  
+  
+                          
+                        </button>
+                    </div>
+                  </div>
+  
+                 
+                
+           
+               
+              
+     
+  
+  
+        
+          
+    
+                </div>
+    
+              </section>
+  </div>
+  </header>
+  <div class="content-wrapper" style="margin-top: 120px; ">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      <div class="container-fluid">
+        <form [formGroup]="VacationForm" (keydown.enter)="$event.preventDefault()">
+         <div class="row">
+            
+               <div class="card  mt-2 p-3 col-12">
+                
+
+                  <div class="row">
+                    <div class="form-group col-lg-2 col-md-12 col-sm-12" *ngIf="nclassId">
+                        <div class="label ">المسلسل</div>
+                          
+                        
+                        <input type="text" class="form-control "  formControlName="n_doc_no" style="width:130px;" readonly >  
+                         
+                    </div>
+                    <div class="form-group col-lg-2 col-md-12 col-sm-12">
+                        <label class="form-label"  class="translate" data-en="Doc Date">تاريخ المستند  <span class="text-danger">*</span></label>
+                        <mat-form-field>
+                          <mat-label>YYYY/MM/DD</mat-label>
+                          <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" style="width:50%" datePickerFormat="YYYY/MM/DD" (focus)="datepicker.open()"  formControlName="d_doc_date" required>
+                          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                          <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="row">
+                  
+                    <div class="form-group col-lg-2 col-md-12 col-sm-12">
+                     <div class="label"> كود الموظف <span class="text-danger">*</span></div>
+                      <select-server-side
+                      [selectForm]="VacationForm"
+                      [controlName]="'n_employee_id'"
+                      [TextField]="'s_employee_name'"
+                      [ValueField]="'n_employee_id'"
+                      [searching]="searchingVacation"
+                      [filteredServerSide]="filteredVacationServerSide"
+                      (OnSearch)="searchVacation($event)">
+                      </select-server-side>
+                   </div>
+                   <div class="form-group col-lg-2 col-md-12 col-sm-12">
+                    <label>نوع الاجازة</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                   </div>
+
+           
+                  </div>
+               
+                <div class="form-group row">
+                    <div class="label col-md-1">اسم الجزاء الانجليزي</div>
+                    <div class="col-lg-4 col-md-12 col-sm-12" >
+                        
+                        <input type="text" class="form-control" formControlName="s_pental_name_eng" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="label col-lg-1">ملاحظات  </div>
+                    <div class="col-lg-4 col-sm-12">
+                       <textarea class="form-control" style="height: 130px;" formControlName="s_notes"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <div class="label col-lg-1"> كود الموظف <span class="text-danger">*</span></div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                                     
+                    <select-server-side
+                    [selectForm]="VacationForm"
+                    [controlName]="'n_employee_id'"
+                    [TextField]="'s_employee_name'"
+                    [ValueField]="'n_employee_id'"
+                    [searching]="searchingVacation"
+                    [filteredServerSide]="filteredVacationServerSide"
+                    (OnSearch)="searchVacation($event)">
+                    </select-server-side>
+                 </div>
+                </div>
+                <div class="form-group row">
+                  <div class="label col-lg-1">خصم عدد الايام <span class="text-danger">*</span></div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    
+                        
+                        <input type="text" class="form-control" formControlName="n_pen_days" >
+                           
+               
+                 </div>
+                </div>
+            
+               </div>
+                
+    
+         </div>
+     
+        </form>
+     </div>
+    </section>
+</div>
+
+
+
+

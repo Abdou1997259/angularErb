@@ -1,0 +1,15 @@
+#pichart{
+    width:200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: red;
+     border:1px solid #ccc;
+     box-shadow: 0 0 10px #CCC;
+}
+#pichart > div:first-child
+{
+    width:200px;
+    height: 200px;
+    border-radius: 50%;    background-image: linear-gradient(120 deg ,black 25%, white 25%,white 10%);
+
+}

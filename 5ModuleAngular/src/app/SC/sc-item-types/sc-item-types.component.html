@@ -1,0 +1,200 @@
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+       <h2 class="translate" data-en="Items Type">أنواع الاصناف</h2>
+       <div class="buttons">
+        <div class="button">
+          <i class="bi bi-bookmark-x "></i>
+          <a routerLink="/sc/scitemtypeslist" class="translate" data-en="Exit">خروج</a>
+        </div>
+        <div class="button">
+          <i class="bi bi-file-earmark-medical  fa-lg"></i>
+          <input type="button" (click)="Save()" class="translate" data-en="Save" [disabled]="!typesForm.valid" value="حفظ" />
+        </div>
+        </div>
+      </div>
+    </section>
+</div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+                  <div class="invoice p-3 mb-3">
+                    <form [formGroup]="typesForm" (keydown.enter)="$event.preventDefault()">
+                      <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                      <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                      <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                      <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+                      <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+                      <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                      <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                      <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+                      <div class="card-body">
+                        <nav>
+                          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active translate" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"  data-en="Main Info">البيانات الآساسية</button>
+                            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" hidden>خصومات الفرع</button>
+                          </div>
+                        </nav>
+                        <div class="tab-content mt-2" id="nav-tabContent">
+                          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="row">
+                              <section class="col-lg-7">
+                                <div class="card p-3">
+                                  <div class="row">
+                                    <section class="col col-4">
+                                      <div class="form-group">
+                                        <label class="label translate"  data-en="Items Number">رقم النوع</label>
+                                        <input type="text" class="form-control" formControlName="n_item_type" value="{{ nItemTypeId }}" readonly />
+                                      </div>
+                                    </section>
+                                  </div>
+
+                                  <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group">
+                                        <label class="label translate" data-en="Item Type Arabic Name" >اسم النوع عربى <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" formControlName="s_item_type_name" />
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <div class="form-group">
+                                        <label class="label translate" data-en="Item Type Name">اسم النوع انجليزى</label>
+                                        <input type="text" class="form-control" formControlName="s_item_type_name_eng" />
+                                      </div>
+                                    </section>
+                                  </div>
+            
+                                  <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group">
+                                        <label class="label translate" data-en="Deduction Rate">نسبة الخصم</label>
+                                        <input type="number" class="form-control" formControlName="n_discount_rate" (keypress)="isNumberKey($event)" />
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <label class="translate" data-en="Classification Code:">كود التصنيف</label>
+                                      <select-server-side 
+                                        [selectForm]="typesForm" 
+                                        [controlName]="'n_category_id'" 
+                                        [TextField]="'s_category_name'"
+                                        [ValueField]="'n_category_id'" 
+                                        [searching]="searchingCategories" 
+                                        [filteredServerSide]="filteredServerSideCategories"
+                                        (OnSearch)="searchCategories($event)">
+                                      </select-server-side>
+                                    </section>
+                                  </div>
+
+                                  <div class="row">
+                                    <section class="col col-12">
+                                      <label class="translate" data-en="Incomes Account:">حساب الايرادات</label>
+                                      <look-up-sc [form]="typesForm" [SearchID]="'acc'" [inputName]="'s_type_related_account'" [mylookupID]="'s_type_related_account'" [colSize]="'col-3'" [colSizeName]="'col-6'" [nameCol]="'relatedName'" [TitleAr]="'حساب الايرادات'" [TitleEn]="'Income Account'"></look-up-sc>
+                                    </section>
+                                  </div>
+
+                                  <br/>
+
+                                  <div class="row">
+                                    <section class="col col-12">
+                                      <label class="translate" data-en="Expenses Account:">حساب المصروفات<span class="text-danger">*</span></label>
+                                      <look-up-sc [form]="typesForm" [SearchID]="'acc'" [inputName]="'s_type_Expense_account'" [mylookupID]="'s_type_Expense_account'" [colSize]="'col-3'" [colSizeName]="'col-6'" [nameCol]="'expensesName'" [TitleAr]="'حساب المصروفات'" [TitleEn]="'Expenses Account'"></look-up-sc>
+                                    </section>
+                                  </div>
+
+                                </div>
+                              </section>
+
+                                <section class="col-lg-5">
+                                  <div class="card p-3">
+                                    <div class="row">
+                                      <section class="col-6">
+                                        <div class="form-group">
+                                          <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" formControlName="b_pos" />
+                                            <label class="form-check-label">POS</label>
+                                          </div>
+                                        </div>
+                                      </section>
+                                    </div>
+
+                                    <!-- <div class="row">
+                                      <section class="col-12">
+                                        <div class="form-group">
+                                          <label class="translate" data-en="Print">الطابعة:</label>
+                                          <prev-select 
+                                            [selectForm]="typesForm"
+                                            [controlName]="'s_printer_name'"
+                                            [TextField]="'s_branch_name'"
+                                            [ValueField]="'n_branch_id'"
+                                            [searching]="searchingBranch"
+                                            [filteredServerSide]="filteredBranchServerSide"
+                                            (OnSearch)="searchBranch($event)">
+                                          </prev-select>
+
+                                          <ng-multiselect-dropdown
+                                          [settings]="dropdownSettings"
+                                          [data]="dropdownList"
+                                          formControlName="s_printer_name">
+                                          </ng-multiselect-dropdown>
+                                        </div>
+                                      </section>
+                                  </div> -->
+                                  </div>
+                                </section>
+                                </div>
+
+                              
+                              <div class="row mt-3">
+                                <div class="col-md-2">
+                                  <app-attachments [ID]="this.docNo" [DataArea]="this.DataAreaNo" [Folder]="'ScItemTypes'" [SubFolder]="'Attachments'" *ngIf="this.docNo !=null && this.docNo > 0"></app-attachments>
+                                </div>
+                              </div>
+                          </div>
+
+                          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="row">
+                              <section class="col-lg-7">
+                                <div class="card p-3">
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <table class="custom-table" formArrayName="itemDiscountLST">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">رقم الفرع</th>
+                                            <th scope="col">إسم الفرع</th>
+                                            <th scope="col">نسبة الخصم</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr [formGroupName]="i" *ngFor="let row of itemDiscountLST.controls; let i = index;">
+                                            <td scope="row" width="25%"> <input type="number" class="form-control" formControlName="n_line_no" value="{{ row.get('n_line_no')?.value }}" readonly/></td>
+                                            <td width="25%"> <input type="number" class="form-control" formControlName="n_Branch_Id" value="{{ row.get('n_Branch_Id')?.value}}" readonly/> </td>
+                                            <td width="25%"> <input type="text" class="form-control" formControlName="n_Branch_Id" value="{{ row.get('n_Branch_Id')?.value}}" readonly/> </td>
+                                            <td width="25%"> <input type="number" class="form-control" formControlName="n_discount_ratio"/> </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>

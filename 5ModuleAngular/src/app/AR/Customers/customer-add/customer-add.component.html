@@ -1,0 +1,1577 @@
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="Add New Customer">إضافة عميل</h2>
+        <div class="buttons">
+          <div class="button">
+            <i class="bi bi-bookmark-x "></i>
+            <a routerLink="/ar/customersList" class="translate" data-en="Exit">خروج</a>
+          </div>
+          <div class="button">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+
+            <input type="button" [disabled]="!ar_customers.valid" class="translate" data-en="Save" value="حفظ"  (click)="Save()" value="حفظ">
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<div class="content-wrapper" style="min-height: 1233.2px;" [ngClass]="{'disabled':showspinner}">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row" *ngIf="showspinner">
+        <hr/>
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="invoice p-3 mb-3">
+            <form [formGroup]="ar_customers" (keydown.enter)="$event.preventDefault()">
+              <div class="card-body">
+                <div class="row">
+                  <section class="col-lg-12">
+                    <div class="card p-3">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button class="nav-link translate active" id="nav-home-1" data-bs-toggle="tab" data-bs-target="#nav-home1" type="button" role="tab" aria-controls="nav-home1" aria-selected="true" data-en="Customer Info">بيانات العميل</button>
+                          <button class="nav-link translate" id="nav-home-2" data-bs-toggle="tab" data-bs-target="#nav-home2" type="button" role="tab" aria-controls="nav-home2" aria-selected="false" data-en="Csutomer Types">اصناف العميل</button>
+                          <button class="nav-link translate" id="nav-home-3" data-bs-toggle="tab" data-bs-target="#nav-home3" type="button" role="tab" aria-controls="nav-home3" aria-selected="false" data-en="Trade Info">المعلومات التجارية</button>
+                          <button class="nav-link translate" id="nav-home-4" data-bs-toggle="tab" data-bs-target="#nav-home4" type="button" role="tab" aria-controls="nav-home4" aria-selected="false" data-en="Additional Attachments">مرفقات اضافية</button>
+                          <button class="nav-link translate" id="nav-home-5" data-bs-toggle="tab" data-bs-target="#nav-home5" type="button" role="tab" aria-controls="nav-home5" aria-selected="false" data-en="Additional Data">بيانات اضافية</button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home1" role="tabpanel" aria-labelledby="nav-home-1">
+                          <div class="row mt-2">
+                            <section class="col-lg-7">
+                              <div class="card p-3">
+
+                                <div class="row">
+                                  <section class="col col-6" [hidden]="n_customer_id <= 0">
+                                    <div class="form-group row">
+                                      <label class="col-sm-3 col-form-label translate" data-en="Customer No"> رقم العميل </label>
+                                      <div class="col-sm-5">
+                                        <input type="text" class="form-control" formControlName="n_customer_id" readonly />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label mt-3 translate" data-en="Customer Add Data"> تاريخ اضافة العميل<span style="color:red">&nbsp;*</span> </label>
+                                      <div class="col-sm-8">
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker1" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker1.open()" formControlName="d_customer_date_add" required />
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker1 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label"> <span class="translate" data-en="Ar Customer Name">إسم العميل</span><span style="color:red">&nbsp;*</span> </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_customer_name" required />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Cutomer Name"> إسم العميل انجليزي </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_customer_name_eng" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label"> <span class="translate" data-en="Address">العنوان</span><span style="color:red">*</span> </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_customer_address" required />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Responsible Man"> الشخص المسئول </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_AttachmentPerson" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Tax file number"> رقم الملف الضريبي <span style="color: red;">*</span> </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_tax_file_no" required />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="National Identification Number"> رقم الهوية الوطنية </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_national_no" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                                <div class="row" *ngIf="b_use_follow_credit_limit">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Safety Limits">    حد الائتمان<span style="color: red;">*</span> </label>
+                                      <div class="col-sm-8">
+                                        <input type="number" class="form-control" formControlName="n_customer_credit_limit" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="The Main Safety Limits">حد الائتمان الاساسي<span style="color: red;">*</span> </label>
+                                      <div class="col-sm-8">
+                                        <input type="number" class="form-control" formControlName="n_modified_customer_credit_limit" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col-lg-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Notification Type"> نوع الاشعار </label>
+                                      <div class="col-sm-8">
+                                        <select class="form-select mt-0" aria-label=".form-select-lg example" formControlName="n_customer_credit_limit_reaction" >
+                                          <option value="0">.............</option>
+                                          <option *ngFor="let item of MaxQtyReactionList" [value]="item.code">{{ item.name_arabic }}</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Tax registration number"> رقم السجل الضريبي </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_tax_doc_no" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Commercial Registration No" > رقم السجل التجاري </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_account_with_customer" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Cost Center"> مركز التكلفة1 </label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'s_cost_center_id'"
+                                        [TextField]="'s_cost_center_name'"
+                                        [ValueField]="'s_cost_center_id'"
+                                        [searching]="searchingCostCenter1"
+                                        [filteredServerSide]="filteredCostCenter1ServerSide"
+                                        (OnSearch)="searchCostCenter1($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Cost Center 2"> مركز التكلفة2 </label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'s_cost_center_id_2'"
+                                        [TextField]="'s_cost_center_name'"
+                                        [ValueField]="'s_cost_center_id'"
+                                        [searching]="searchingCostCenter2"
+                                        [filteredServerSide]="filteredCostCenter2ServerSide"
+                                        (OnSearch)="searchCostCenter2($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label"><span class="translate" data-en="Related Account">الحساب المرتبط</span><span style="color:red">&nbsp;*</span></label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'s_related_account_no'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingRelatedAcc"
+                                        [filteredServerSide]="filteredRelatedAccServerSide"
+                                        (OnSearch)="searchRelatedAcc($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Rejects account"> حساب المرفوضات </label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'s_refusal_account'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingaccountTreeOrders"
+                                        [filteredServerSide]="filteredaccountTreeOrdersServerSide"
+                                        (OnSearch)="searchaccountTreeOrders($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label"><span class="translate" data-en="Customer Type">نوع العميل:</span><span style="color:red">&nbsp;*</span></label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'n_customer_type_id'"
+                                        [TextField]="'s_customer_type_name'"
+                                        [ValueField]="'n_customer_type_id'"
+                                        [searching]="searchingCustomerTypes"
+                                        [filteredServerSide]="filteredCustomerTypesServerSide"
+                                        (OnSearch)="searchCustomerTypesList($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Commision Type"> شرائح العملات </label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'n_commision_type'"
+                                        [TextField]="'s_commission_type_name'"
+                                        [ValueField]="'n_commission_type_id'"
+                                        [searching]="searchingCommissionTypes"
+                                        [filteredServerSide]="filteredCommissionTypesServerSide"
+                                        (OnSearch)="searchCommissionTypesList($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label"><span class="translate" data-en="SalesMan">المندوب:</span><span style="color:red">&nbsp;*</span></label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'n_salesman_id'"
+                                        [TextField]="'s_salesman_name'"
+                                        [ValueField]="'n_salesman_id'"
+                                        [searching]="searchingSalesMan"
+                                        [filteredServerSide]="filteredSalesManServerSide"
+                                        (OnSearch)="searchSalesMan($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col-lg-5">
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <div class="row">
+                                      <div class="card p-3">
+                                        <div class="row">
+                                          <section class="col col-3">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" id="b_cash_customerID"
+                                                style="width: 18px; height: 19px;" formControlName="b_cash_customer" />
+                                              <label class="form-check-label translate" data-en="Cash customer" for="b_cash_customerID" style="margin-right: 15px; font-weight: bold;"> عميل نقدي </label>
+                                            </div>
+                                          </section>
+
+                                          <section class="col col-3">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" id="b_direct_custID"
+                                                style="width: 18px; height: 19px;" formControlName="b_direct_cust" />
+                                              <label class="form-check-label translate" data-en="Direct Customer" for="b_direct_custID" style="margin-right: 15px; font-weight: bold;"> عميل مباشر </label>
+                                            </div>
+                                          </section>
+
+                                          <section class="col col-3">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" id="b_stop_custID"
+                                                style="width: 18px; height: 19px;" formControlName="b_stop_cust" />
+                                              <label class="form-check-label translate" for="b_stop_custID" data-en="Stopped" style="margin-right: 15px; font-weight: bold;"> موقوف </label>
+                                            </div>
+                                          </section>
+
+                                          <section class="col col-3">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" id="b_is_renterID"
+                                                style="width: 18px; height: 19px;" formControlName="b_is_renter" />
+                                              <label class="form-check-label translate" data-en="Renter" for="b_is_renterID" style="margin-right: 15px; font-weight: bold;"> مستآجر </label>
+                                            </div>
+                                          </section>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="row">
+                                      <div class="card p-3">
+                                        <div class="row">
+                                          <section class="col col-9">
+                                            <div class="form-group row">
+                                              <label class="col-sm-3 col-form-label translate" data-en="Main Customer" > العميل الرئيسي </label>
+                                              <div class="col-sm-9">
+                                                <select-server-side
+                                                [selectForm]="ar_customers"
+                                                [controlName]="'n_maincustomer_id'"
+                                                [TextField]="'s_maincustomer_name'"
+                                                [ValueField]="'n_maincustomer_id'"
+                                                [searching]="searchingMainCustomer"
+                                                [filteredServerSide]="filteredMainCustomerServerSide"
+                                                (OnSearch)="searchMainCustomerList($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+                                        </div>
+
+                                        <div class="row">
+                                          <section class="col col-9">
+                                            <div class="form-group row">
+                                              <label class="col-sm-3 col-form-label translate" data-en="Related Supplier"> المورد المرتبط </label>
+                                              <div class="col-sm-9">
+                                                <select-server-side
+                                                [selectForm]="ar_customers"
+                                                [controlName]="'n_related_supplier'"
+                                                [TextField]="'s_supplier_name'"
+                                                [ValueField]="'n_supplier_id'"
+                                                [searching]="searchingRelatedSupplier"
+                                                [filteredServerSide]="filteredRelatedSupplierServerSide"
+                                                (OnSearch)="searchRelatedSupplierList($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+                                        </div>
+
+                                        <div class="row">
+                                          <section class="col col-9">
+                                            <div class="form-group row">
+                                              <label class="col-sm-3 col-form-label translate" data-en="Collection representative"> مندوب التحصيل </label>
+                                              <div class="col-sm-9">
+                                                <select-server-side
+                                                [selectForm]="ar_customers"
+                                                [controlName]="'n_adver_man'"
+                                                [TextField]="'s_name'"
+                                                [ValueField]="'n_Code_id'"
+                                                [searching]="searchingAdverMan"
+                                                [filteredServerSide]="filteredAdverManServerSide"
+                                                (OnSearch)="searchAdverManList($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+                                        </div>
+
+                                        <div class="row">
+                                          <section class="col col-9">
+                                            <div class="form-group row">
+                                              <label class="col-sm-3 col-form-label translate" data-en="Area No"> رقم المنطقة </label>
+                                              <div class="col-sm-9">
+                                                <select-server-side
+                                                [selectForm]="ar_customers"
+                                                [controlName]="'n_area_id'"
+                                                [TextField]="'s_area_name'"
+                                                [ValueField]="'n_area_id'"
+                                                [searching]="searchingArea"
+                                                [filteredServerSide]="filteredAreaServerSide"
+                                                (OnSearch)="searchAreaList($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+                                        </div>
+
+                                        <div class="row">
+                                          <section class="col col-9">
+                                            <div class="form-group row">
+                                              <label class="col-sm-3 col-form-label translate" data-en="Price List"> قائمة السعر </label>
+                                              <div class="col-sm-9">
+                                                <select-server-side
+                                                [selectForm]="ar_customers"
+                                                [controlName]="'n_price_list_no'"
+                                                [TextField]="'s_list_name'"
+                                                [ValueField]="'n_doc_no'"
+                                                [searching]="searchingPrice"
+                                                [filteredServerSide]="filteredPriceServerSide"
+                                                (OnSearch)="searchPriceList($event)">
+                                                </select-server-side>
+                                              </div>
+                                            </div>
+                                          </section>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </section>
+                              </div>
+
+                              <div class="row">
+                                <section class="col col-12">
+                                  <div class="row">
+                                    <div class="card p-3">
+                                      <div class="row">
+                                        <section class="col col-9">
+                                          <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label translate" data-en= >النشاط</label>
+                                            <div class="col-sm-9">
+                                              <select class="form-select" formControlName="s_CustFields">
+                                                <option [ngValue]="0">------------------------</option>
+                                                <option *ngFor="let c of custFieldsList" [value]="c.n_Id">{{ isEnglish?c.s_name_eng:c.s_name }}</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                        </section>
+
+                                        <section class="col col-3">
+                                          <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                              <!-- <button type="button" class="btn btn-outline-primary w-100">اضافة نشاط</button> -->
+                                              <a class="btn btn-outline-primary w-100 translate" target="_blank" routerLink="/ar/customerIndustryAdd"  data-en="Add Activity"> اضافة نشاط </a>
+                                            </div>
+                                          </div>
+                                        </section>
+                                      </div>
+
+                                      <div class="row">
+                                        <section class="col col-9">
+                                          <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label translate" data-en="Customer Type">فئة العميل</label>
+                                            <div class="col-sm-9">
+                                              <select class="form-select" formControlName="n_source">
+                                                <option [ngValue]="0">------------------------</option>
+                                                <option *ngFor="let c of sourceList" [value]="c.n_Id">{{isEnglish?c.s_name_eng: c.s_name }}</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                        </section>
+
+                                        <section class="col col-3">
+                                          <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                              <!-- <button type="button" class="btn btn-outline-primary w-100">اضافة فئة</button> -->
+                                              <a class="btn btn-outline-primary w-100 translate" target="_blank" routerLink="/ar/customerClassAdd" data-en="Add Type"> اضافة فئة </a>
+                                            </div>
+                                          </div>
+                                        </section>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </section>
+                              </div>
+                            </section>
+                          </div>
+
+                          <div class="row">
+                            <section class="col-lg-7">
+                              <div class="card p-3">
+                                <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label translate" data-en="Type of credit period">نوع فترة الائتمان</label>
+                                        <div class="col-sm-8">
+                                          <select class="form-select" formControlName="n_CreditPeriod_type">
+                                            <option [ngValue]="0">------------------------</option>
+                                            <option *ngFor="let c of creditPeriodTypesList" [value]="c.code">{{ c.name_arabic }}</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label translate" data-en="Payment Period">فترة الايام</label>
+                                        <div class="col-sm-7">
+                                          <input type="number" class="form-control" formControlName="n_customer_payment_period" placeholder="0" />
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+
+                                  <div class="row">
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label translate" data-en="Dealing Type ">نوع التعامل</label>
+                                        <div class="col-sm-8">
+                                          <select class="form-select" formControlName="n_dealing_type">
+                                            <option [ngValue]="0">------------------------</option>
+                                            <option *ngFor="let c of dealingTypesList" [value]="c.code">{{ isEnglish?c.s_name_eng:c.name_arabic }}</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </section>
+
+                                    <section class="col col-6">
+                                      <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label translate" data-en="Advance payment ratio">نسبة الدفعة المتقدمة</label>
+                                        <div class="col-sm-7">
+                                          <input type="number" class="form-control" formControlName="n_advanced_payment_percent" placeholder="0" />
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </div>
+
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label translate" data-en="Branch">الفروع</label>
+                                      <div class="col-sm-10">
+                                          <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="branchesList" [(ngModel)]="selectedItems" formControlName="s_branches"
+                                          >
+                                          </ng-multiselect-dropdown>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col-lg-5">
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-3 col-form-label translate" data-en="WebSite">الموقع الالكتروني</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" formControlName="s_CustomerSite" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-3 col-form-label translate" data-en="Email">بريد الكتروني</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" formControlName="s_customer_e_mail" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-3 col-form-label" class="translate"  data-en="Responsible Email">ايميل المسئول</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" formControlName="s_email" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+
+                          <div class="row">
+                            <section class="col-lg-12">
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Email Box">صندوق البريد</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_PBox" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="ZipCode">الرمز البريدي</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_zipcode" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate " data-en="Phone">رقم التليفون</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_customer_phone_no" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Fax No">رقم الفاكس</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_customer_fax_no" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Phone Number 2">رقم تليفون2</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_customer_phone_no2" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Responsible Telephone">تليفون المسئول</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_tel_no" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Responsible Man Fax">فاكس المسئول</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_fax" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-8 col-form-label translate" data-en="The person's mobile phone identifies the client">جوال الشخص المسئول لدي العميل</label>
+                                      <div class="col-sm-4">
+                                        <input type="text" class="form-control" formControlName="s_mobile_no" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label translate" data-en="Notes">ملاحظات</label>
+                                      <div class="col-sm-10">
+                                        <textarea class="form-control" formControlName="s_ExtraNote" rows="3"></textarea>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-home2" role="tabpanel" aria-labelledby="av-home-2">
+                          <div class="row mt-2">
+                            <section class="col-lg-7">
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-9">
+                                    <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label translate" data-en="Item Type" > نوع الصنف </label>
+                                      <div class="col-sm-6">
+                                        <div class="position-relative">
+                                          <div class="custom-search">
+                                            <i class="fa fa-search position-absolute"></i>
+                                            <input class="form-control has-search" type="text" formControlName="s_item_type_name"  (focus)="serachOpen($event); searchItemTypesBegin('');"  id="input-search-13" (keyup)="searchItemTypesBegin($event)" (blur)="searchHide(13)"  autocomplete="off">
+                                            <div class="search-list" id="serach-list-id-13">
+                                              <table class="search-table">
+                                                  <thead>
+                                                    <tr>
+                                                      <th>رقم  </th>
+                                                      <th>الاسم</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr *ngFor="let type of itemTypesList; let i=index;" (click)="selectItem(i, 13, 's_item_type_name', 'item_type_id')">
+                                                        <td [id]="'tdF'+ i">{{type.n_item_type}}</td>
+                                                        <td [id]="'tdS'+ i">{{type.s_item_type_name}}</td>
+                                                      </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            <input type="hidden" name="item_type_id">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-3">
+                                    <div class="form-group row">
+                                      <label class="col-sm-3 col-form-label"></label>
+                                      <div class="col-sm-9">
+                                        <button type="button" class="btn btn-outline-primary w-100 translate" data-en="Load Items">تحميل الاصناف</button>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+
+                          <div class="row">
+                            <section class="col-lg-10">
+                              <div class="card p-3">
+                                <div class="row">
+                                  <div class="col-12 table-responsive">
+                                    <table  id="tblPricesDetails" class="custom-table" formArrayName="ar_customers_items_prices">
+                                      <thead>
+                                        <tr>
+                                          <th  style="min-width: 25px"  class="translate" data-en="No">م</th>
+                                          <th  style="min-width: 140px" class="translate" data-en="Item Code">رقم الصنف</th>
+                                          <th  style="min-width: 200px" class="translate" data-en="Item Name">اسم الصنف</th>
+                                          <th  style="min-width: 140px" class="translate" data-en="Unit Code">كود الوحدة</th>
+                                          <th  style="min-width: 200px" class="translate" data-en="Unit Name">اسم الوحدة</th>
+                                          <th  style="min-width: 120px" class="translate" data-en="Price">السعر</th>
+                                          <th  style="min-width: 45px"></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr [formGroupName]="i" *ngFor="let item of ar_customers_items_prices.controls; let i = index;">
+                                          <th scope="row" class="text-center" style="min-width: 25px;"> {{ i + 1 }} </th>
+
+                                          <td style="min-width: 140px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="loadItems(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" [ngClass]="isItemExist[i] ? 'border-success' : 'border-danger'" type="text" formControlName="s_item_id" (keypress)="onKeyItemSearch($event, i)">
+                                            </div>
+                                          </td>
+                                          <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_item_name" readonly /> </td>
+
+                                          <td style="min-width: 140px;">
+                                            <div class="position-relative">
+                                              <i class="fa fa-search position-absolute" (click)="loadUnits(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" [ngClass]="isUnitExist[i] ? 'border-success' : 'border-danger'" type="text" formControlName="n_unit_id" (keypress)="onKeyUnitSearch($event, i)">
+                                            </div>
+                                          </td>
+                                          <td style="min-width: 200px;"> <input type="text" class="form-control" formControlName="s_unit_name" readonly /> </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="number" class="form-control" formControlName="n_price" placeholder="0" />
+                                          </td>
+
+                                          <td style="min-width: 45px;">
+                                            <i (click)="remove_ar_customers_items_prices_Row(i)" class="bi bi-x-square" tabindex="-1"></i>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12 text-center">
+                                      <div class="button-plus">
+                                        <i class="bi bi-plus"></i>
+                                        <a (click)="add_ar_customers_items_prices_Row()" class="translate" data-en="Add Item">أضافة صنف</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-home3" role="tabpanel" aria-labelledby="av-home-3">
+                          <div class="row mt-2">
+                            <section class="col-lg-7">
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Country"> الدولة </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_country" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Capital"> المحافظة </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_governorate" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="City"> المدينة </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_city" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="District"> الحي </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_district" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Building No"> رقم المبني </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_building_number" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Street Name"> إسم الشارع </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_street_name" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Postal Code"> الرمز البريدي </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="n_postal_zone" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="col-lg-5">
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-8">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Tax Office Name"> مأمورية الضرائب </label>
+                                      <div class="col-sm-8">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'n_tax_office'"
+                                        [TextField]="'s_tax_office_name'"
+                                        [ValueField]="'n_doc_no'"
+                                        [searching]="searchingTaxOffice"
+                                        [filteredServerSide]="filteredTaxOfficeServerSide"
+                                        (OnSearch)="searchTaxOfficeList($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-8">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Customer Type">نوع العميل</label>
+                                      <div class="col-sm-8">
+                                        <select class="form-select" formControlName="n_cust_type">
+                                          <option [ngValue]="0">------------------------</option>
+                                          <option *ngFor="let c of customerTypesDPList" [value]="c.code">{{ c.name_arabic }}</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-8">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Nature of the client">طبيعة العميل</label>
+                                      <div class="col-sm-8">
+                                        <select class="form-select" formControlName="n_customer_nature">
+                                          <option [ngValue]="0">------------------------</option>
+                                          <option *ngFor="let c of customerNaturesDPList" [value]="c.code">{{ c.name_arabic }}</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-8">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label">النوع</label>
+                                      <div class="col-sm-8">
+                                        <select class="form-select" formControlName="n_type">
+                                          <option [ngValue]="0">------------------------</option>
+                                          <option *ngFor="let c of typesDPList" [value]="c.code">{{ c.name_arabic }}</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label">EDI name</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" formControlName="s_edi_name" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label">EDI email</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" formControlName="s_edi_email" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-home4" role="tabpanel" aria-labelledby="av-home-4">
+                          <div class="row mt-2">
+                            <section class="col-lg-7">
+                            </section>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-home5" role="tabpanel" aria-labelledby="av-home-5">
+                          <div class="row mt-2">
+                            <section class="col-lg-7">
+                              <div class="card p-3">
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label mt-3 translate" data-en="Contract Start Date"> تاريخ بداية التعاقد </label>
+                                      <div class="col-sm-8">
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker3" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker3.open()"  formControlName="d_contract_start_date" />
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker3"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker3 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label mt-3 translate" data-en="Contract start date"> تاريخ نهاية التعاقد </label>
+                                      <div class="col-sm-8">
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker4" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker4.open()"  formControlName="d_contract_end_date" />
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker4"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker4 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label mt-3 tranlsate" data-en="Contract activation date"> تاريخ تفعيل العقد </label>
+                                      <div class="col-sm-8">
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="datepicker5" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker5.open()"  formControlName="d_contract_activate_date" />
+                                          <mat-datepicker-toggle matSuffix [for]="datepicker5"></mat-datepicker-toggle>
+                                          <mat-datepicker #datepicker5 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                                <div class="row">
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Rented space"> المساحة المؤجرة </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_rent_area" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Customer No" > رقم العميل </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_customer_number" />
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-6">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Piece No"> رقم القطعة </label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" formControlName="s_piece_no" />
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+
+                              </div>
+                            </section>
+
+                            <section class="col-lg-5">
+                              <div class="card p-3">
+                                <div class="row">
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Escrow Account Retained"> حساب الضمان المحتجز </label>
+                                      <div class="col-sm-7">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'s_Guarantee_detained_acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingGuarantee"
+                                        [filteredServerSide]="filteredGuaranteeServerSide"
+                                        (OnSearch)="searchGuaranteeList($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label translate" data-en="Advance payments account"> حساب الدفعات المقدمة </label>
+                                      <div class="col-sm-7">
+                                        <select-server-side
+                                        [selectForm]="ar_customers"
+                                        [controlName]="'s_advance_payment_acc'"
+                                        [TextField]="'s_account_name'"
+                                        [ValueField]="'s_account_no'"
+                                        [searching]="searchingAdvancedPayment"
+                                        [filteredServerSide]="filteredAdvancedPaymentServerSide"
+                                        (OnSearch)="searchAdvancedPaymentList($event)">
+                                        </select-server-side>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <!-- <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label"> حساب الضمان المحتجز </label>
+                                      <div class="col-sm-8">
+                                        <div class="position-relative">
+                                          <div class="custom-search">
+                                            <i class="fa fa-search position-absolute"></i>
+                                            <input class="form-control has-search" type="text" formControlName="s_Guarantee_detained_acc_name"  (focus)="serachOpen($event); searchAccountTreeOrdersBegin('');"  id="input-search-15" (keyup)="searchAccountTreeOrdersBegin($event)" (blur)="searchHide(15)"  autocomplete="off">
+                                            <div class="search-list" id="serach-list-id-15">
+                                              <table class="search-table">
+                                                  <thead>
+                                                    <tr>
+                                                      <th>رقم  </th>
+                                                      <th>الاسم</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr *ngFor="let type of accountTreeOrdersList; let i=index;" (click)="selectItem(i, 15, 's_Guarantee_detained_acc_name', 's_Guarantee_detained_acc')">
+                                                        <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                        <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+                                                      </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            <input type="hidden" name="s_Guarantee_detained_acc">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </section>
+
+                                  <section class="col col-12">
+                                    <div class="form-group row">
+                                      <label class="col-sm-4 col-form-label"> حساب الدفعات المقدمة </label>
+                                      <div class="col-sm-8">
+                                        <div class="position-relative">
+                                          <div class="custom-search">
+                                            <i class="fa fa-search position-absolute"></i>
+                                            <input class="form-control has-search" type="text" formControlName="s_advance_payment_acc_name"  (focus)="serachOpen($event); searchAccountTreeOrdersBegin('');"  id="input-search-16" (keyup)="searchAccountTreeOrdersBegin($event)" (blur)="searchHide(16)"  autocomplete="off">
+                                            <div class="search-list" id="serach-list-id-16">
+                                              <table class="search-table">
+                                                  <thead>
+                                                    <tr>
+                                                      <th>رقم  </th>
+                                                      <th>الاسم</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr *ngFor="let type of accountTreeOrdersList; let i=index;" (click)="selectItem(i, 16, 's_advance_payment_acc_name', 's_advance_payment_acc')">
+                                                        <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                                                        <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+                                                      </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            <input type="hidden" name="s_advance_payment_acc">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </section> -->
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </form>
+            <div class="card-footer mb-4" >
+              <div class="row mb-lg-5">
+                   <div class="col-md-2">
+                    <app-attachments [ID]="this.n_customer_id" [DataArea]="this.ar_customers.value.n_DataAreaID" [Folder]="'Customers'" [SubFolder]="'Attachments'" *ngIf="this.n_customer_id !=null && this.n_customer_id > 0"></app-attachments>
+                   </div>
+                </div>
+                <div class="row" *ngIf="showspinner">
+                  <hr/>
+                  <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+
+<!-- <section class="col col-6">
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"> نوع العميل<span style="color:red">&nbsp;*</span> </label>
+    <div class="col-sm-8">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_customer_type_name"  (focus)="serachOpen($event); searchCustomerTypesBegin('');"  id="input-search-1" (keyup)="searchCustomerTypesBegin($event)" (blur)="searchHide(1)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-1">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم</th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of customerTypesList; let i=index;" (click)="selectItem(i, 1, 's_customer_type_name', 'n_customer_type_id')">
+                      <td [id]="'tdF'+ i">{{type.n_customer_type_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_customer_type_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_customer_type_id">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<!-- <section class="col col-6">
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"> مركز التكلفة1 </label>
+    <div class="col-sm-8">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_cost_center_name"  (focus)="serachOpen($event); searchCostCentersBegin('');"  id="input-search-6" (keyup)="searchCostCentersBegin($event)" (blur)="searchHide(6)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-6">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of costCenterList; let i=index;" (click)="selectItem(i, 6, 's_cost_center_name', 's_cost_center_id')">
+                      <td [id]="'tdF'+ i">{{type.s_cost_center_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_cost_center_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="s_cost_center_id">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- <section class="col col-6">
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"> مركز التكلفة2 </label>
+    <div class="col-sm-8">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_cost_center_name_2"  (focus)="serachOpen($event); searchCostCentersBegin('');"  id="input-search-7" (keyup)="searchCostCentersBegin($event)" (blur)="searchHide(7)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-7">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of costCenterList; let i=index;" (click)="selectItem(i, 7, 's_cost_center_name_2', 's_cost_center_id_2')">
+                      <td [id]="'tdF'+ i">{{type.s_cost_center_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_cost_center_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="s_cost_center_id_2">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!--
+<section class="col col-6">
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"> حساب المرفوضات </label>
+    <div class="col-sm-8">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_account_name"  (focus)="serachOpen($event); searchAccountTreeOrdersBegin('');"  id="input-search-10" (keyup)="searchAccountTreeOrdersBegin($event)" (blur)="searchHide(10)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-10">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of accountTreeOrdersList; let i=index;" (click)="selectItem(i, 10, 's_account_name', 's_refusal_account')">
+                      <td [id]="'tdF'+ i">{{type.s_account_no}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_account_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="s_refusal_account">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!--
+<section class="col col-6">
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"> المندوب <span style="color:red;">*</span> </label>
+    <div class="col-sm-8">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_salesman_name"  (focus)="serachOpen($event); searchSalesmenBegin('');"  id="input-search-3" (keyup)="searchSalesmenBegin($event)" (blur)="searchHide(3)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-3">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of salesmenList; let i=index;" (click)="selectItem(i, 3, 's_salesman_name', 'n_salesman_id')">
+                      <td [id]="'tdF'+ i">{{type.n_salesman_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_salesman_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_salesman_id">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!--
+<section class="col col-6">
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"> شرائح العملات </label>
+    <div class="col-sm-8">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_commission_type_name"  (focus)="serachOpen($event); searchCommissionsBegin('');"  id="input-search-12" (keyup)="searchCommissionsBegin($event)" (blur)="searchHide(12)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-12">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of commissionsList; let i=index;" (click)="selectItem(i, 12, 's_commission_type_name', 'n_commision_type')">
+                      <td [id]="'tdF'+ i">{{type.n_commission_type_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_commission_type_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_commision_type">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!--
+<section class="col col-9">
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> العميل الرئيسي </label>
+    <div class="col-sm-9">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_maincustomer_name"  (focus)="serachOpen($event); searchMainCustomersBegin('');"  id="input-search-2" (keyup)="searchMainCustomersBegin($event)" (blur)="searchHide(2)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-2">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of mainCustomersList; let i=index;" (click)="selectItem(i, 2, 's_maincustomer_name', 'n_maincustomer_id')">
+                      <td [id]="'tdF'+ i">{{type.n_maincustomer_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_maincustomer_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_maincustomer_id">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!--
+<section class="col col-9">
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> المورد المرتبط </label>
+    <div class="col-sm-9">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_supplier_name"  (focus)="serachOpen($event); searchSuppliersBegin('');"  id="input-search-11" (keyup)="searchSuppliersBegin($event)" (blur)="searchHide(11)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-11">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of suppliersList; let i=index;" (click)="selectItem(i, 11, 's_supplier_name', 'n_related_supplier')">
+                      <td [id]="'tdF'+ i">{{type.n_supplier_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_supplier_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_related_supplier">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!--
+<section class="col col-9">
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> مندوب التحصيل </label>
+    <div class="col-sm-9">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_name"  (focus)="serachOpen($event); searchAdvermenBegin('');"  id="input-search-4" (keyup)="searchAdvermenBegin($event)" (blur)="searchHide(4)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-4">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of advermenList; let i=index;" (click)="selectItem(i, 4, 's_name', 'n_adver_man')">
+                      <td [id]="'tdF'+ i">{{type.n_Code_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_adver_man">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!--
+<section class="col col-9">
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> رقم المنطقة </label>
+    <div class="col-sm-9">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_area_name"  (focus)="serachOpen($event); searchAreaBegin('');"  id="input-search-5" (keyup)="searchAreaBegin($event)" (blur)="searchHide(5)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-5">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of areaList; let i=index;" (click)="selectItem(i, 5, 's_area_name', 'n_area_id')">
+                      <td [id]="'tdF'+ i">{{type.n_area_id}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_area_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_area_id">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!--
+<section class="col col-9">
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> قائمة السعر </label>
+    <div class="col-sm-9">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_list_name"  (focus)="serachOpen($event); searchPriceBegin('');"  id="input-search-8" (keyup)="searchPriceBegin($event)" (blur)="searchHide(8)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-8">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of priceList; let i=index;" (click)="selectItem(i, 8, 's_list_name', 'n_price_list_no')">
+                      <td [id]="'tdF'+ i">{{type.n_doc_no}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_list_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_price_list_no">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!--
+<section class="col col-10">
+  <div class="form-group row">
+    <label class="col-sm-3 col-form-label"> مأمورية الضرائب </label>
+    <div class="col-sm-9">
+      <div class="position-relative">
+        <div class="custom-search">
+          <i class="fa fa-search position-absolute"></i>
+          <input class="form-control has-search" type="text" formControlName="s_tax_office_name"  (focus)="serachOpen($event); searchTexOfficesBegin('');"  id="input-search-14" (keyup)="searchTexOfficesBegin($event)" (blur)="searchHide(14)"  autocomplete="off">
+          <div class="search-list" id="serach-list-id-14">
+            <table class="search-table">
+                <thead>
+                  <tr>
+                    <th>رقم  </th>
+                    <th>الاسم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let type of taxOfficesList; let i=index;" (click)="selectItem(i, 14, 's_tax_office_name', 'n_tax_office')">
+                      <td [id]="'tdF'+ i">{{type.n_doc_no}}</td>
+                      <td [id]="'tdS'+ i">{{type.s_tax_office_name}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <input type="hidden" name="n_tax_office">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->

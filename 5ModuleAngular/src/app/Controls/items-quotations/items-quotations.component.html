@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>الاصناف</h1>
+      <button class="btn btn-danger" (click)="onCloseClick()">X</button>
+    </div>
+  </div>
+</div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label class="translate" data-en="General Search">بحث عام</label>
+
+                <div class="input-group">
+                  <input type="text" class="form-control" (keyup)="DoSearch();"  [(ngModel)]="KeyWord"    >
+                </div>
+                <!-- /.input group -->
+              </div>
+        </div>
+    </div>
+
+
+     <table    datatable
+        class="table table-striped table-bordered dt-responsive" style="width:100%;text-align: center;" >
+      <thead >
+      <tr class="table-primary">
+        <th style="text-align: center;" class="translate" data-en="Item Code">كود الصنف</th>
+        <th style="text-align: center;" class="translate" data-en="Item Name">إسم الصنف</th>
+
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr    *ngFor="let item of items" (click)="selectItem(item)" >
+        <td  >{{item.s_item_id}}  </td>
+        <td  >{{item.s_item_name}}  </td>
+
+
+      </tr>
+      </tbody>
+
+    </table>
+
+    <div class="d-flex justify-content-center pt-1">
+
+      <pagination [boundaryLinks]="true" [totalItems]="totalCount"  [maxSize]="5"
+      [(ngModel)]="currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">         
+      </pagination>
+    
+    </div>
+
+

@@ -1,0 +1,112 @@
+<header>
+  <div class="content-wrapper"  >
+    <section class="content" >
+      <div class="container-fluid">
+        <h2 class="translate" data-en="Users">المستخدمين</h2>
+        <div class="buttons">
+          <div class="button"  *ngIf="cannew && !isSubscribed">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+            <a routerLink="/sys/user" class="translatedata" data-en="New" >جديد
+            </a>
+          </div>
+          <div class="button" *ngIf="isSubscribed">
+            <i class="bi bi-file-earmark-medical  fa-lg"></i>
+            <a routerLink="/main/adduser"  class="translatedata" data-en="New">جديد
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+
+<div class="content-wrapper" style="    margin-top: 140px;" >
+  <section class="content" >
+        <div class="container-fluid">
+            <div class="row" *ngIf="showspinner" >
+              <hr/>
+              <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+            </div>
+
+            <div class="custom-table-responsive">
+
+              <table  class="custom-table-add" >
+                <thead >
+                  <tr>
+                    <td colspan="12" width="100%" >
+                      <div>
+                        <div class="s-icons">
+                          <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                          <i class="bi bi-file-earmark-excel"></i>
+                          <i class="bi bi-info"></i>
+                        </div>
+                        <h2 class="translate" data-en="Users">المستخدمين</h2>
+                        <div class="f-icons">
+                          <i class="bi bi-layout-text-window-reverse"></i>
+                          <i class="bi bi-microsoft"></i>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr >
+                    <th ><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="UserID"></th>
+                    <th ><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="UserName"></th>
+                    <th ><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="GroupName"></th>
+                    <th ><input type="text" class="form-control" (ngModelChange)="Search();"  [(ngModel)]="EmpName"></th>
+                    <th ></th>
+                    <th ></th>
+                    <th ></th>
+                    <th ></th>
+                  </tr>
+                  <tr >
+                    <th style="text-align: center;text-align: center;" class="translate" data-en="User NO">رقم المستخدم</th>
+                    <th style="text-align: center;text-align: center;" class="translate" data-en="User Name">اسم المستخدم</th>
+                    <th style="text-align: center;text-align: center;" class="translate" data-en="Group Name">اسم المجموعة</th>
+                    <th style="text-align: center;text-align: center;" class="translate" data-en="Empolyee Name">اسم الموظف</th>
+                    <th  ></th>
+                    <th  ></th>
+                    <th ></th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of UsersData" >
+                  <td style="text-align: center;" >{{user.n_id}}  </td>
+                  <td style="text-align: center;" >{{user.s_user_name}}  </td>
+                  <td style="text-align: center;" >{{user.s_group_name}}  </td>
+                  <td style="text-align: center;" >{{user.s_employee_name}}  </td>
+                  <td style="text-align: center;" ><a routerLink="/sys/edituser/{{user.n_id}}" data-toggle="tooltip" data-placement="bottom" title="تعديل المستخدم" class="btn translatedata" data-en="Edit">تعديل</a></td>
+                  <td style="text-align: center;" ><a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowID(user.n_id)" class="btn translatedata" data-en="Remove">حذف</a></td>
+                  <td style="text-align: center;" ><div class="button-plus" ><a routerLink="/sys/userprev/{{user.n_id}}" style="width: 120px;" class="translatedata" data-en="Previledge"  >صلاحيات الشاشات</a></div></td>
+                  <td style="text-align: center;" ><div class="button-plus"><a routerLink="/sys/useraddtinaladd/{{user.n_id}}" style="width: 120px;" class="translatedata" data-en="Additonal Previledge"  >الصلاحيات الاضافية</a></div></td>
+                </tr>
+              </tbody>
+
+          </table>
+        </div>
+      </div>
+  </section>
+</div>
+<br/><br/>
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" class="translate" data-en="Close">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body translate" data-en="Are you sure ?" >
+                هل انت متاكد من حذف هذا المستخدم؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary translate" data-dismiss="modal" #closebutton data-en="Close" >اغلاق</button>
+                <button type="button" class="btn btn-primary translate" (click)="DeleteUser()" data-en="Remove">حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+

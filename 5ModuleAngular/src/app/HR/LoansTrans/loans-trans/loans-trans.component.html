@@ -1,0 +1,343 @@
+<header>
+  <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+          <h2 class="translate"> اضافة حركة سلف </h2>
+              <div class="buttons">
+                  <div class="button" >
+                      <i class="bi bi-bookmark-x "></i>
+                      <input type="button" routerLink="/hr/loans-trans-list" class="translate"  data-en="Exit"value="خروج">
+                  </div>
+                  <div class="button">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <input type="button" [disabled]="!Py_loans.valid" value="حفظ" class="translate" data-en="Save"  (click)="Save()" value="حفظ">
+                  </div>
+              </div>
+          </div>
+
+      </section>
+  </div>
+</header>
+<br/>
+
+<div class="content-wrapper" style="min-height: 1233.2px;">
+    <!-- Content Header (Page header) -->
+
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row" *ngIf="showspinner">
+          <hr/>
+          <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+
+              <form [formGroup]="Py_loans" (keydown.enter)="$event.preventDefault()">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+                <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+                <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+
+                <div class="card-body" >
+                    <div class="row">
+                        <section class="col-lg-7">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-4" *ngIf="this.loanNo > 0">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Document Number:">رقم السلفة:</label>
+                                  <input type="number" class="form-control" formControlName="n_loan_no" readonly>
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <label class="label"> <span class="translate" data-en="Transaction Date:"> تاريخ السلفة: </span><span style="color:red">&nbsp;*</span> </label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker.open()"  formControlName="d_loan_date" required>
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Transaction Type:">نوع الحركة:</label>
+                                  <select class="form-select" formControlName="n_Trans_Type" (change)="TransChanged();">
+                                    <option *ngFor="let c of TransTypes" [ngValue]="c.code">{{ c.name_arabic }}</option>
+                                 </select>
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Request Number:">رقم الطلب:</label>
+                                  <input type="number" class="form-control" formControlName="n_requestNo" placeholder="0" />
+                                </div>
+                              </section>
+
+                              <section class="col col-4" >
+                                <div class="form-group">
+                                  <label class="label translate">&nbsp;</label>
+                                  <div class="form-check">
+                                    <input class="form-check-input p-2" type="checkbox" value="" id="b_OldYear" formControlName="b_OldYear"  />
+                                    <label class="form-check-label mr-3 translate" data-en="Set manual calculation" for="b_OldYear">
+                                      تسوية سنوات سابقة
+                                    </label>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="ُEmployee Code:"> كود الموظف:<span style="color: red;">*</span> </label>
+                                  <select-server-side
+                                  [selectForm]="Py_loans"
+                                  [controlName]="'n_employee_id'"
+                                  [TextField]="'s_employee_name'"
+                                  [ValueField]="'n_employee_id'"
+                                  [searching]="searchingEmp"
+                                  [filteredServerSide]="filteredEmpServerSide"
+                                  (OnSearch)="searchEmp($event)" >
+                                  </select-server-side>
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Request Number:"> مبلغ السلفة:<span style="color: red;">*</span> </label>
+                                  <input type="number" class="form-control" formControlName="n_loan_value" placeholder="0" />
+                                </div>
+                              </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Suptracted Value:"> المبلغ المستقطع شهريآ:<span style="color: red;">*</span> </label>
+                                  <input type="number" class="form-control" formControlName="n_monthlyValue" placeholder="0" />
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                             <section class="col col-8" *ngIf="isDebitLoan">
+                              <div class="row">
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="label translate" data-en="Account Number:"> رقم الحساب: </label>
+                                    <select-server-side
+                                    [selectForm]="Py_loans"
+                                    [controlName]="'s_account_no'"
+                                    [TextField]="'s_account_name'"
+                                    [ValueField]="'s_account_no'"
+                                    [searching]="searchingAccounts"
+                                    [filteredServerSide]="filteredAccountsServerSide"
+                                    (OnSearch)="searchAccounts($event)" >
+                                    </select-server-side>
+                                  </div>
+                                </section>
+
+                                <section class="col col-6">
+                                  <div class="form-group">
+                                    <label class="label translate" data-en="Settelment Type:">نوع التسوية:</label>
+                                    <select class="form-select" formControlName="n_settlement_Type">
+                                      <option *ngFor="let c of SettelementTypes" [ngValue]="c.code">{{ c.name_arabic }}</option>
+                                   </select>
+                                  </div>
+                                </section>
+                               </div>
+                             </section>
+
+                              <section class="col col-4">
+                                <div class="form-group">
+                                  <label class="label translate" data-en="Suptracted Value:"> المبلغ المستقطع سابقآ: </label>
+                                  <input type="number" class="form-control" formControlName="n_SubtractValue" placeholder="0" />
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-5">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-8">
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label translate" data-en="Number of installments:"> عدد الاقساط: </label>
+                                  <div class="col-sm-8">
+                                    <input type="number" class="form-control" formControlName="n_count_of_installments" placeholder="0" />
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+
+                            <div class="row">
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label"> <span class="translate" data-en="Start of deduction:"> بداية الاحتساب </span> </label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker3" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker3.open()"  formControlName="d_start_of_deduction">
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker3"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker3 disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+
+                              <section class="col col-6">
+                                <div class="form-group">
+                                  <label class="label"> <span class="translate" data-en="End of deduction:"> نهاية الاحتساب </span> </label>
+                                  <mat-form-field>
+                                    <input matInput [matDatepicker]="datepicker4" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker4.open()"  formControlName="d_end_of_deduction">
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker4"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker4 disabled="false"></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col col-12">
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label translate" data-en="Arabic Description:"> وصف عربي: </label>
+                                  <div class="col-sm-9">
+                                    <textarea class="form-control" formControlName="s_Description" rows="1"></textarea>
+                                  </div>
+                                </div>
+                              </section>
+
+                              <section class="col col-12">
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label translate" data-en="English Description:"> وصف انجليزي: </label>
+                                  <div class="col-sm-9">
+                                    <textarea class="form-control" formControlName="s_Description_eng" rows="1"></textarea>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section class="col-lg-12">
+                          <div class="card p-3">
+                            <div class="row">
+                              <section class="col-lg-12">
+                                <div class="row">
+                                  <div class="col-12 table-responsive">
+                                    <table  id="tblMultiTransDetails" class="custom-table table-striped" formArrayName="Py_loans_details">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col" class="text-center translate" data-en="#" style="min-width: 25px" >#</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 90px">تاريخ استحقاق القسط</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 100px">قيمة القسط</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 60px">تم الخصم</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 90px">تاريخ الخصم</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 90px">تأجيل الخصم</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 150px">ك مركز التكلفة</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 200px">مركز التكلفة</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 150px">ك مركز التكلفة2</th>
+                                          <th scope="col" class="text-center translate" data-en="Source Code" style="min-width: 200px">مركز التكلفة2</th>
+                                          <th scope="col" class="text-center" style="min-width: 45px"></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr [formGroupName]="i" *ngFor="let item of Py_loans_details.controls; let i = index;">
+
+                                          <td scope="row" class="text-center" style="min-width: 25px;">
+                                            {{ i + 1 }}
+                                          </td>
+
+                                          <td style="min-width: 90px;">
+                                            <mat-form-field>
+                                              <input matInput [matDatepicker]="datepicker1" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker1.open()"  formControlName="d_Due_Date">
+                                              <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                                              <mat-datepicker #datepicker1 disabled="false"></mat-datepicker>
+                                            </mat-form-field>
+                                          </td>
+
+                                          <td style="min-width: 100px;">
+                                            <input type="number" class="form-control" formControlName="n_Due_Value" />
+                                          </td>
+
+                                          <td style="min-width: 60px;" class="text-center">
+                                            <input type="checkbox" formControlName="b_deduct" >
+                                          </td>
+
+                                          <td style="min-width: 90px;">
+                                            <mat-form-field>
+                                              <input matInput [matDatepicker]="datepicker2" placeholder="YYYY/MM/DD" datePickerFormat="YYYY/MM/DD" (click)="datepicker2.open()"  formControlName="d_deduct_date">
+                                              <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                                              <mat-datepicker #datepicker2 disabled="false"></mat-datepicker>
+                                            </mat-form-field>
+                                          </td>
+
+                                          <td style="min-width: 60px;" class="text-center">
+                                            <input type="checkbox" formControlName="b_postponted" >
+                                          </td>
+
+                                          <td style="min-width: 150px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="LoadCostCenter1(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" type="text" formControlName="s_cost_center_id" (change)="ChangeDetailsCost1(i);">
+                                            </div>
+                                          </td>
+
+                                          <td style="min-width: 200px;">
+                                            <input type="text" class="form-control" formControlName="s_cost_center_name" readonly />
+                                          </td>
+
+                                          <td style="min-width: 150px;">
+                                            <div class="position-relative" >
+                                              <i class="fa fa-search position-absolute" (click)="LoadCostCenter2(i)" data-toggle="modal"></i>
+                                              <input class="form-control has-search" type="text" formControlName="s_cost_center_id2" (change)="ChangeDetailsCost2(i);">
+                                            </div>
+                                          </td>
+
+                                          <td style="min-width: 200px;">
+                                            <input type="text" class="form-control" formControlName="s_cost_center_name2" readonly />
+                                          </td>
+
+                                          <td style="min-width: 45px;">
+                                            <i (click)="RemoveLoanTransDetailsRow(i)" class="bi bi-x-square text-center" tabindex="-1"></i>
+                                          </td>
+
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12 text-center">
+                                      <div class="button-plus">
+                                        <i class="bi bi-plus"></i>
+                                        <a (click)="Add_Py_loans_details_Row()" class="translate" data-en="Add">أضافة</a>
+                                     </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>

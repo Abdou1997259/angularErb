@@ -1,0 +1,463 @@
+<header>
+    <div class="content-wrapper" >
+      <section class="content" >
+        <div class="container-fluid">
+                
+          <h2 class="translate" data-en="Additional Prevleges">   صلاحيات اضافية</h2>
+          <div class="buttons">                             
+            <div class="button">
+                <i class="bi bi-bookmark-x "></i>
+                <a routerLink="/sys/userslist" class="translate" data-en="Close">خروج</a>
+              
+            </div>
+            <div class="button">
+                <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                <button (click)="save()" class="translate" data-en="Save">حفظ </button>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+</header>
+
+  <div class="content-wrapper" style="margin-top: 120px;">
+    <!-- Content Header (Page header) -->
+  
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+     
+                <form [formGroup]="userform" (keydown.enter)="$event.preventDefault()">
+                    <div class="row">
+                      <div class="form-group row">
+                        <input class="form-control" readonly formControlName="n_ID" style="width:100px;display: none;">
+                      </div>
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                            
+                           <div class="form-group row">
+                               <div class="label col-lg-4">المخازن <span class="text-danger">*</span></div>
+                               <div class="col-lg-8">
+                                                  
+                                 <prev-select
+                                 [selectForm]="userform"
+                                 [controlName]="'s_stores'"
+                                 [TextField]="'s_store_name'"
+                                 [ValueField]="'n_store_id'"
+                                 
+                                 [searching]="searchingStores"
+                                 [filteredServerSide]="filteredStoresServerSide"
+                                 (OnSearch)="searchStores($event)">
+                                 </prev-select>
+                              </div>
+                             </div>
+                            
+                      
+                      
+                          
+                           <div class="form-group row">
+                             <div class="label col-lg-4">المخزن الافتراضي<span class="text-danger">*</span></div>
+                             <div class="col-lg-8">
+                                                
+                               <select-server-side
+                               [selectForm]="userform"
+                               [controlName]="'n_default_store'"
+                               [TextField]="'s_store_name'"
+                               [ValueField]="'n_store_id'"
+                               [searching]="searchingStores"
+                               [filteredServerSide]="filteredStoresServerSide"
+                               (OnSearch)="searchStores($event)">
+                               </select-server-side>
+                            </div>
+                           </div>
+
+                           <div class="form-group row">
+                            <div class="label col-lg-4">البنوك </div>
+                            <div class="col-lg-8">
+                                               
+                              <prev-select
+                              [selectForm]="userform"
+                              [controlName]="'s_banks'"
+                              [TextField]="'s_bank_name'"
+                              [ValueField]="'n_bank_id'"
+                              
+                              [searching]="searchingBanks"
+                              [filteredServerSide]="filteredBanksServerSide"
+                              (OnSearch)="searchBanks($event)">
+                              </prev-select>
+                           </div>
+                          </div>
+                         
+                   
+                   
+                       
+                        <div class="form-group row">
+                          <div class="label col-lg-4">البنك الافتراضي</div>
+                          <div class="col-lg-8">
+                                             
+                            <select-server-side
+                            [selectForm]="userform"
+                            [controlName]="'n_default_bank_id'"
+                            [TextField]="'s_bank_name'"
+                            [ValueField]="'n_bank_id'"
+                            [searching]="searchingBanks"
+                            [filteredServerSide]="filteredBanksServerSide"
+                            (OnSearch)="searchBanks($event)">
+                            </select-server-side>
+                         </div>
+                        </div>
+                       
+                          </div>
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                            <div class="form-group row">
+                                <div class="label col-lg-4">الخزينة <span class="text-danger">*</span></div>
+                                <div class="col-lg-8">
+                                                   
+                                  <prev-select
+                                  [selectForm]="userform"
+                                  [controlName]="'s_cashes'"
+                                  [TextField]="'s_cash_name'"
+                                  [ValueField]="'n_cash_id'"
+                                  
+                                  [searching]="searchingCashes"
+                                  [filteredServerSide]="filteredCashesServerSide"
+                                  (OnSearch)="searchCashes($event)">
+                                  </prev-select>
+                               </div>
+                              </div>
+                             
+                       
+                       
+                           
+                            <div class="form-group row">
+                              <div class="label col-lg-4"> الخزينة الافتراضية <span class="text-danger">*</span></div>
+                              <div class="col-lg-8">
+                                                 
+                                <select-server-side
+                                [selectForm]="userform"
+                                [controlName]="'n_default_cash'"
+                                [TextField]="'s_cash_name'"
+                                [ValueField]="'n_cash_id'"
+                                [searching]="searchingCashes"
+                                [filteredServerSide]="filteredCashesServerSide"
+                                (OnSearch)="searchCashes($event)">
+                                </select-server-side>
+                             </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="label col-lg-4">الفروع <span class="text-danger">*</span></div>
+                                <div class="col-lg-8">
+                                                   
+                                  <prev-select
+                                  [selectForm]="userform"
+                                  [controlName]="'s_branches'"
+                                  [TextField]="'s_branch_name'"
+                                  [ValueField]="'n_branch_id'"
+                                  
+                                  [searching]="searchingBranches"
+                                  [filteredServerSide]="filteredBranchesServerSide"
+                                  (OnSearch)="searchBranches($event)">
+                                  </prev-select>
+                               </div>
+                              </div>
+                             
+                       
+                       
+                           
+                            <div class="form-group row">
+                              <div class="label col-lg-4">  بطاقات الائتمان</div>
+                              <div class="col-lg-8">
+                                                 
+                                <prev-select
+                                [selectForm]="userform"
+                                [controlName]="'s_credit_cards'"
+                                [TextField]="'s_credit_card_name'"
+                                [ValueField]="'n_credit_card_no'"
+                                
+                                [searching]="searchingCards"
+                                [filteredServerSide]="filteredCardsServerSide"
+                                (OnSearch)="searchCards($event)">
+                                </prev-select>
+                             </div>
+                            </div>
+                          </div>
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                            <div class="form-group row">
+                                <div class="label col-lg-4">السنوات المغلقة </div>
+                                <div class="col-lg-8">
+                                                   
+                                  <prev-select
+                                  [selectForm]="userform"
+                                  [controlName]="'s_closed_years'"
+                                  [TextField]="'s_year_name'"
+                                  [ValueField]="'n_year_id'"
+                                  
+                                  [searching]="searchingYears"
+                                  [filteredServerSide]="filteredYearsServerSide"
+                                  (OnSearch)="searchYears($event)">
+                                  </prev-select>
+                               </div>
+                              </div>
+                             
+                       
+                       
+                           
+                            <div class="form-group row">
+                              <div class="label col-lg-4"> المسئول  </div>
+                              <div class="col-lg-8">
+                                                 
+                                <select-server-side
+                                [selectForm]="userform"
+                                [controlName]="'n_orderIssued_no'"
+                                [TextField]="'s_orderIssued_name'"
+                                [ValueField]="'n_orderIssued_no'"
+                                [searching]="searchingOrderIsu"
+                                [filteredServerSide]="filteredOrderIsuServerSide"
+                                (OnSearch)="searchOrderIsu($event)">
+                                </select-server-side>
+                             </div>
+                            </div>
+
+                          
+                             
+                       
+                       
+                           
+                          
+                          </div>
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                            <div class="form-group row">
+                                <div class="label col-lg-4">توجيهة  العملاء </div>
+                                <div class="col-lg-8">
+                                                   
+                                  <select-server-side
+                                    [selectForm]="userform"
+                                    [controlName]="'n_cust_acc_dire'"
+                                    [TextField]="'s_acc_dir_name'"
+                                    [ValueField]="'n_acc_dir_no'"
+                                    [searching]="searchingCustDir"
+                                    [filteredServerSide]="filteredCustDirIsuServerSide"
+                                    (OnSearch)="searchCustDir($event)">
+                                </select-server-side>
+                               </div>
+                              </div>
+                             
+                       
+                       
+                           
+                            <div class="form-group row">
+                              <div class="label col-lg-4"> مركز التكلفة الافتراضي  </div>
+                              <div class="col-lg-8">
+                                                 
+                                <select-server-side
+                                [selectForm]="userform"
+                                [controlName]="'s_default_cost_center'"
+                                [TextField]="'s_cost_center_name'"
+                                [ValueField]="'s_cost_center_id'"
+                                [searching]="searchingCostCenter"
+                                [filteredServerSide]="filteredCostCenterIsuServerSide"
+                                (OnSearch)="searchCostCeneter($event)">
+                                </select-server-side>
+                             </div>
+                            </div>
+
+                          
+                             
+                       
+                       
+                           
+                          
+                          </div>
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                            <div class="form-group row">
+                                <div class="label col-lg-4">  نوع فاتورة العملاء </div>
+                                <div class="col-lg-8">
+                                                   
+                                  <select class="form-control" formControlName="n_sales_invoice_types">
+                                    <option value="0">--------------</option>
+                                    <option value="1">نقدي</option>
+                                    <option value="2">أجل</option>
+                                  </select>
+                               </div>
+                              </div>
+
+                              <div class="form-group row" >
+                                <div class="label col-lg-4">السعر الافتراضي للمبيعات</div>
+                                <div class="col-lg-8">
+                                                   
+                                  <select class="form-control" style="margin: 15px 0;" formControlName="n_sellprice_type">
+                                    <option value="0">--------------</option>
+                                    <option value="1">سعر البيع</option>
+                                    <option value="2">سعر التجزء</option>
+                                  </select>
+                               </div>
+                              </div>
+                             
+                       
+                       
+                           
+                              <div class="form-group row">
+                                <div class="label col-lg-4">  العميل الافتراضي</div>
+                                <div class="col-lg-8">
+                                                   
+                                  <select-server-side
+                                  [selectForm]="userform"
+                                  [controlName]="'n_default_customer_id'"
+                                  [TextField]="'s_customer_name'"
+                                  [ValueField]="'n_customer_id'"
+                                  [searching]="searchingDefaultCust"
+                                  [filteredServerSide]="filteredDefaultCustServerSide"
+                                  (OnSearch)="searchDefaultCust($event)">
+                                  </select-server-side>
+                               </div>
+                              </div>
+                             
+                           
+
+                          
+                             
+                       
+                       
+                           
+                          
+                          </div>
+                          
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                            <div class="form-group row">
+                                <div class="label col-lg-4">خطوط الانتاج</div>
+                                <div class="col-lg-8">
+                                                   
+                                  <prev-select
+                                  [selectForm]="userform"
+                                  [controlName]="'s_prod_lines'"
+                                  [TextField]="'s_Name'"
+                                  [ValueField]="'n_doc_no'"
+                                  
+                                  [searching]="searchingProdLine"
+                                  [filteredServerSide]="filteredProdLineServerSide"
+                                  (OnSearch)="searchProdLine($event)">
+                                  </prev-select>
+                               </div>
+                              </div>
+                             
+                       
+                       
+                              <div class="form-group row">
+                                <div class="label col-lg-4"> كود المحطة </div>
+                                <div class="col-lg-8">
+                                                   
+                                  <select-server-side
+                                  [selectForm]="userform"
+                                  [controlName]="'n_stationId'"
+                                  [TextField]="'s_cost_center_name'"
+                                  [ValueField]="'n_serial'"
+                                  [searching]="searchingstations"
+                                  [filteredServerSide]="filteredStationServerSide"
+                                  (OnSearch)="searchStations($event)">
+                                  </select-server-side>
+                               </div>
+                              </div>
+                         
+
+                            <div class="form-group row">
+                                <div class="label col-lg-4">فروع الموافقات</div>
+                                <div class="col-lg-8">
+                                                   
+                                  <prev-select
+                                  [selectForm]="userform"
+                                  [controlName]="'s_branches_workflow'"
+                                  [TextField]="'s_branch_name'"
+                                  [ValueField]="'n_branch_id'"
+                                  
+                                  [searching]="searchingBranches"
+                                  [filteredServerSide]="filteredBranchesServerSide"
+                                  (OnSearch)="searchBranches($event)">
+                                  </prev-select>
+                               </div>
+                              </div>
+                             
+                       
+                       
+                           
+                            <div class="form-group row">
+                              <div class="label col-lg-4"> المشغل</div>
+                              <div class="col-lg-8">
+                                                 
+                                <prev-select
+                                [selectForm]="userform"
+                                [controlName]="'s_mixer_workers'"
+                                [TextField]="'s_employee_name'"
+                                [ValueField]="'n_employee_id'"
+                                
+                                [searching]="searchingMixerWroks"
+                                [filteredServerSide]="filteredMixerWorksServerSide"
+                                (OnSearch)="searchMixerWroks($event)">
+                                </prev-select>
+                             </div>
+                            </div>
+                          </div>
+
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                        
+                             
+                       
+                       
+                              <div class="form-group row">
+                                <div class="label col-lg-4"> المشغل الافتراضي </div>
+                                <div class="col-lg-8">
+                                                   
+                                  <select-server-side
+                                  [selectForm]="userform"
+                                  [controlName]="'n_mixerWorker'"
+                                  [TextField]="'s_employee_name'"
+                                  [ValueField]="'n_employee_id'"
+                                  [searching]="searchingMixerWroks"
+                                  [filteredServerSide]="filteredMixerWorksServerSide"
+                                  (OnSearch)="searchMixerWroks($event)">
+                                  </select-server-side>
+                               </div>
+                              </div>
+                         
+
+                             
+                            
+                             
+                       
+                       
+                           
+                          
+                          </div>
+                          <div class="card mt-5 p-3 col-md-12 col-lg-6" style="border:none !important;box-shadow: none !important  ;">
+                            <div class="form-group row">
+                              <div class="label col-lg-4">  التعديل ع التقرير</div>
+                              <div class="col-lg-8">
+                                                 
+                                <div class="form-check">
+                                  <input class="form-check-input" fromControlName="b_edit_in_reports" type="checkbox" value="" id="flexCheckDefault" style="    width: 33px;
+                                  height: 23px;
+                                  border: 1px solid rgba(0, 0, 0, 0.4);
+                                  margin: 0 130px 0 0;">
+                                  <label class="form-check-label" for="flexCheckDefault">
+                                   
+                                  </label>
+                                </div>
+                             </div>
+                            </div>
+                          </div>
+
+                    </div>
+                
+                   </form>
+          
+
+        </div>
+      
+     </div>
+    </section>
+</div>
+
+
+
+

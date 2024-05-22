@@ -1,0 +1,158 @@
+  <!-- Content Wrapper. Contains page content -->
+  <header>
+    <div class="content-wrapper" >
+      <section class="content" >
+          <div class="container-fluid">
+              <h2 class="translate" data-en="Cutomer Sales Order">أمر توريد</h2>
+              <div class="buttons">
+                  <div class="button" *ngIf="cannew">
+                      <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                      <a routerLink="/ar/customerSalesOrderAdd" class="translatedata" data-en="New">جديد
+                      </a>
+                  </div>
+                </div>
+          </div>
+      </section>
+    </div>
+  </header>
+
+  <div class="content-wrapper rtl ">
+    <section class="content">
+
+        <div class="row" *ngIf="showspinner">
+            <hr/>
+            <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+          </div>
+
+            <!-- /.card-header -->
+            <div class="custom-table-responsive">
+              <table  class="custom-table-add" >
+
+                <thead >
+                  <tr>
+                  <td colspan="12" width="100%" >
+
+                     <div>
+                      <div class="s-icons">
+                        <i class="bi bi-pencil-fill" style="color:#343A40 ;"></i>
+                        <i class="bi bi-file-earmark-excel"></i>
+                        <i class="bi bi-info"></i>
+                      </div>
+                      <h2 class="translate" data-en="Customer Sales Order">أمر توريد</h2>
+
+                      <div class="f-icons">
+                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <i class="bi bi-microsoft"></i>
+                      </div>
+
+                    </div>
+
+                  </td>
+
+               </tr>
+
+                <tr>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="orderId"></th>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="orderDate"></th>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="customer"></th>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="store"></th>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="description"></th>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="total"></th>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="net"></th>
+                  <th><input type="text" class="form-control text-center" (ngModelChange)="DoSearch();" [(ngModel)]="confirm"></th>
+                  <th *ngIf="canedit"></th>
+                  <th *ngIf="candelete"></th>
+                  <th></th>
+                </tr>
+
+               <tr  >
+                <th class="text-center translatedata" style="min-width: 45px;" data-en="Customer Order Code">رقم الامر</th>
+                <th class="text-center translatedata" style="min-width: 100px;" data-en="Customer Order Date" >تاريخ الامر</th>
+                <th class="text-center translatedata" style="min-width: 100px;" data-en="Customer">العميل</th>
+                <th class="text-center translatedata" style="min-width: 100px;" data-en="Store" >المخزن</th>
+                <th class="text-center translatedata" style="min-width: 150px;" data-en="Description" >الوصف</th>
+                <th class="text-center translatedata" style="min-width: 50px;" data-en="Total" >الاجمالي</th>
+                <th class="text-center translatedata" style="min-width: 50px;" data-en="Net Cutomer Order" >صافي الامر</th>
+                <th class="text-center translatedata" style="min-width: 50px;" data-en="Confirm" >التعميد</th>
+                <th *ngIf="canedit"></th>
+                <th *ngIf="candelete"></th>
+                <th></th>
+
+              </tr>
+
+
+
+                </thead>
+                <tbody>
+                  <tr *ngFor="let purchase of customerSalesOrderList"> <!-- [ngClass]="{'bg-success text-white': purchase.b_confirm == true}" -->
+                    <td  class="text-center" style="min-width: 45px;"> {{purchase.n_doc_no}}         </td>
+                    <td  class="text-center" style="min-width: 100px;"> {{purchase.d_doc_date}}       </td>
+                    <td  class="text-center" style="min-width: 100px;"> {{purchase.s_customer_name}}  </td>
+                    <td  class="text-center" style="min-width: 100px;"> {{purchase.s_store_name}}     </td>
+                    <td  class="text-center" style="min-width: 150px;"> {{purchase.s_notes}}          </td>
+                    <td  class="text-center" style="min-width: 50px;"> {{purchase.n_total_value}}    </td>
+                    <td  class="text-center" style="min-width: 50px;"> {{purchase.n_net_value}}      </td>
+                    <td  class="text-center" style="min-width: 50px;"> {{purchase.b_confirm == false ? 'غير معمد': 'معمد'}}        </td>
+                    <td  > <a routerLink="/ar/customerSalesOrderEdit/{{purchase.n_doc_no}}" data-toggle="tooltip" data-placement="bottom" title="عرض بيانات المدة"  class="translatedata" data-en="Edit" >تعديل</a></td>
+                    <td  > <a href="#" data-toggle="modal" data-target="#CancelModal" (click)="getRowId(purchase.n_doc_no)" class="translatedata" data-en="Remove" >حذف</a></td>
+                    <td > <a href="{{ReportUrl}}PrintReport?docNo={{purchase.n_doc_no}}&idColName={{this.idColName}}&formID={{this.formID}}&comp={{this.comp}}&year={{this.year}}&branch={{this.branch}}&lang={{this.lang}}" data-toggle="tooltip" target="_blank"  class="btn translatedata" data-en="Print">طباعة</a></td>
+
+                 </tr>
+                 <tr >
+                  <td colspan="10">
+                    <div class="page">
+                      <pagination [boundaryLinks]="true" [totalItems]="PagingCount"  [maxSize]="5"
+                      [(ngModel)]="currentPage"
+                      (pageChanged)="pageChanged($event)"
+                      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                    </pagination>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+                </tbody>
+
+       </table>
+
+            </div>
+
+
+
+
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- Button trigger modal -->
+  <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">الغاء</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                هل انت متاكد من حذف هذا الامر؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" #closebutton >اغلاق</button>
+                <button type="button" class="btn btn-primary" (click)="DeleteRow()" data-dismiss="modal" #closebutton>حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <p></p>
+<!-- Modal -->
+
+
+
+
+

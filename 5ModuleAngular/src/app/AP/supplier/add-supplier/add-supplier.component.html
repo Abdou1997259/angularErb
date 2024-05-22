@@ -1,0 +1,593 @@
+
+
+<header>
+  <div class="content-wrapper" >
+    <section class="content" >
+        <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+
+
+
+                 <h2 class="translate" data-en="Add Supplier">أضافة مورد</h2>
+                 <div class="buttons">
+
+
+
+                    <div class="button">
+                        <i class="bi bi-bookmark-x "></i>
+                        <a routerLink="/ap/supplierList" class="translate" data-en="Exit">خروج</a>
+
+                    </div>
+                    <div class="button">
+                        <i class="bi bi-file-earmark-medical  fa-lg"></i>
+                        <input type="button" [disabled]="!supplierForm.valid" value="حفظ" class="translate" data-en="Save"  (click)="save()" value="حفظ">
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+              </section>
+  </div>
+
+
+  </header>
+
+
+
+  <div class="content-wrapper content-wrapper-cutom" style="    min-height: 85px  !important;
+  margin-top: 102px;" [ngClass]="{'disabled':showspinner}" >
+    <section class="content" >
+        <div class="container-fluid">
+    <nav style="padding: 10px;">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist" style="margin-right: 250px;">
+          <button class="nav-link  translate active" id="nav-home-tab" data-en="Supplier Info" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" style="padding: 7px;margin-left: 13px">بيانات الموردين</button>
+          <button class="nav-link translate" id="nav-profile-tab"      data-en="Accountts and Banks" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" style="padding: 7px;margin-left: 13px">الحسابات و البنوك</button>
+
+
+        </div>
+      </nav>
+</div>
+
+    </section>
+</div>
+
+<div class="content-wrapper" [ngClass]="{'disabled':showspinner}">
+  <section class="content" >
+      <div class="container-fluid">
+
+  <form [formGroup]="supplierForm" class="mr-250-mb">
+    <input type="number" style="display: none;" class="form-control" formControlName="n_DataAreaID">
+    <input type="number" style="display: none;" class="form-control" formControlName="n_UserAdd">
+    <input type="number" style="display: none;" class="form-control" formControlName="n_UserUpdate">
+    <input type="number" style="display: none;" class="form-control" formControlName="d_UserUpdateDate">
+    <input type="number" style="display: none;" class="form-control" formControlName="d_UserAddDate">
+    <input type="number" style="display: none;" class="form-control" formControlName="n_current_branch">
+    <input type="number" style="display: none;" class="form-control" formControlName="n_current_company">
+    <input type="number" style="display: none;" class="form-control" formControlName="n_current_year">
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="content-wrapper" [ngClass]="isEnglish?'mg-r-0':'mg-l-0' " >
+                <section class="content" >
+                    <div class="container-fluid">
+                      <div class="custom-form">
+                        <div class="custom-card">
+                            <div class="card-header">
+
+                              <h2 class="translate" data-en="Supplier Info ">بيانات الموردين</h2>
+                          
+
+                            </div>
+                           
+                          
+                            <div class="cutom-formgroup-full-width" *ngIf="ShowId">
+                              <div class="field-form ">
+                                <label><span class="translate" data-en="Supplier No">رقم المورد </span><span class="text-danger">*</span></label>
+
+                                <input type="number" class="form-control input" formControlName="n_supplier_id"   readonly style="width:25%">
+                              </div>
+
+
+                          </div>
+                            <div class="cutom-formgroup-full-width">
+                              <div class="field-form ">
+                                <label class="translate" data-en="Ar Supplier Name ">أسم المورد <span class="text-danger">*</span></label>
+
+                                <input type="text" class="form-control input" formControlName="s_supplier_name">
+                              </div>
+
+
+                          </div>
+                          <div class="cutom-formgroup-full-width">
+                            <div class="field-form ">
+                              <label class="translate" data-en="Supplier Name" >الاسم الانجليزي</label>
+
+                              <input type="text" class="form-control input" formControlName="s_supplier_name_eng">
+                            </div>
+
+
+                          </div>
+                          <div class="cutom-formgroup-full-width">
+                            <div class="field-form ">
+                                 <label class="translate"data-en="Address">العنوان</label>
+
+                                <input type="text" class="form-control" formControlName="s_supplier_address">
+                            </div>
+
+
+                          </div>
+                          <div class="cutom-formgroup-full-width">
+                            <div class="field-form ">
+                              <label ><span  class="translate" data-en="Credit Limit">حد الائتمان</span> <span class="text-danger">*</span></label>
+
+                              <input type="number" class="form-control input" formControlName="n_supplier_credit_limit" style=" width: 41%;
+                              margin-left: 10px;
+                          ">
+                       
+                              <select class="form-control" style="padding: 0 9px;"formControlName="n_credit_limit_reaction" >
+                                <option value="0">---------------------</option>
+                                <option value="1">السماح بالحركة</option>
+                                <option value="2">رسالة تحذيرية</option>
+                                <option value="3">منع الحركه</option>
+                            </select>
+                            </div>
+
+
+                          </div>
+                         
+                          <div class="cutom-formgroup-check">
+
+
+                            <div class="check-field-form">
+                                <label class="check-label translate" data-en="Is Direct">مورد مباشر </label>
+                                <input type="checkbox" class="custom-check" formControlName="b_is_direct">
+                            </div>
+                            <div class="check-field-form">
+
+                            <label class="check-label translate" data-en="Stop">  أيقاف التعامل </label>
+                                <input type="checkbox" class="custom-check" formControlName="b_stop" >
+                            </div>
+
+                        </div>
+
+
+                         
+                         
+
+                        
+
+
+                          
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                        <div class="custom-card">
+                          <div class="card-header">
+
+                              <h2 class="translate" data-en="Data Handling">بيانات التعامل </h2>
+                          </div>
+
+
+                          <div class="cutom-formgroup">
+                              <div class="field-form" >
+                                  <label style="text-align: center;" class="translate" data-en="Person Telphone" >تليفون الشخص المسئول :</label>
+
+                                  <input type="number" class="form-control input" formControlName="s_PersonTel">
+                              </div>
+                              <div class="field-form">
+                         
+                                <label ><span class="translate" data-en="Area Code">كود المنطقة</span> <span class="text-danger">*</span></label>
+                              
+                               
+                                 <select formControlName="n_area_id" class="input">
+                                   <option *ngFor="let item of filteredAreaServerSide | async " [value]="item['n_area_id']">{{item["s_area_name"]}}</option> 
+                                   <option value="0">---------------------------------</option> 
+                                 </select>
+                              
+                                </div>
+                          
+                        <div class="field-form" >
+                          <label  class="translate" data-en="Zip Code">الرمز البريدي:</label>
+
+                          <input type="text" class="form-control input" formControlName="s_zipcode">
+                        </div>
+                     
+                              <div class="field-form">
+                                  <label class="translate" data-en="Dealing Type">نوع التعامل</label>
+                                  <select class="input" formControlName="n_dealing_type" >
+                                      <option value="0">---------------------</option>
+                                      <option value="1">نقدي</option>
+                                      <option value="2">أجل</option>
+
+                                  </select>
+                              </div>    
+                            <div class="field-form">
+                                <label class="translate" data-en="Supplier Payment Period">فترة السماح</label>
+
+                                <input type="number" class="form-control input" formControlName="n_supplier_payment_period">
+                            </div>
+
+                            <div class="field-form">
+                              <label class="label translate" data-en="Fax No">رقم الفاكس:</label>
+
+                             <input type="number" class="form-control input" formControlName="s_supplier_fax_no">
+                         </div>
+                              <!-- <div class="field-form">
+                                  <label  style="text-align: center;"  class="translate" data-en="Selective Tax Type">الموقف الضريبي للضريبة الانتقائية:</label>
+                                  <select class="input"  formControlName="n_selective_tax_type" >
+                                      <option value="0">------------</option> 
+                                      <option value="0">نقدي</option>
+                                      <option value="1">أجل</option>
+
+                                  </select>
+                              </div> -->
+
+
+                              <!-- <div class="field-form" >
+                                  <label >الرقم الضريبي:</label>
+
+                                  <input type="text" class="form-control input" formControlName="sVatNo">
+                              </div> -->
+                              <!-- <div class="field-form">
+                                  <label  style="text-align: center;" class="translate" data-en="Tax Type" >الموقف الضريبي</label>
+                                  <select class="input"  formControlName="n_taxes_type" >
+                                    <option value="0">-----------------------------</option> 
+                                      <option value="0">خاضع للضريبة </option>
+                                      <option value="1">معفي</option>
+                                      <option value="2">غير للضريبة</option>
+
+                                  </select>
+                              </div> -->
+                              <div class="field-form">
+                                <label  style="text-align: center;" class="translate" data-en="Attachment Perosn">الشخص المسئول لدي المورد:</label>
+
+                                <input type="text" class="form-control input" formControlName="s_AttachmentPerson">
+                            </div>
+                             
+                         
+                  
+                              <div class="field-form">
+                                <label class="translate" data-en="Supplier Class">تصنيف المورد</label>
+                                <select class="input" formControlName="n_supplier_class" >
+                                <option value="0">-----------</option>
+                                <option value="1">A</option>
+                                <option value="2">B</option>
+                                <option value="3">C</option>
+                                <option value="4">D</option>
+                                </select>
+                              </div>
+                            
+                            
+                            
+                          </div>
+                          <div  class="cutom-formgroup-full-width">
+                            <div class="field-form">
+                       
+                              <label class="translate" data-en="Branchs">الفروع</label>
+                            
+                              <div class="w-100">
+                                <prev-select 
+                                  [selectForm]="supplierForm"
+                                  [controlName]="'s_branches'"
+                                  [TextField]="'s_branch_name'"
+                                  [ValueField]="'n_branch_id'"
+                                  
+                                  [searching]="searchingBranch"
+                                  [filteredServerSide]="filteredBranchServerSide"
+                                  (OnSearch)="searchBranch($event)">
+                                </prev-select>
+                              
+                              </div>
+                            </div>
+
+                          </div>
+                      </div>
+                        <div class="custom-card">
+                          <div class="card-header">
+                            
+                            <h2 class="translate" data-en="Other Info ">بيانات اخري</h2>
+
+
+                          </div>
+
+                     
+                          <div class="cutom-formgroup">
+
+
+                     
+                              
+                               
+                                  <div class="field-form">
+                                    <label ><span class="translate" data-en="Supplier Type">اختر نوع المورد</span><span class="text-danger">*</span></label>
+                                    <div class="w-100">
+                                      <select-server-side
+                                          [selectForm]="supplierForm"
+                                          [controlName]="'n_supplier_type_id'"
+                                          [TextField]="'s_supplier_type_name'"
+                                          [ValueField]="'n_supplier_type_id'"
+                                          [searching]="searchingSupplierTypes"
+                                          [filteredServerSide]="filteredTypesServerSide"
+                                          (OnSearch)="searchSupplierTypes($event)">
+                                    </select-server-side>
+                                    </div>
+                                  </div>
+
+
+
+
+
+                                  <div class="field-form">
+                                    <label class="label translate" data-en="Fax No">رقم الفاكس:</label>
+
+                                   <input type="number" class="form-control input" formControlName="s_supplier_fax_no">
+                               </div>
+                               <div class="field-form">
+                                <label  style="text-align: center;" class="translate" data-en="Commision Name">شرائح العمولات</label>
+                               <div class="w-100">
+                                 <select-server-side
+                                   [selectForm]="supplierForm"
+                                   [controlName]="'n_commision_type'"
+                                   [TextField]="'s_commission_type_name'"
+                                   [ValueField]="'n_commission_type_id'"
+                                   [searching]="commessionSearching"
+                                   [filteredServerSide]="filteredCommssionServerSide"
+                                   (OnSearch)="searchCommission($event)">
+                               </select-server-side>
+                               </div>
+                             </div>
+
+                             <div class="field-form">
+                              <label class="translate" data-en="Phone Number">رقم الموبيل</label>
+
+                              <input type="number" class="form-control input" formControlName="s_supplier_phone_no" >
+                            </div>
+                            <div class="field-form">
+                              <label class="translate" data-en="Classification">التصنيف:</label>
+                              <div class="w-100">
+                                <select-server-side
+                              [selectForm]="supplierForm"
+                              [controlName]="'n_supplier_category'"
+                              [TextField]="'s_name'"
+                              [ValueField]="'n_id'"
+                              [searching]="classificationSearching"
+                              [filteredServerSide]="filteredClassificationServerSide"
+                              (OnSearch)="searchClassification($event)">
+                              </select-server-side>
+                              </div>
+                            </div>
+                            <div class="field-form">
+                              <label class="translate" data-en="Supplier Web Page">البريد الالكتروني</label>
+  
+                              <input type="text" class="form-control input" formControlName="s_supplier_web_page">
+                           </div>
+                           <div class="field-form">
+                            <label  style="text-align: center;" class="translate" data-en="PurchaseMan">مندوب المشتريات</label>
+                           <div class="w-100">
+                             <select-server-side
+                               [selectForm]="supplierForm"
+                               [controlName]="'n_purchaseMan_id'"
+                               [TextField]="'s_employee_name'"
+                               [ValueField]="'n_employee_id'"
+                               [searching]="purchaseSearching"
+                               [filteredServerSide]="filteredPurchaseServerSide"
+                               (OnSearch)="searchPurchaseEmp($event)">
+                           </select-server-side>
+                           </div>
+                     </div>
+                          </div>
+
+                         
+                       
+
+                       
+
+
+
+
+
+
+
+
+
+
+
+                      </div>
+                      
+                    
+                      </div>
+                    </div>
+                 </section>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="content-wrapper" >
+                <section class="content" >
+                    <div class="container-fluid">
+                      <div class="custom-form">
+                        <div class="custom-card">
+                            <div class="card-header">
+                                <h2 class="translate" data-en="Account">الحسابات</h2>
+                            </div>
+                            <div class="cutom-formgroup">
+
+
+                              <div class="field-form">
+                               
+                                <label style="text-align: center;"><span  class="translate" data-en="Account Name:"> رقم الحساب:</span> <span class="text-danger">*</span></label>
+                               
+                                <select-server-side 
+                                [selectForm]="supplierForm"
+                                 [controlName]="'s_related_account_no'" 
+                                 [TextField]="'s_account_name'" 
+                                 [ValueField]="'s_account_no'" 
+                                 [searching]="searchingAccounts" 
+                                 [filteredServerSide]="filteredaccounts1" 
+                                 (OnSearch)="searchAccounts($event,1)"></select-server-side>
+                              </div>
+                            
+                              <div class="field-form">
+                                <label style="text-align: center;" class="translate" data-en="Agreement discount calculation:">حساب خسم الاتفاق:</label>
+                                <select-server-side 
+                                [selectForm]="supplierForm"
+                                 [controlName]="'s_agreement_discount_acc'" 
+                                 [TextField]="'s_account_name'" 
+                                 [ValueField]="'s_account_no'" 
+                                 [searching]="searchingAccounts" 
+                                 [filteredServerSide]="filteredaccounts2" 
+                                 (OnSearch)="searchAccounts($event,2)"></select-server-side>
+                              </div>
+                              <div class="field-form">
+                                <label style="text-align: center;" class="translate" data="Advance Payment Name"> ح/الدفعات المقدمة:</label>
+                                <select-server-side 
+                                [selectForm]="supplierForm"
+                                 [controlName]="'s_advanced_payment_acc'" 
+                                 [TextField]="'s_account_name'" 
+                                 [ValueField]="'s_account_no'" 
+                                 [searching]="searchingAccounts" 
+                                 [filteredServerSide]="filteredaccounts3" 
+                                 (OnSearch)="searchAccounts($event,3)"></select-server-side>
+                              </div>
+                              <div class="field-form">
+                                <label style="text-align: center;" class="translate" data-en="Guarantees Reserved Primary Acc Name">ح/الضمان المحتجزة الابتدائي:</label>
+                                <select-server-side 
+                                [selectForm]="supplierForm"
+                                 [controlName]="'s_guarantees_reserved_primary_acc'" 
+                                 [TextField]="'s_account_name'" 
+                                 [ValueField]="'s_account_no'" 
+                                 [searching]="searchingAccounts" 
+                                 [filteredServerSide]="filteredaccounts3" 
+                                 (OnSearch)="searchAccounts($event,3)"></select-server-side>
+                              </div>
+                         
+                              <div class="field-form">
+                                <label style="text-align: center;" class="translate " data-en="Gurantess Reserver Final Name">ح/الضمان المحتجز النهائي:</label>
+                                <select-server-side 
+                                [selectForm]="supplierForm"
+                                 [controlName]="'s_guarantees_reserved_final_acc'" 
+                                 [TextField]="'s_account_name'" 
+                                 [ValueField]="'s_account_no'" 
+                                 [searching]="searchingAccounts" 
+                                 [filteredServerSide]="filteredaccounts3" 
+                                 (OnSearch)="searchAccounts($event,3)"></select-server-side>
+                              </div>
+                             
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                        <div class="custom-card">
+                            <div class="card-header">
+                            <h2 class="translate" data-en="Bank Info">بيانات البنكية</h2>
+                            </div>
+                            <div class="cutom-formgroup">
+                                <div class="field-form">
+                                    <label class="translate" data-en="Name of the beneficiary">اسم المستفيد</label>
+
+                                    <input type="text" class="form-control input" formControlName="s_beneficiary_name">
+                                </div>
+
+                              
+                                <div class="field-form">
+                                  <label  style="text-align: center;" class="translate" data-en="The account number transferred to">رقم الحساب المحول له</label>
+
+                                  <input type="number" formControlName="s_TransferToAccount" class="form-control input">
+                              </div>
+
+                                <div class="field-form">
+                                    <label class="translate" data-en="Check State">موقف الشيك</label>
+                                    <select class="input"  >
+                                        <option value="0">يصرف للمستفيد الاول</option>
+                                        <option value="1">شيك مسطر</option>
+
+                                    </select>
+                                </div>
+                                <div class="field-form">
+                                    <label class="translate" data-en="IBAN">الابيان</label>
+
+                                    <input type="text" formControlName="s_IBAN" class="form-control input">
+                                </div>
+                                <div class="field-form">
+                                    <label class="translate" data-en="Swift code">السويفت كود</label>
+
+                                    <input type="text" class="form-control input" formControlName="s_SwiftCode">
+                                </div>
+                               
+                                    <div class="field-form">
+                                        <label class="transalte" data-en="City">المدينة</label>
+
+                                        <input type="text" formControlName="s_City" class="form-control input">
+                                    </div>
+                                    <div class="field-form">
+                                        <label  class="translate" data-en="Country">البلد </label>
+
+                                       <input type="text" formControlName="s_Country" class="form-control input">
+                                   </div>
+                                   <div class="field-form">
+                                    <label  class="translate" data-en="Address">العنوان</label>
+
+                                   <input type="text" formControlName="s_Address" class="form-control input">
+                               </div>
+
+
+                            </div>
+                         
+
+
+                        </div>
+                      </div>
+                    </div>
+                 </section>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+</div>
+</section>
+</div>
